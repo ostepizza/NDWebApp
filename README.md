@@ -10,4 +10,3 @@ Prerequisite: Have Visual Studio installed
 5. In the PM console, type "update-database" and press enter and wait.
 6. Check in PhpMyAdmin that the new database and tables have been created.
 7. Attempt to build solution inside Visual Studio
-8. PROFIT????
