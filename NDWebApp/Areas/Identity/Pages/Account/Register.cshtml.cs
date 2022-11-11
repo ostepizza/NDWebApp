@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using NDWebApp.Areas.Identity.Data;
+using NDWebApp.Data;
 
 namespace NDWebApp.Areas.Identity.Pages.Account
 {
@@ -71,6 +72,18 @@ namespace NDWebApp.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
+            [Required]
+            [Display(Name = "Employee Number")]
+            public int empNr { get; set; }
+
+            [Required]
+            [Display(Name = "First name")]
+            public string empFname { get; set; }
+
+            [Required]
+            [Display(Name = "Last name")]
+            public string empLname { get; set; }
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -114,6 +127,10 @@ namespace NDWebApp.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+
+                user.empNr = Input.empNr;
+                user.empFname = Input.empFname;
+                user.empLname = Input.empLname;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);

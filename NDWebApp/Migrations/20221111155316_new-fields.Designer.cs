@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NDWebApp.Data;
 
@@ -10,9 +11,10 @@ using NDWebApp.Data;
 namespace NDWebApp.Migrations
 {
     [DbContext(typeof(NDWebAppContext))]
-    partial class NDWebAppContextModelSnapshot : ModelSnapshot
+    [Migration("20221111155316_new-fields")]
+    partial class newfields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

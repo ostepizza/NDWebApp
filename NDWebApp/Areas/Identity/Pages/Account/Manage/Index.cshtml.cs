@@ -56,6 +56,17 @@ namespace NDWebApp.Areas.Identity.Pages.Account.Manage
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
+            /// 
+            [Display(Name = "Employee Number")]
+            public int empNr { get; set; }
+
+            [Display(Name = "First name")]
+            public string empFname { get; set; }
+
+            [Display(Name = "Last name")]
+            public string empLname { get; set; }
+
+
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
@@ -66,11 +77,18 @@ namespace NDWebApp.Areas.Identity.Pages.Account.Manage
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
+            var empNr = user.empNr;
+            var empFname = user.empFname;
+            var empLname = user.empLname;
+
             Username = userName;
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                empNr = empNr,
+                empFname = empFname,
+                empLname = empLname
             };
         }
 
@@ -89,6 +107,28 @@ namespace NDWebApp.Areas.Identity.Pages.Account.Manage
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);
+
+            var empNr = user.empNr;
+            if (Input.empNr != empNr)
+            {
+                user.empNr = Input.empNr;
+                await _userManager.UpdateAsync(user);
+            }
+
+            var empFname = user.empFname;
+            if (Input.empFname != empFname)
+            {
+                user.empFname = Input.empFname;
+                await _userManager.UpdateAsync(user);
+            }
+
+            var empLname = user.empLname;
+            if (Input.empLname != empLname)
+            {
+                user.empLname = Input.empLname;
+                await _userManager.UpdateAsync(user);
+            }
+
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");

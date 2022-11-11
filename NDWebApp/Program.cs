@@ -6,14 +6,34 @@ using NDWebApp.Areas.Identity.Data;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("NDWebAppContextConnection") ?? throw new InvalidOperationException("Connection string 'NDWebAppContextConnection' not found.");
 
+var settings = builder.Configuration.GetSection("Settings").Get<Settings>();
+var reqDigit = settings.RequireDigit;
+var reqLowercase = settings.RequireLowercase;
+var reqNonAlphanumeric = settings.RequireNonAlphanumeric;
+var reqUppercase = settings.RequireUppercase;
+var reqLength = settings.RequiredLength;
+var reqUniqueChars = settings.RequiredUniqueChars;
+var reqConfirmedAccount = settings.RequireConfirmedAccount;
+
 builder.Services.AddDbContext<NDWebAppContext>(options =>
     options.UseMySql(connectionString, new MySqlServerVersion(new Version(10, 4, 25))));
 
-builder.Services.AddDefaultIdentity<NDWebAppUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<NDWebAppUser>(options => options.SignIn.RequireConfirmedAccount = reqConfirmedAccount)
     .AddEntityFrameworkStores<NDWebAppContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    // Default Password settings.
+    options.Password.RequireDigit = reqDigit;
+    options.Password.RequireLowercase = reqLowercase;
+    options.Password.RequireNonAlphanumeric = reqNonAlphanumeric;
+    options.Password.RequireUppercase = reqUppercase;
+    options.Password.RequiredLength = reqLength;
+    options.Password.RequiredUniqueChars = reqUniqueChars;
+});
 
 var app = builder.Build();
 

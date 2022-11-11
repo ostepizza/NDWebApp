@@ -9,5 +9,8 @@ namespace NDWebApp.Areas.Identity.Data;
 // Add profile data for application users by adding properties to the NDWebAppUser class
 public class NDWebAppUser : IdentityUser
 {
+    public int empNr { get; set; }
+    public string empFname { get; set; }
+    public string empLname { get; set; }
 }
 
