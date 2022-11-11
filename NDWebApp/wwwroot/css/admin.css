@@ -1,0 +1,390 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    font-family: 'Nunito', sans-serif;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin-bottom: .5rem;
+    font-family: 'Lato', sans-serif;
+}
+
+.content a,a:hover,a:visited {
+    color: #000000;
+    width: 100%;
+    text-decoration: underline;
+}
+
+.container-fluid div, .container-fluid{
+    margin:0;
+    padding: 0;
+}
+
+.page-index {
+    width:100%;
+}
+
+.page-index-top h1 {
+    text-align: center;
+}
+
+.page-index-top img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    padding-top: 3%;
+}
+
+div .page-index-panel {
+    min-height: 200px;
+    border: 1px solid black;
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+div .page-index-panel p {
+    text-align: center;
+}
+
+div .page-index-panel {
+    text-align: center;
+}
+
+.page-index-panel h1,.page-index-panel h2,.page-index-panel h3,.page-index-panel h4,.page-index-panel h5,.page-index-panel h6,.page-index-panel h7 {
+    text-align: center;
+    margin-top: 5px;
+}
+
+.panel, .ready {
+    color: #00FF00;
+}
+
+.panel, .not-ready {
+    color: #FF0000;
+}
+
+.navbar-light {
+    color:#000000;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    border-top: #000000 solid 1px;
+    color:#000000;
+    font-size:20px;
+}
+
+.menu {
+    font-size: 1.5em;
+    text-align: center;
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    background: #DCDCDC;
+    background-image: linear-gradient(#DCDCDC, #E0E0E0);
+    color: #000000;
+    height: 100vh;
+}
+
+.menu .btn  {
+    height: 3rem;
+    cursor: pointer;
+    display: flex;
+    flex-flow:column;
+    justify-content: center;
+    align-content: center;
+    transition: 500ms;
+    border-top: #000000 solid 2px;
+    border-radius: 0rem;
+    font-family: Lato;
+    font-size: 0.8em;
+}
+
+.menu .btn-last {
+    border-bottom: #000000 solid 2px;
+}
+
+.menu .btn:hover {
+    background: #FFFFFF;
+    color: #000000;
+}
+
+.menu a,a:hover,a:visited {
+    color: #000000;
+    width: 100%;
+}
+
+.menu #login {
+    position: flex;
+    bottom: 0;
+    width: 100%;
+}
+
+.menu .logged-in-as {
+    font-size:12px;
+    margin-top:8px;
+    margin-bottom: 10px;
+}
+
+.menu img {
+    width:80%;
+    margin: 0 auto;
+    padding-top: 5%;
+}
+
+table, tr, td, th {
+    border: solid black 2px;
+}
+
+table {
+    margin-top: 25px;
+}
+
+th, td, tr {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 5px;
+}
+
+th {
+    text-align: center;
+}
+
+.tc {
+    text-align: center;
+}
+
+.infoText h1, .infoText h2, .infoText h3, .infoText h4, .infoText h5, .infoText h6, .infoText h7 {
+    text-align:center;
+    margin-top: 20px;
+}
+
+.privileges {
+    min-width: 150px;
+}
+
+.privileges-0 {
+    color: #111111;
+}
+
+.privileges-1 {
+    color: #0000FF;
+}
+
+.privileges-2 {
+    color: #00b33c;
+}
+
+.privileges-3 {
+    color: #FF0000;
+}
+
+.playertable table {
+    max-height: 500px;
+    min-height: 100%;
+    width:100%;
+}
+
+.playertable th, .matchtable td, .matchtable tr {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.playerimg {
+    width:200px;
+    height:200px;
+    margin-bottom: 3%;
+}
+
+.playertablepanel {
+    max-width:100%;
+    min-width:100%;
+    font-size:10px;
+    border: 1px solid black;
+}
+
+footer {
+    font-size: 0.6rem;
+}
+
+.announcement {
+    width:100%;
+    border: 1px solid black;
+    margin-top:  200px;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.announcement .posted_by {
+    border-bottom: 1px solid black;
+    padding: 10px;
+    background-color:#f2f2f2;
+}
+
+.announcement .text {
+    padding: 10px;
+}
+
+
+.announcement_post {
+    
+}
+
+.announcement_post textarea {
+    width:95%;
+}
+
+.announcement_post button {
+    width:80%;
+}
+
+.admincontrols h1, .admincontrols h2, .admincontrols h3, .admincontrols h4, .admincontrols h5 {
+    text-align:left;
+}
+
+.content .btn {
+    background-color: #000000;
+    border-color: #000000;
+    color: #FFFFFF;
+    border: 2px solid black;
+    width:25%;
+}
+
+.btngreen {
+    background-color: #000000;
+    border-color: #000000;
+    color: #00FF00;
+    border: 2px solid black;
+    width:25%;
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    cursor: pointer;
+}
+
+.btnred {
+    background-color: #000000;
+    border-color: #000000;
+    color: #FF0000;
+    border: 2px solid black;
+    width:25%;
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    cursor: pointer;
+}
+
+.btngreen:hover {
+    background-color: #FFFFFF;
+    color:#000000;
+}
+
+.btnred:hover {
+    background-color: #FFFFFF;
+    color:#000000;
+}
+
+.menu .btn-last {
+    border-bottom: #000000 solid 2px;
+}
+
+/*.content button, .content input {
+    width:25%;
+}*/
+
+.content .btn:hover {
+    background-color: #FFFFFF;
+    color:#000000;
+}
+
+.textcenter p {
+    text-align:center;
+}
+
+.form form, .form input, .form select {
+    margin-top:2vh;
+    width: 90%;
+}
+
+.mobileHide {
+    display: flex;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    max-width: 20vh;
+}
+
+.mobileShow {
+    display: none;
+}
+
+/* CSS for smaller view spaces */
+@media screen and (max-width: 768px) {
+    
+    .mobileHide {
+        display: none;
+    }
+    
+    .mobileShow {
+        display: flex;
+    }
+    
+    .jim-table-responsive table {
+        border: none;
+    }
+
+    /* hide table headings */
+    .jim-table-responsive table thead {
+        display: none;
+    }
+
+    /* treat rows like divs */
+    .jim-table-responsive table tr {
+        display: block;
+        border-top: 2px solid lightgray; /* separate row data with thicker line */
+        margin-top: 5px;
+        border: none;
+    }
+
+    /* treat columns like divs */
+    .jim-table-responsive table td {
+        display: block;
+        text-align: right; /* text to right */
+        border: none;
+        border-top: 1px solid #dee2e6
+    }
+
+    /* this part is ugly, but necessary to show label on left */
+    .jim-table-responsive table td:before {
+        content: attr(data-label);
+        float: left; /* label to left */
+        font-weight: 700;
+    }
+}
