@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "m0K1ZMXYuHU1WcYPguuUL+s/Hgbr9Z22kgFAtlL+bzM=",
+  "Hash": "iEFwTeyuRcvFMQ0ZAVxheJoFvUC6p7o51q1hKZ67XM8=",
   "Source": "NDWebApp",
   "BasePath": "_content/NDWebApp",
   "Mode": "Default",
@@ -1715,23 +1715,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
-    },
-    {
-      "Identity": "C:\\Users\\Admin\\Documents\\GitHub\\NDWebApp\\NDWebApp\\wwwroot\\js\\UserLogin.js",
-      "SourceId": "NDWebApp",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\Documents\\GitHub\\NDWebApp\\NDWebApp\\wwwroot\\",
-      "BasePath": "_content/NDWebApp",
-      "RelativePath": "js/UserLogin.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\UserLogin.js"
     },
     {
       "Identity": "C:\\Users\\Admin\\Documents\\GitHub\\NDWebApp\\NDWebApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
