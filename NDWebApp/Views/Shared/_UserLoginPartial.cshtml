@@ -1,0 +1,29 @@
+﻿@model NDWebApp.Models.LoginModel
+
+<div id="UserLogin">
+    <form asp-controller="UserAuth" asp-action="Login" class="form-signin">
+        <input type="hidden" asp-for="LoginInvalid" />
+        <img class="mb-4 imglogo" src="img/logo.svg">
+        <h1 class="h3 mb-3 font-weight-normal">Vennligst logg inn</h1>
+
+        <label asp-for="Email" class="sr-only">E-post</label>
+        <input asp-for="Email" class="form-control" autofocus>
+
+        <label asp-for="Password" class="sr-only">Passord</label>
+        <input asp-for="Password" class="form-control">
+
+        <div class="checkbox mb-3">
+            <label>
+                <input asp-for="RememberMe" type="checkbox"> Remember me
+            </label>
+        </div>
+        <div class="loggedout abovebtn">You have been successfully logged out.</div>
+        <div class="loggedout abovebtn">You have been timed out.</div>
+        <button class="btn btn-lg btn-primary btn-block" name="login" value="login">Logg inn</button>
+
+        <span asp-validation-for="Email" class="text-danger"></span>
+        <span asp-validation-for="Password" class="text-danger"></span>
+
+        <p class="mt-5 mb-3">&copy; some copyright 2014-2077</p>
+    </form>
+</div>

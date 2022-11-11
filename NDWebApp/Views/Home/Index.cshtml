@@ -2,7 +2,31 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1>Velkommen</h1>
+<h5>Antall forslag du har sendt inn: 7</h5>
+
+<div>
+    <canvas id="pieChart" style="width: 500px; margin-top: 50px;”"></canvas>
 </div>
+
+<!-- For Pie Chart-->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3"></script>
+
+<script>
+    //pie
+    var ctxP = document.getElementById("pieChart").getContext('2d');
+    var myPieChart = new Chart(ctxP, {
+        type: 'pie',
+        data: {
+            labels: ["Godkjente Forslag", "Avslåtte Forslag", "Forslag Under Vurdering"],
+            datasets: [{
+                data: [2, 1, 4,],
+                backgroundColor: ["#008000", "#F7464A", "#4D5360"],
+                hoverBackgroundColor: ["#228B22", "#FF5A5E", "#616774"]
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+</script>
