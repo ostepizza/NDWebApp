@@ -1,0 +1,156 @@
+@{
+    ViewBag.Title = "Min Konto";
+}
+
+<style>
+
+    .profile-img img{
+        width: 70%;
+        height: 100%;
+    }
+    .profile-img .file {
+        position: relative;
+        overflow: hidden;
+        margin-top: -20%;
+        width: 70%;
+        border: none;
+        border-radius: 0;
+        font-size: 15px;
+        background: #212529b8;
+    }
+    .profile-img .file input {
+        position: absolute;
+        opacity: 0;
+        right: 0;
+        top: 0;
+    }
+
+
+
+
+</style>
+                  
+<div class="container emp-profile">
+                        <form method="post">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="profile-img" style="margin-top: 80px;">
+                                        <img src="https://avatars.akamai.steamstatic.com/53b122596546700879f9aa226b1cbb57d0ec7bff_full.jpg" alt=""/>
+                                        <div class="file btn btn-lg btn-primary">
+                                            Endre Profilbilde
+                                            <input type="file" name="file"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="profile-head" style="margin-top: 80px;">
+                                        <h2>
+                                            Mister Garf
+                                        </h2>
+                                        <h6>
+                                            IKT-ansvarlig
+                                        </h6>
+                                        <ul class="nav nav-tabs" id="myTab" role="tablist" >
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Kontaktinfo</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Forslag</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <fieldset class="clearfix">
+
+                                        <div>
+                                            <label for="username">Nytt passord:</label><br>
+                                            <input type="password" id="username" name="username" style="width: fit-content;">
+                                        </div>
+
+                                        <div>
+                                            <label for="pass">Bekreft passord:</label><br>
+                                            <input type="password" id="pass" name="password" style="width: fit-content;">
+                                        </div><br>
+
+                                        <input type="submit" value="Endre passord" style="width: fit-content;">
+
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="tab-content profile-tab" id="myTabContent">
+                                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Ansatt-ID</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>001</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Navn</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>Mister Garf</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Email</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>lasagner@gmail.com</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Telefon-nummer</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>+47 97878582</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Avdeling</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>IKT</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Team</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>Team-01</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Pågående forslag</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>2</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Alle forslag</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>7</p>
+                                                </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+    </div>

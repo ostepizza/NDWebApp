@@ -1,0 +1,8 @@
+@{
+    ViewBag.Title = "Teamoversikt";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Liste over teams</h1>
+<a asp-controller="Teams" asp-action="Add">Legg til</a>
+Teamnavn - Leder - Se detaljer
+Bofa - Jeff - <a asp-controller="Teams" asp-action="Detailed">Se detaljer</a>

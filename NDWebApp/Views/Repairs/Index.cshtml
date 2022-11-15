@@ -1,0 +1,49 @@
+@{
+    ViewBag.Title = "Reparasjoner";
+}
+
+<link rel="stylesheet" href="~/css/table.css" asp-append-version="true">
+
+<h1 class="h1">Reparasjoner</h1>
+
+    <div class="outer-wrapper">
+    <div class="table-wrapper">
+    <table>
+        <thead>
+            <th>Tittel</th>
+            <th>Deadline</th>
+            <th>Status</th>
+            <th>Ansvarlig</th>
+            <th>Sendt inn av</th>
+            <th>Se detaljer</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1 time til Ørsta Kaffereparasjon</td>
+                <td>01.01.23</td>
+                <td>Godkjent</td>
+                <td>Grim Arne</td>
+                <td>Petter</td>
+                <td><a asp-controller="Repairs" asp-action="Detailed">Se detajler</a></td>
+            </tr>
+            <tr>
+                <td>1 time til Ørsta Kaffereparasjon</td>
+                <td>01.01.23</td>
+                <td>Godkjent</td>
+                <td>Grim Arne</td>
+                <td>Petter</td>
+                <td><a asp-controller="Repairs" asp-action="Detailed">Se detajler</a></td>
+            </tr>
+            <tr>
+                <td>1 time til Ørsta Kaffereparasjon</td>
+                <td>01.01.23</td>
+                <td>Godkjent</td>
+                <td>Grim Arne</td>
+                <td>Petter</td>
+                <td><a asp-controller="Repairs" asp-action="Detailed">Se detajler</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+<a asp-controller="Repairs" asp-action="Add" class="button">Legg til ny reparasjon</a>

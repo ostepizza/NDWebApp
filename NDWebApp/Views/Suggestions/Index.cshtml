@@ -1,0 +1,49 @@
+@{
+    ViewBag.Title = "Forslag";
+}
+
+<link rel="stylesheet" href="~/css/table.css" asp-append-version="true">
+
+    <h1 class="h1">Forslag</h1>
+
+    <div class="outer-wrapper">
+    <div class="table-wrapper">
+    <table>
+        <thead>
+            <th>Tittel</th>
+            <th>Deadline</th>
+            <th>Status</th>
+            <th>Ansvarlig</th>
+            <th>Sendt inn av</th>
+            <th>Se detaljer</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1 time til Ørsta Rådhus</td>
+                <td>01.01.23</td>
+                <td>Godkjent</td>
+                <td>Prell Arne</td>
+                <td>Jens Rosamann</td>
+                <td><a asp-controller="Suggestions" asp-action="Detailed">Se detajler</a></td>
+            </tr>
+            <tr>
+                <td>1 time til Ørsta Rådhus</td>
+                <td>01.01.23</td>
+                <td>Godkjent</td>
+                <td>Prell Arne</td>
+                <td>Jens Rosamann</td>
+                <td><a asp-controller="Suggestions" asp-action="Detailed">Se detajler</a></td>
+            </tr>
+            <tr>
+                <td>1 time til Ørsta Rådhus</td>
+                <td>01.01.23</td>
+                <td>Godkjent</td>
+                <td>Prell Arne</td>
+                <td>Jens Rosamann</td>
+                <td><a asp-controller="Suggestions" asp-action="Detailed">Se detajler</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+<a asp-controller="Suggestions" asp-action="Add" class="button">Legg til nytt forslag</a>
