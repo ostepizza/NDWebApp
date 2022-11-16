@@ -10,7 +10,7 @@ namespace NDWebApp.Areas.Identity.Data;
 public class NDWebAppUser : IdentityUser
 {
     public int empNr { get; set; }
-    public string empFname { get; set; }
-    public string empLname { get; set; }
+    public string empFname { get; set; } = "";
+    public string empLname { get; set; } = "";
 }
 

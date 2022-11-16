@@ -2,6 +2,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NDWebApp.Data;
 using NDWebApp.Areas.Identity.Data;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using static System.Formats.Asn1.AsnWriter;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("NDWebAppContextConnection") ?? throw new InvalidOperationException("Connection string 'NDWebAppContextConnection' not found.");
@@ -19,6 +23,7 @@ builder.Services.AddDbContext<NDWebAppContext>(options =>
     options.UseMySql(connectionString, new MySqlServerVersion(new Version(10, 4, 25))));
 
 builder.Services.AddDefaultIdentity<NDWebAppUser>(options => options.SignIn.RequireConfirmedAccount = reqConfirmedAccount)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<NDWebAppContext>();
 
 // Add services to the container.
@@ -36,6 +41,10 @@ builder.Services.Configure<IdentityOptions>(options =>
 });
 
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
+    await DbInitializer.Initialize(scope.ServiceProvider);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
