@@ -6,7 +6,7 @@ CREATE TABLE `AspNetRoles` (
     `Name` varchar(256) CHARACTER SET utf8mb4 NULL,
     `NormalizedName` varchar(256) CHARACTER SET utf8mb4 NULL,
     `ConcurrencyStamp` longtext CHARACTER SET utf8mb4 NULL,
-    CONSTRAINT `PK_AspNetRoles` PRIMARY KEY (`Id`)
+    PRIMARY KEY (`Id`)
 ) CHARACTER SET=utf8mb4;
 
 CREATE TABLE `AspNetUsers` (
@@ -25,7 +25,7 @@ CREATE TABLE `AspNetUsers` (
     `LockoutEnd` datetime(6) NULL,
     `LockoutEnabled` tinyint(1) NOT NULL,
     `AccessFailedCount` int NOT NULL,
-    CONSTRAINT `PK_AspNetUsers` PRIMARY KEY (`Id`)
+    PRIMARY KEY (`Id`)
 ) CHARACTER SET=utf8mb4;
 
 CREATE TABLE `AspNetRoleClaims` (
@@ -33,7 +33,7 @@ CREATE TABLE `AspNetRoleClaims` (
     `RoleId` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
     `ClaimType` longtext CHARACTER SET utf8mb4 NULL,
     `ClaimValue` longtext CHARACTER SET utf8mb4 NULL,
-    CONSTRAINT `PK_AspNetRoleClaims` PRIMARY KEY (`Id`),
+    PRIMARY KEY (`Id`),
     CONSTRAINT `FK_AspNetRoleClaims_AspNetRoles_RoleId` FOREIGN KEY (`RoleId`) REFERENCES `AspNetRoles` (`Id`) ON DELETE CASCADE
 ) CHARACTER SET=utf8mb4;
 
@@ -43,7 +43,7 @@ CREATE TABLE `AspNetUserClaims` (
     `UserId` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
     `ClaimType` longtext CHARACTER SET utf8mb4 NULL,
     `ClaimValue` longtext CHARACTER SET utf8mb4 NULL,
-    CONSTRAINT `PK_AspNetUserClaims` PRIMARY KEY (`Id`),
+    PRIMARY KEY (`Id`),
     CONSTRAINT `FK_AspNetUserClaims_AspNetUsers_UserId` FOREIGN KEY (`UserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE
 ) CHARACTER SET=utf8mb4;
 
@@ -52,14 +52,14 @@ CREATE TABLE `AspNetUserLogins` (
     `ProviderKey` varchar(128) CHARACTER SET utf8mb4 NOT NULL,
     `ProviderDisplayName` longtext CHARACTER SET utf8mb4 NULL,
     `UserId` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
-    CONSTRAINT `PK_AspNetUserLogins` PRIMARY KEY (`LoginProvider`, `ProviderKey`),
+    PRIMARY KEY (`LoginProvider`, `ProviderKey`),
     CONSTRAINT `FK_AspNetUserLogins_AspNetUsers_UserId` FOREIGN KEY (`UserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE
 ) CHARACTER SET=utf8mb4;
 
 CREATE TABLE `AspNetUserRoles` (
     `UserId` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
     `RoleId` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
-    CONSTRAINT `PK_AspNetUserRoles` PRIMARY KEY (`UserId`, `RoleId`),
+    PRIMARY KEY (`UserId`, `RoleId`),
     CONSTRAINT `FK_AspNetUserRoles_AspNetRoles_RoleId` FOREIGN KEY (`RoleId`) REFERENCES `AspNetRoles` (`Id`) ON DELETE CASCADE,
     CONSTRAINT `FK_AspNetUserRoles_AspNetUsers_UserId` FOREIGN KEY (`UserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE
 ) CHARACTER SET=utf8mb4;
@@ -69,7 +69,7 @@ CREATE TABLE `AspNetUserTokens` (
     `LoginProvider` varchar(128) CHARACTER SET utf8mb4 NOT NULL,
     `Name` varchar(128) CHARACTER SET utf8mb4 NOT NULL,
     `Value` longtext CHARACTER SET utf8mb4 NULL,
-    CONSTRAINT `PK_AspNetUserTokens` PRIMARY KEY (`UserId`, `LoginProvider`, `Name`),
+    PRIMARY KEY (`UserId`, `LoginProvider`, `Name`),
     CONSTRAINT `FK_AspNetUserTokens_AspNetUsers_UserId` FOREIGN KEY (`UserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE
 ) CHARACTER SET=utf8mb4;
 
@@ -100,7 +100,7 @@ CREATE TABLE `Team` (
     `TeamId` int NOT NULL AUTO_INCREMENT,
     `TeamName` varchar(256) CHARACTER SET utf8mb4 NOT NULL,
     `LeaderUserId` varchar(255) CHARACTER SET utf8mb4 NULL,
-    CONSTRAINT `PK_Team` PRIMARY KEY (`TeamId`),
+    PRIMARY KEY (`TeamId`),
     CONSTRAINT `FK_LeaderUserId` FOREIGN KEY (`LeaderUserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE
 ) CHARACTER SET=utf8mb4;
 
@@ -110,7 +110,7 @@ ALTER TABLE `AspNetUsers` ADD `TeamId` int NULL;
 CREATE TABLE `Status` (
     `StatusId` int NOT NULL AUTO_INCREMENT,
     `StatusTitle` varchar(256) CHARACTER SET utf8mb4 NOT NULL,
-    CONSTRAINT `PK_Status` PRIMARY KEY (`StatusId`)
+    PRIMARY KEY (`StatusId`)
 ) CHARACTER SET=utf8mb4;
 
 CREATE TABLE `Suggestion` (
@@ -123,7 +123,7 @@ CREATE TABLE `Suggestion` (
     `ResponsibleUserId` varchar(255) CHARACTER SET utf8mb4 NULL,
     `TeamId` int NULL,
     `StatusId` int NULL,
-    CONSTRAINT `PK_Suggestion` PRIMARY KEY (`SuggestionId`),
+    PRIMARY KEY (`SuggestionId`),
     CONSTRAINT `FK_SuggestedUserId` FOREIGN KEY (`SuggestedUserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE,
     CONSTRAINT `FK_ResponsibleUserId` FOREIGN KEY (`ResponsibleUserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE,
     CONSTRAINT `FK_SuggestionStatus` FOREIGN KEY (`StatusId`) REFERENCES `Status` (`StatusId`) ON DELETE CASCADE,
@@ -139,7 +139,7 @@ CREATE TABLE `Repairs` (
     `UserId` varchar(255) CHARACTER SET utf8mb4 NULL,
     `TeamId` int NULL,
     `StatusId` int NULL,
-    CONSTRAINT `PK_Repairs` PRIMARY KEY (`RepairsId`),
+    PRIMARY KEY (`RepairsId`),
     CONSTRAINT `FK_RepairsUserId` FOREIGN KEY (`UserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE,
     CONSTRAINT `FK_RepairStatus` FOREIGN KEY (`StatusId`) REFERENCES `Status` (`StatusId`) ON DELETE CASCADE,
     CONSTRAINT `FK_RepairTeam` FOREIGN KEY (`TeamId`) REFERENCES `Team` (`TeamId`) ON DELETE CASCADE
@@ -149,182 +149,182 @@ CREATE TABLE `Repairs` (
 -- Users are created using a model in the Identity framework. These are just for testing purposes for the other tables:
 INSERT INTO AspNetUsers(Id, UserName, NormalizedUserName, Email, NormalizedEmail, EmailConfirmed, PasswordHash, SecurityStamp, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, empFname, empLname)
 VALUES(
-"88c215e4-0410-4fba-ac81-b94343ec2010" -- userid
-, "admin@admin.net" -- username
-, "ADMIN@ADMIN:NET" -- normalized Username
-, "admin@admin.net" -- email
-, "ADMIN@ADMIN:NET" -- normalized Email
-, 1 -- email confirmed
-, "AQAAAAEAACcQAAAAEEw7yvYYvDvjn7CyvoDpnP1Dsr/p+61upoGSdjJE2jwbYiTXPL81iSzehKAdt6a5wg==" -- password Hash
-, "randomstamp" -- security stamp
-, 0 -- phone confirmed
-, 0 -- 2fa enabled
-, 0 -- lockout enabled
-, 0 -- access failed count
-, "Admin" -- first name
-, "" -- last name
+    "88c215e4-0410-4fba-ac81-b94343ec2010",
+    "admin@admin.net",
+    "ADMIN@ADMIN.NET",
+    "admin@admin.net",
+    "ADMIN@ADMIN.NET",
+    1,
+    "AQAAAAEAACcQAAAAEEw7yvYYvDvjn7CyvoDpnP1Dsr/p+61upoGSdjJE2jwbYiTXPL81iSzehKAdt6a5wg==",
+    "randomstamp",
+    0,
+    0,
+    0,
+    0,
+    "Admin",
+    ""
 );
 
 INSERT INTO AspNetUsers(Id, UserName, NormalizedUserName, Email, NormalizedEmail, EmailConfirmed, PasswordHash, SecurityStamp, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, empFname, empLname)
 VALUES(
-"af04f53d-7a94-409e-b72e-8d65fb6f9774" -- userid
-, "user1@users.net" -- username
-, "USER1@USERS:NET" -- normalized Username
-, "user1@users.net" -- email
-, "USER1@USERS:NET" -- normalized Email
-, 1 -- email confirmed
-, "AQAAAAEAACcQAAAAEEw7yvYYvDvjn7CyvoDpnP1Dsr/p+61upoGSdjJE2jwbYiTXPL81iSzehKAdt6a5wg==" -- password Hash
-, "randomstamp" -- security stamp
-, 0 -- phone confirmed
-, 0 -- 2fa enabled
-, 0 -- lockout enabled
-, 0 -- access failed count
-, "User" -- first name
-, "One" -- last name
+    "af04f53d-7a94-409e-b72e-8d65fb6f9774",
+    "user1@users.net",
+    "USER1@USERS.NET",
+    "user1@users.net",
+    "USER1@USERS.NET",
+    1,
+    "AQAAAAEAACcQAAAAEEw7yvYYvDvjn7CyvoDpnP1Dsr/p+61upoGSdjJE2jwbYiTXPL81iSzehKAdt6a5wg==",
+    "randomstamp",
+    0,
+    0,
+    0,
+    0,
+    "User",
+    "One"
 );
 
 INSERT INTO AspNetUsers(Id, UserName, NormalizedUserName, Email, NormalizedEmail, EmailConfirmed, PasswordHash, SecurityStamp, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, empFname, empLname)
 VALUES(
-"163f3a9a-5566-4737-b5f0-105a8f62fa7d" -- userid
-, "user2@users.net" -- username
-, "USER2@USERS:NET" -- normalized Username
-, "user2@users.net" -- email
-, "USER2@USERS:NET" -- normalized Email
-, 1 -- email confirmed
-, "AQAAAAEAACcQAAAAEEw7yvYYvDvjn7CyvoDpnP1Dsr/p+61upoGSdjJE2jwbYiTXPL81iSzehKAdt6a5wg==" -- password Hash
-, "randomstamp" -- security stamp
-, 0 -- phone confirmed
-, 0 -- 2fa enabled
-, 0 -- lockout enabled
-, 0 -- access failed count
-, "Duser" -- first name
-, "Two" -- last name
+    "163f3a9a-5566-4737-b5f0-105a8f62fa7d",
+    "user2@users.net",
+    "USER2@USERS.NET",
+    "user2@users.net",
+    "USER2@USERS.NET",
+    1,
+    "AQAAAAEAACcQAAAAEEw7yvYYvDvjn7CyvoDpnP1Dsr/p+61upoGSdjJE2jwbYiTXPL81iSzehKAdt6a5wg==",
+    "randomstamp",
+    0,
+    0,
+    0,
+    0,
+    "Duser",
+    "Two"
 );
 
 INSERT INTO AspNetUsers(Id, UserName, NormalizedUserName, Email, NormalizedEmail, EmailConfirmed, PasswordHash, SecurityStamp, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, empFname, empLname)
 VALUES(
-"60bbe9f7-d3ab-444d-9f65-a36a411773b4" -- userid
-, "user3@users.net" -- username
-, "USER3@USERS:NET" -- normalized Username
-, "user3@users.net" -- email
-, "USER3@USERS:NET" -- normalized Email
-, 1 -- email confirmed
-, "AQAAAAEAACcQAAAAEEw7yvYYvDvjn7CyvoDpnP1Dsr/p+61upoGSdjJE2jwbYiTXPL81iSzehKAdt6a5wg==" -- password Hash
-, "randomstamp" -- security stamp
-, 0 -- phone confirmed
-, 0 -- 2fa enabled
-, 0 -- lockout enabled
-, 0 -- access failed count
-, "Fuser" -- first name
-, "Three" -- last name
+    "60bbe9f7-d3ab-444d-9f65-a36a411773b4",
+    "user3@users.net",
+    "USER3@USERS.NET",
+    "user3@users.net",
+    "USER3@USERS.NET",
+    1,
+    "AQAAAAEAACcQAAAAEEw7yvYYvDvjn7CyvoDpnP1Dsr/p+61upoGSdjJE2jwbYiTXPL81iSzehKAdt6a5wg==",
+    "randomstamp",
+    0,
+    0,
+    0,
+    0,
+    "Fuser",
+    "Three"
 );
 
 INSERT INTO AspNetUsers(Id, UserName, NormalizedUserName, Email, NormalizedEmail, EmailConfirmed, PasswordHash, SecurityStamp, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, empFname, empLname)
 VALUES(
-"de1d72ab-8c3f-484c-b060-f2e8345464a8" -- userid
-, "user4@users.net" -- username
-, "USER4@USERS:NET" -- normalized Username
-, "user4@users.net" -- email
-, "USER4@USERS:NET" -- normalized Email
-, 1 -- email confirmed
-, "AQAAAAEAACcQAAAAEEw7yvYYvDvjn7CyvoDpnP1Dsr/p+61upoGSdjJE2jwbYiTXPL81iSzehKAdt6a5wg==" -- password Hash
-, "randomstamp" -- security stamp
-, 0 -- phone confirmed
-, 0 -- 2fa enabled
-, 0 -- lockout enabled
-, 0 -- access failed count
-, "Kuser" -- first name
-, "Four" -- last name
+    "de1d72ab-8c3f-484c-b060-f2e8345464a8",
+    "user4@users.net",
+    "USER4@USERS.NET",
+    "user4@users.net",
+    "USER4@USERS.NET",
+    1,
+    "AQAAAAEAACcQAAAAEEw7yvYYvDvjn7CyvoDpnP1Dsr/p+61upoGSdjJE2jwbYiTXPL81iSzehKAdt6a5wg==",
+    "randomstamp",
+    0,
+    0,
+    0,
+    0,
+    "Kuser",
+    "Four"
 );
 
 INSERT INTO AspNetUsers(Id, UserName, NormalizedUserName, Email, NormalizedEmail, EmailConfirmed, PasswordHash, SecurityStamp, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, empFname, empLname)
 VALUES(
-"a6c61e62-cf37-4421-bbec-f496b1724ab6" -- userid
-, "user5@users.net" -- username
-, "USER5@USERS:NET" -- normalized Username
-, "user5@users.net" -- email
-, "USER5@USERS:NET" -- normalized Email
-, 1 -- email confirmed
-, "AQAAAAEAACcQAAAAEEw7yvYYvDvjn7CyvoDpnP1Dsr/p+61upoGSdjJE2jwbYiTXPL81iSzehKAdt6a5wg==" -- password Hash
-, "randomstamp" -- security stamp
-, 0 -- phone confirmed
-, 0 -- 2fa enabled
-, 0 -- lockout enabled
-, 0 -- access failed count
-, "Muser" -- first name
-, "Five" -- last name
+    "a6c61e62-cf37-4421-bbec-f496b1724ab6",
+    "user5@users.net",
+    "USER5@USERS.NET",
+    "user5@users.net",
+    "USER5@USERS.NET",
+    1,
+    "AQAAAAEAACcQAAAAEEw7yvYYvDvjn7CyvoDpnP1Dsr/p+61upoGSdjJE2jwbYiTXPL81iSzehKAdt6a5wg==",
+    "randomstamp",
+    0,
+    0,
+    0,
+    0,
+    "Muser",
+    "Five"
 );
 
 INSERT INTO AspNetUsers(Id, UserName, NormalizedUserName, Email, NormalizedEmail, EmailConfirmed, PasswordHash, SecurityStamp, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, empFname, empLname)
 VALUES(
-"6e0db95f-a9d8-4b4d-808c-aaebe769b56c" -- userid
-, "user6@users.net" -- username
-, "USER6@USERS:NET" -- normalized Username
-, "user6@users.net" -- email
-, "USER6@USERS:NET" -- normalized Email
-, 1 -- email confirmed
-, "AQAAAAEAACcQAAAAEEw7yvYYvDvjn7CyvoDpnP1Dsr/p+61upoGSdjJE2jwbYiTXPL81iSzehKAdt6a5wg==" -- password Hash
-, "randomstamp" -- security stamp
-, 0 -- phone confirmed
-, 0 -- 2fa enabled
-, 0 -- lockout enabled
-, 0 -- access failed count
-, "Suser" -- first name
-, "Six" -- last name
+    "6e0db95f-a9d8-4b4d-808c-aaebe769b56c",
+    "user6@users.net",
+    "USER6@USERS.NET",
+    "user6@users.net",
+    "USER6@USERS.NET",
+    1,
+    "AQAAAAEAACcQAAAAEEw7yvYYvDvjn7CyvoDpnP1Dsr/p+61upoGSdjJE2jwbYiTXPL81iSzehKAdt6a5wg==",
+    "randomstamp",
+    0,
+    0,
+    0,
+    0,
+    "Suser",
+    "Six"
 );
 
 INSERT INTO AspNetUsers(Id, UserName, NormalizedUserName, Email, NormalizedEmail, EmailConfirmed, PasswordHash, SecurityStamp, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, empFname, empLname)
 VALUES(
-"e31400a0-f278-4603-87ed-f10dc1f60fb8" -- userid
-, "user7@users.net" -- username
-, "USER7@USERS:NET" -- normalized Username
-, "user7@users.net" -- email
-, "USER7@USERS:NET" -- normalized Email
-, 1 -- email confirmed
-, "AQAAAAEAACcQAAAAEEw7yvYYvDvjn7CyvoDpnP1Dsr/p+61upoGSdjJE2jwbYiTXPL81iSzehKAdt6a5wg==" -- password Hash
-, "randomstamp" -- security stamp
-, 0 -- phone confirmed
-, 0 -- 2fa enabled
-, 0 -- lockout enabled
-, 0 -- access failed count
-, "Buser" -- first name
-, "Seven" -- last name
+    "e31400a0-f278-4603-87ed-f10dc1f60fb8",
+    "user7@users.net",
+    "USER7@USERS.NET",
+    "user7@users.net",
+    "USER7@USERS.NET",
+    1,
+    "AQAAAAEAACcQAAAAEEw7yvYYvDvjn7CyvoDpnP1Dsr/p+61upoGSdjJE2jwbYiTXPL81iSzehKAdt6a5wg==",
+    "randomstamp",
+    0,
+    0,
+    0,
+    0,
+    "Buser",
+    "Seven"
 );
 
 INSERT INTO AspNetUsers(Id, UserName, NormalizedUserName, Email, NormalizedEmail, EmailConfirmed, PasswordHash, SecurityStamp, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, empFname, empLname)
 VALUES(
-"6b1d879f-1e12-491e-9a80-488a04d1c959" -- userid
-, "user8@users.net" -- username
-, "USER8@USERS:NET" -- normalized Username
-, "user8@users.net" -- email
-, "USER8@USERS:NET" -- normalized Email
-, 1 -- email confirmed
-, "AQAAAAEAACcQAAAAEEw7yvYYvDvjn7CyvoDpnP1Dsr/p+61upoGSdjJE2jwbYiTXPL81iSzehKAdt6a5wg==" -- password Hash
-, "randomstamp" -- security stamp
-, 0 -- phone confirmed
-, 0 -- 2fa enabled
-, 0 -- lockout enabled
-, 0 -- access failed count
-, "Pusur" -- first name
-, "Eight" -- last name
+    "6b1d879f-1e12-491e-9a80-488a04d1c959",
+    "user8@users.net",
+    "USER8@USERS.NET",
+    "user8@users.net",
+    "USER8@USERS.NET",
+    1,
+    "AQAAAAEAACcQAAAAEEw7yvYYvDvjn7CyvoDpnP1Dsr/p+61upoGSdjJE2jwbYiTXPL81iSzehKAdt6a5wg==",
+    "randomstamp",
+    0,
+    0,
+    0,
+    0,
+    "Pusur",
+    "Eight"
 );
 
 INSERT INTO AspNetUsers(Id, UserName, NormalizedUserName, Email, NormalizedEmail, EmailConfirmed, PasswordHash, SecurityStamp, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, empFname, empLname)
 VALUES(
-"cdfc0707-97ae-465a-9a8b-b65b3678d41b"
-, "user9@users.net"
-, "USER9@USERS:NET"
-, "user9@users.net"
-, "USER9@USERS:NET"
-, 1 -- email confirmed
-, "AQAAAAEAACcQAAAAEEw7yvYYvDvjn7CyvoDpnP1Dsr/p+61upoGSdjJE2jwbYiTXPL81iSzehKAdt6a5wg==" -- password Hash
-, "randomstamp" -- security stamp
-, 0 -- phone confirmed
-, 0 -- 2fa enabled
-, 0 -- lockout enabled
-, 0 -- access failed count
-, "Vuser"
-, "Nine"
+    "cdfc0707-97ae-465a-9a8b-b65b3678d41b",
+    "user9@users.net",
+    "USER9@USERS.NET",
+    "user9@users.net",
+    "USER9@USERS.NET",
+    1,
+    "AQAAAAEAACcQAAAAEEw7yvYYvDvjn7CyvoDpnP1Dsr/p+61upoGSdjJE2jwbYiTXPL81iSzehKAdt6a5wg==",
+    "randomstamp",
+    0,
+    0,
+    0,
+    0,
+    "Vuser",
+    "Nine"
 );
 
 -- Adding teams
@@ -415,11 +415,11 @@ VALUES (10, "Kan det fikses?", "Klart det kan!", '2023-01-15', NULL, "60bbe9f7-d
 
 -- Testing the data
 -- Listing the 5 first rows of the 5 most important tables, sorted:
-SELECT * FROM `AspNetUsers` ORDER BY Id ASC LIMIT 5;
-SELECT * FROM `Team` ORDER BY TeamId ASC LIMIT 5;
-SELECT * FROM `Suggestion` ORDER BY SuggestionId ASC LIMIT 5;
-SELECT * FROM `Repairs` ORDER BY RepairsId ASC LIMIT 5;
-SELECT * FROM `Status` ORDER BY StatusId ASC LIMIT 5;
+SELECT * FROM `AspNetUsers` ORDER BY `Id` ASC LIMIT 5;
+SELECT * FROM `Team` ORDER BY `TeamId` ASC LIMIT 5;
+SELECT * FROM `Suggestion` ORDER BY `SuggestionId` ASC LIMIT 5;
+SELECT * FROM `Repairs` ORDER BY `RepairsId` ASC LIMIT 5;
+SELECT * FROM `Status` ORDER BY `StatusId` ASC LIMIT 5;
 
 -- List all suggestions with their suggesting employee and responsible employee
 SELECT `SuggestionTitle`, `SuggestedUserId`, `ResponsibleUserId` FROM `Suggestion`;
@@ -431,19 +431,19 @@ SELECT `Id`, `empFname`, `empLname` FROM `AspNetUsers` WHERE `Id` NOT IN (SELECT
 SELECT u.`Id`, u.`EmpFname`, u.`empLname`, (SELECT COUNT(*) FROM `Suggestion` WHERE `SuggestedUserId` = u.`Id`) SuggestionsAdded FROM `AspNetUsers` u ORDER BY SuggestionsAdded DESC LIMIT 3;
 
 -- List all the suggestions by the employee with the highest number of suggestions submitted, sorted by date/time
-SELECT u.empFname, u.empLname, s.SuggestionTitle, s.SuggestionDescription, s.SuggestionDeadline
-FROM AspNetUsers AS u INNER JOIN `Suggestion` AS s ON s.SuggestedUserId=u.Id
-WHERE u.Id=(SELECT SuggestedUserId FROM Suggestion GROUP BY SuggestedUserId ORDER BY COUNT(SuggestedUserId) DESC LIMIT 1)
+SELECT u.`empFname`, u.`empLname`, s.`SuggestionTitle`, s.`SuggestionDescription`, s.`SuggestionDeadline`
+FROM `AspNetUsers` AS u INNER JOIN `Suggestion` AS s ON s.`SuggestedUserId`=u.`Id`
+WHERE u.`Id`=(SELECT `SuggestedUserId` FROM `Suggestion` GROUP BY `SuggestedUserId` ORDER BY COUNT(`SuggestedUserId`) DESC LIMIT 1)
 ORDER BY s.SuggestionDeadline ASC;
 
 -- List all suggestions that are in the "ACT" state at the moment
-SELECT su.SuggestionTitle, st.StatusTitle
-FROM Suggestion AS su INNER JOIN `Status` AS st
-WHERE st.StatusId = 6 AND st.StatusId = su.StatusId
+SELECT su.`SuggestionTitle`, st.`StatusTitle`
+FROM `Suggestion` AS su INNER JOIN `Status` AS st
+WHERE st.`StatusId` = 6 AND st.`StatusId` = su.`StatusId`;
 
 -- List all teams with total number of suggestions handled per team, ordered by number of suggestions, the team with most suggestions first
-SELECT t.TeamID, t.TeamName, count(s.TeamID) TotalSuggestionsAdded
-FROM Team t
-LEFT JOIN Suggestion s ON t.TeamId = s.TeamId
-GROUP BY t.TeamID, t.TeamName
+SELECT t.`TeamID`, t.`TeamName`, count(s.`TeamID`) TotalSuggestionsAdded
+FROM `Team` t
+LEFT JOIN `Suggestion` s ON t.`TeamId` = s.`TeamId`
+GROUP BY t.`TeamID`, t.`TeamName`
 ORDER BY TotalSuggestionsAdded DESC;
