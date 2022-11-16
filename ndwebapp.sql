@@ -197,7 +197,7 @@ VALUES(
 , 0 -- 2fa enabled
 , 0 -- lockout enabled
 , 0 -- access failed count
-, "User" -- first name
+, "Duser" -- first name
 , "Two" -- last name
 );
 
@@ -215,7 +215,7 @@ VALUES(
 , 0 -- 2fa enabled
 , 0 -- lockout enabled
 , 0 -- access failed count
-, "User" -- first name
+, "Fuser" -- first name
 , "Three" -- last name
 );
 
@@ -233,13 +233,13 @@ VALUES(
 , 0 -- 2fa enabled
 , 0 -- lockout enabled
 , 0 -- access failed count
-, "User" -- first name
+, "Kuser" -- first name
 , "Four" -- last name
 );
 
 INSERT INTO AspNetUsers(Id, UserName, NormalizedUserName, Email, NormalizedEmail, EmailConfirmed, PasswordHash, SecurityStamp, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, empFname, empLname)
 VALUES(
-"a6c61e62-cf37-4421-bbec-f496b1724ab6`" -- userid
+"a6c61e62-cf37-4421-bbec-f496b1724ab6" -- userid
 , "user5@users.net" -- username
 , "USER5@USERS:NET" -- normalized Username
 , "user5@users.net" -- email
@@ -251,7 +251,7 @@ VALUES(
 , 0 -- 2fa enabled
 , 0 -- lockout enabled
 , 0 -- access failed count
-, "User" -- first name
+, "Muser" -- first name
 , "Five" -- last name
 );
 
@@ -269,8 +269,8 @@ VALUES(
 , 0 -- 2fa enabled
 , 0 -- lockout enabled
 , 0 -- access failed count
-, "`User`" -- first name
-, "`Six`" -- last name
+, "Suser" -- first name
+, "Six" -- last name
 );
 
 INSERT INTO AspNetUsers(Id, UserName, NormalizedUserName, Email, NormalizedEmail, EmailConfirmed, PasswordHash, SecurityStamp, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, empFname, empLname)
@@ -287,7 +287,7 @@ VALUES(
 , 0 -- 2fa enabled
 , 0 -- lockout enabled
 , 0 -- access failed count
-, "User" -- first name
+, "Buser" -- first name
 , "Seven" -- last name
 );
 
@@ -305,8 +305,8 @@ VALUES(
 , 0 -- 2fa enabled
 , 0 -- lockout enabled
 , 0 -- access failed count
-, "`User`" -- first name
-, "`Eight`" -- last name
+, "Pusur" -- first name
+, "Eight" -- last name
 );
 
 INSERT INTO AspNetUsers(Id, UserName, NormalizedUserName, Email, NormalizedEmail, EmailConfirmed, PasswordHash, SecurityStamp, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, empFname, empLname)
@@ -323,7 +323,7 @@ VALUES(
 , 0 -- 2fa enabled
 , 0 -- lockout enabled
 , 0 -- access failed count
-, "User"
+, "Vuser"
 , "Nine"
 );
 
@@ -353,62 +353,97 @@ INSERT INTO `Status` (`StatusId`, `StatusTitle`) VALUES (10, "Ferdig");
 
 -- Adding suggestions
 INSERT INTO `Suggestion` (`SuggestionId`, `SuggestionTitle`, `SuggestionDescription`, `SuggestionDeadline`, `SuggestionEnddate`, `SuggestedUserId`, `ResponsibleUserId`, `TeamId`, `StatusId`)
-VALUES (1, "Tittel på forslag nr. 1", "Dette er en beskrivelse", 2023-01-15, NULL, "af04f53d-7a94-409e-b72e-8d65fb6f9774", "88c215e4-0410-4fba-ac81-b94343ec2010", 4, 2);
+VALUES (1, "Tittel på forslag nr. 1", "Dette er en beskrivelse", '2023-01-15', NULL, "af04f53d-7a94-409e-b72e-8d65fb6f9774", "88c215e4-0410-4fba-ac81-b94343ec2010", 4, 6);
 
 INSERT INTO `Suggestion` (`SuggestionId`, `SuggestionTitle`, `SuggestionDescription`, `SuggestionDeadline`, `SuggestionEnddate`, `SuggestedUserId`, `ResponsibleUserId`, `TeamId`, `StatusId`)
-VALUES (2, "Tittel på forslag nr. 1", "Dette er en beskrivelse", 2023-01-15, NULL, "af04f53d-7a94-409e-b72e-8d65fb6f9774", "88c215e4-0410-4fba-ac81-b94343ec2010", 5, 1);
+VALUES (2, "Tittel på forslag nr. 2", "Også en beskrivelse", '2023-01-17', NULL, "af04f53d-7a94-409e-b72e-8d65fb6f9774", "de1d72ab-8c3f-484c-b060-f2e8345464a8", 5, 1);
 
 INSERT INTO `Suggestion` (`SuggestionId`, `SuggestionTitle`, `SuggestionDescription`, `SuggestionDeadline`, `SuggestionEnddate`, `SuggestedUserId`, `ResponsibleUserId`, `TeamId`, `StatusId`)
-VALUES (3, "Tittel på forslag nr. 1", "Dette er en beskrivelse", 2023-01-15, 2022-11-10, "af04f53d-7a94-409e-b72e-8d65fb6f9774", "88c215e4-0410-4fba-ac81-b94343ec2010", 6, 10);
+VALUES (3, "Tittel på forslag nr. 3", "En bra beskrivelse", '2023-02-05', '2022-11-10', "af04f53d-7a94-409e-b72e-8d65fb6f9774", "6b1d879f-1e12-491e-9a80-488a04d1c959", 6, 10);
 
 INSERT INTO `Suggestion` (`SuggestionId`, `SuggestionTitle`, `SuggestionDescription`, `SuggestionDeadline`, `SuggestionEnddate`, `SuggestedUserId`, `ResponsibleUserId`, `TeamId`, `StatusId`)
-VALUES (4, "Tittel på forslag nr. 1", "Dette er en beskrivelse", 2023-01-15, NULL, "af04f53d-7a94-409e-b72e-8d65fb6f9774", "88c215e4-0410-4fba-ac81-b94343ec2010", 6, 5);
+VALUES (4, "Tittel på forslag nr. 4", "En dårlig beskrivelse", '2023-03-25', NULL, "af04f53d-7a94-409e-b72e-8d65fb6f9774", "88c215e4-0410-4fba-ac81-b94343ec2010", 6, 5);
 
 INSERT INTO `Suggestion` (`SuggestionId`, `SuggestionTitle`, `SuggestionDescription`, `SuggestionDeadline`, `SuggestionEnddate`, `SuggestedUserId`, `ResponsibleUserId`, `TeamId`, `StatusId`)
-VALUES (5, "Tittel på forslag nr. 1", "Dette er en beskrivelse", 2023-01-15, NULL, "af04f53d-7a94-409e-b72e-8d65fb6f9774", "88c215e4-0410-4fba-ac81-b94343ec2010", 8, 5);
+VALUES (5, "Tittel på forslag nr. 5", "Den beste beskrivelsen", '2023-01-05', NULL, "60bbe9f7-d3ab-444d-9f65-a36a411773b4", "de1d72ab-8c3f-484c-b060-f2e8345464a8", 8, 6);
 
 INSERT INTO `Suggestion` (`SuggestionId`, `SuggestionTitle`, `SuggestionDescription`, `SuggestionDeadline`, `SuggestionEnddate`, `SuggestedUserId`, `ResponsibleUserId`, `TeamId`, `StatusId`)
-VALUES (6, "Tittel på forslag nr. 1", "Dette er en beskrivelse", 2023-01-15, NULL, "af04f53d-7a94-409e-b72e-8d65fb6f9774", "88c215e4-0410-4fba-ac81-b94343ec2010", 9, 6);
+VALUES (6, "Tittel på forslag nr. 6", "En kreativ beskrivelse", '2023-02-13', NULL, "60bbe9f7-d3ab-444d-9f65-a36a411773b4", "6b1d879f-1e12-491e-9a80-488a04d1c959", 9, 6);
 
 INSERT INTO `Suggestion` (`SuggestionId`, `SuggestionTitle`, `SuggestionDescription`, `SuggestionDeadline`, `SuggestionEnddate`, `SuggestedUserId`, `ResponsibleUserId`, `TeamId`, `StatusId`)
-VALUES (7, "Tittel på forslag nr. 1", "Dette er en beskrivelse", 2023-01-15, NULL, "af04f53d-7a94-409e-b72e-8d65fb6f9774", "88c215e4-0410-4fba-ac81-b94343ec2010", 1, 7);
+VALUES (7, "Tittel på forslag nr. 7", "En usunn beskrivelse av et sunt forslag", '2023-03-30', NULL, "60bbe9f7-d3ab-444d-9f65-a36a411773b4", "88c215e4-0410-4fba-ac81-b94343ec2010", 1, 7);
 
 INSERT INTO `Suggestion` (`SuggestionId`, `SuggestionTitle`, `SuggestionDescription`, `SuggestionDeadline`, `SuggestionEnddate`, `SuggestedUserId`, `ResponsibleUserId`, `TeamId`, `StatusId`)
-VALUES (8, "Tittel på forslag nr. 1", "Dette er en beskrivelse", 2023-01-15, NULL, "af04f53d-7a94-409e-b72e-8d65fb6f9774", "88c215e4-0410-4fba-ac81-b94343ec2010", 2, 8);
+VALUES (8, "Tittel på forslag nr. 8", "En helt ok beskrivelse", '2023-04-27', NULL, "6e0db95f-a9d8-4b4d-808c-aaebe769b56c", "de1d72ab-8c3f-484c-b060-f2e8345464a8", 2, 8);
 
 INSERT INTO `Suggestion` (`SuggestionId`, `SuggestionTitle`, `SuggestionDescription`, `SuggestionDeadline`, `SuggestionEnddate`, `SuggestedUserId`, `ResponsibleUserId`, `TeamId`, `StatusId`)
-VALUES (9, "Tittel på forslag nr. 1", "Dette er en beskrivelse", 2023-01-15, NULL, "af04f53d-7a94-409e-b72e-8d65fb6f9774", "88c215e4-0410-4fba-ac81-b94343ec2010", 3, 1);
+VALUES (9, "Tittel på forslag nr. 9", "En god beskrivelse", '2023-04-12', NULL, "6e0db95f-a9d8-4b4d-808c-aaebe769b56c", "6b1d879f-1e12-491e-9a80-488a04d1c959", 6, 6);
 
 INSERT INTO `Suggestion` (`SuggestionId`, `SuggestionTitle`, `SuggestionDescription`, `SuggestionDeadline`, `SuggestionEnddate`, `SuggestedUserId`, `ResponsibleUserId`, `TeamId`, `StatusId`)
-VALUES (10, "Tittel på forslag nr. 1", "Dette er en beskrivelse", 2023-01-15, NULL, "af04f53d-7a94-409e-b72e-8d65fb6f9774", "88c215e4-0410-4fba-ac81-b94343ec2010", 4, 1);
+VALUES (10, "Tittel på forslag nr. 10", "En kjedelig beskrivelse", '2023-01-10', NULL, "af04f53d-7a94-409e-b72e-8d65fb6f9774", "88c215e4-0410-4fba-ac81-b94343ec2010", 4, 1);
 
 -- Adding repairs
 INSERT INTO `Repairs` (`RepairsId`, `RepairsTitle`, `RepairsDescription`, `RepairsDeadline`, `RepairsEnddate`, `UserId`, `TeamId`, `StatusId`)
-VALUES (1, "Tittel på reparasjon", "Beskrivelse på reparasjon", 2023-01-15, 2022-11-10, "af04f53d-7a94-409e-b72e-8d65fb6f9774", 4, 10);
+VALUES (1, "Noe er ødelagt", "Beskrivelse på reparasjon", '2023-01-15', '2022-11-10', "af04f53d-7a94-409e-b72e-8d65fb6f9774", 4, 10);
 
 INSERT INTO `Repairs` (`RepairsId`, `RepairsTitle`, `RepairsDescription`, `RepairsDeadline`, `RepairsEnddate`, `UserId`, `TeamId`, `StatusId`)
-VALUES (2, "Tittel på reparasjon", "Beskrivelse på reparasjon", 2023-01-15, 2022-11-10, "af04f53d-7a94-409e-b72e-8d65fb6f9774", 5, 10);
+VALUES (2, "En tittel", "En annen beskrivelse", '2023-01-15', '2022-11-10', "60bbe9f7-d3ab-444d-9f65-a36a411773b4", 5, 10);
 
 INSERT INTO `Repairs` (`RepairsId`, `RepairsTitle`, `RepairsDescription`, `RepairsDeadline`, `RepairsEnddate`, `UserId`, `TeamId`, `StatusId`)
-VALUES (3, "Tittel på reparasjon", "Beskrivelse på reparasjon", 2023-01-15, NULL, "af04f53d-7a94-409e-b72e-8d65fb6f9774", 6, 7);
+VALUES (3, "Noe annet er ødelagt", "Mange ord som blir til en setning", '2023-01-15', NULL, "6e0db95f-a9d8-4b4d-808c-aaebe769b56c", 6, 7);
 
 INSERT INTO `Repairs` (`RepairsId`, `RepairsTitle`, `RepairsDescription`, `RepairsDeadline`, `RepairsEnddate`, `UserId`, `TeamId`, `StatusId`)
-VALUES (4, "Tittel på reparasjon", "Beskrivelse på reparasjon", 2023-01-15, NULL, "af04f53d-7a94-409e-b72e-8d65fb6f9774", 7, 7);
+VALUES (4, "Enda en tittel", "Få ord", '2023-01-15', NULL, "60bbe9f7-d3ab-444d-9f65-a36a411773b4", 7, 7);
 
 INSERT INTO `Repairs` (`RepairsId`, `RepairsTitle`, `RepairsDescription`, `RepairsDeadline`, `RepairsEnddate`, `UserId`, `TeamId`, `StatusId`)
-VALUES (5, "Tittel på reparasjon", "Beskrivelse på reparasjon", 2023-01-15, NULL, "af04f53d-7a94-409e-b72e-8d65fb6f9774", 8, 7);
+VALUES (5, "Brann i søppelkassa", "Heldigvis ikke en hel bok", '2023-01-15', NULL, "af04f53d-7a94-409e-b72e-8d65fb6f9774", 8, 7);
 
 INSERT INTO `Repairs` (`RepairsId`, `RepairsTitle`, `RepairsDescription`, `RepairsDeadline`, `RepairsEnddate`, `UserId`, `TeamId`, `StatusId`)
-VALUES (6, "Tittel på reparasjon", "Beskrivelse på reparasjon", 2023-01-15, NULL, "af04f53d-7a94-409e-b72e-8d65fb6f9774", 9, 7);
+VALUES (6, "Atter en tittel", "Atter en beskrivelse", '2023-01-15', NULL, "60bbe9f7-d3ab-444d-9f65-a36a411773b4", 9, 7);
 
 INSERT INTO `Repairs` (`RepairsId`, `RepairsTitle`, `RepairsDescription`, `RepairsDeadline`, `RepairsEnddate`, `UserId`, `TeamId`, `StatusId`)
-VALUES (7, "Tittel på reparasjon", "Beskrivelse på reparasjon", 2023-01-15, NULL, "af04f53d-7a94-409e-b72e-8d65fb6f9774", 10, 1);
+VALUES (7, "Brann i fuglekassa", "Ingen fugler skadd", '2023-01-15', NULL, "6e0db95f-a9d8-4b4d-808c-aaebe769b56c", 10, 1);
 
 INSERT INTO `Repairs` (`RepairsId`, `RepairsTitle`, `RepairsDescription`, `RepairsDeadline`, `RepairsEnddate`, `UserId`, `TeamId`, `StatusId`)
-VALUES (8, "Tittel på reparasjon", "Beskrivelse på reparasjon", 2023-01-15, NULL, "af04f53d-7a94-409e-b72e-8d65fb6f9774", 1, 1);
+VALUES (8, "Nok en tittel", "Jada!", '2023-01-15', NULL, "60bbe9f7-d3ab-444d-9f65-a36a411773b4", 1, 1);
 
 INSERT INTO `Repairs` (`RepairsId`, `RepairsTitle`, `RepairsDescription`, `RepairsDeadline`, `RepairsEnddate`, `UserId`, `TeamId`, `StatusId`)
-VALUES (9, "Tittel på reparasjon", "Beskrivelse på reparasjon", 2023-01-15, NULL, "af04f53d-7a94-409e-b72e-8d65fb6f9774", 2, 1);
+VALUES (9, "Brusmaskin ødelagt", "Trenger brus", '2023-01-15', NULL, "af04f53d-7a94-409e-b72e-8d65fb6f9774", 2, 1);
 
 INSERT INTO `Repairs` (`RepairsId`, `RepairsTitle`, `RepairsDescription`, `RepairsDeadline`, `RepairsEnddate`, `UserId`, `TeamId`, `StatusId`)
-VALUES (10, "Tittel på reparasjon", "Beskrivelse på reparasjon", 2023-01-15, NULL, "af04f53d-7a94-409e-b72e-8d65fb6f9774", 3, 1);
+VALUES (10, "Kan det fikses?", "Klart det kan!", '2023-01-15', NULL, "60bbe9f7-d3ab-444d-9f65-a36a411773b4", 3, 1);
+
+-- Testing the data
+-- Listing the 5 first rows of the 5 most important tables, sorted:
+SELECT * FROM `AspNetUsers` ORDER BY Id ASC LIMIT 5;
+SELECT * FROM `Team` ORDER BY TeamId ASC LIMIT 5;
+SELECT * FROM `Suggestion` ORDER BY SuggestionId ASC LIMIT 5;
+SELECT * FROM `Repairs` ORDER BY RepairsId ASC LIMIT 5;
+SELECT * FROM `Status` ORDER BY StatusId ASC LIMIT 5;
+
+-- List all suggestions with their suggesting employee and responsible employee
+SELECT `SuggestionTitle`, `SuggestedUserId`, `ResponsibleUserId` FROM `Suggestion`;
+
+-- List all employees that have not submitted any suggestions
+SELECT `Id`, `empFname`, `empLname` FROM `AspNetUsers` WHERE `Id` NOT IN (SELECT `SuggestedUserId` FROM `Suggestion`);
+
+-- List the names and number of suggestions of the three users with most suggestions submitted, sorted by number of submissions
+SELECT u.`Id`, u.`EmpFname`, u.`empLname`, (SELECT COUNT(*) FROM `Suggestion` WHERE `SuggestedUserId` = u.`Id`) SuggestionsAdded FROM `AspNetUsers` u ORDER BY SuggestionsAdded DESC LIMIT 3;
+
+-- List all the suggestions by the employee with the highest number of suggestions submitted, sorted by date/time
+SELECT u.empFname, u.empLname, s.SuggestionTitle, s.SuggestionDescription, s.SuggestionDeadline
+FROM AspNetUsers AS u INNER JOIN `Suggestion` AS s ON s.SuggestedUserId=u.Id
+WHERE u.Id=(SELECT SuggestedUserId FROM Suggestion GROUP BY SuggestedUserId ORDER BY COUNT(SuggestedUserId) DESC LIMIT 1)
+ORDER BY s.SuggestionDeadline ASC;
+
+-- List all suggestions that are in the "ACT" state at the moment
+SELECT su.SuggestionTitle, st.StatusTitle
+FROM Suggestion AS su INNER JOIN `Status` AS st
+WHERE st.StatusId = 6 AND st.StatusId = su.StatusId
+
+-- List all teams with total number of suggestions handled per team, ordered by number of suggestions, the team with most suggestions first
+SELECT t.TeamID, t.TeamName, count(s.TeamID) TotalSuggestionsAdded
+FROM Team t
+LEFT JOIN Suggestion s ON t.TeamId = s.TeamId
+GROUP BY t.TeamID, t.TeamName
+ORDER BY TotalSuggestionsAdded DESC;
