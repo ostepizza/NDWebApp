@@ -1,6 +1,9 @@
--- Adding the tables for the Identity framework
+-- Database setup
+CREATE DATABASE IF NOT EXISTS webappdatabase;
+USE webappdatabase;
 ALTER DATABASE CHARACTER SET utf8mb4;
 
+-- Adding the tables for the Identity framework
 CREATE TABLE `AspNetRoles` (
     `Id` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
     `Name` varchar(256) CHARACTER SET utf8mb4 NULL,
@@ -101,10 +104,12 @@ CREATE TABLE `Team` (
     `TeamName` varchar(256) CHARACTER SET utf8mb4 NOT NULL,
     `LeaderUserId` varchar(255) CHARACTER SET utf8mb4 NULL,
     PRIMARY KEY (`TeamId`),
-    CONSTRAINT `FK_LeaderUserId` FOREIGN KEY (`LeaderUserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE
+    CONSTRAINT `FK_LeaderUserId` FOREIGN KEY (`LeaderUserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE SET NULL
 ) CHARACTER SET=utf8mb4;
 
 ALTER TABLE `AspNetUsers` ADD `TeamId` int NULL;
+
+ALTER TABLE `AspNetUsers` ADD CONSTRAINT `FK_TeamId_AspNetUsers_TeamId` FOREIGN KEY (`TeamId`) REFERENCES `Team` (`TeamId`) ON DELETE SET NULL;
 
 -- Adding tables for status, suggestions and repairs
 CREATE TABLE `Status` (
@@ -122,12 +127,12 @@ CREATE TABLE `Suggestion` (
     `SuggestedUserId` varchar(255) CHARACTER SET utf8mb4 NULL,
     `ResponsibleUserId` varchar(255) CHARACTER SET utf8mb4 NULL,
     `TeamId` int NULL,
-    `StatusId` int NULL,
+    `StatusId` int NULL DEFAULT 0,
     PRIMARY KEY (`SuggestionId`),
-    CONSTRAINT `FK_SuggestedUserId` FOREIGN KEY (`SuggestedUserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE,
-    CONSTRAINT `FK_ResponsibleUserId` FOREIGN KEY (`ResponsibleUserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE,
-    CONSTRAINT `FK_SuggestionStatus` FOREIGN KEY (`StatusId`) REFERENCES `Status` (`StatusId`) ON DELETE CASCADE,
-    CONSTRAINT `FK_SuggestionTeam` FOREIGN KEY (`TeamId`) REFERENCES `Team` (`TeamId`) ON DELETE CASCADE
+    CONSTRAINT `FK_SuggestedUserId` FOREIGN KEY (`SuggestedUserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE SET NULL,
+    CONSTRAINT `FK_ResponsibleUserId` FOREIGN KEY (`ResponsibleUserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE SET NULL,
+    CONSTRAINT `FK_SuggestionStatus` FOREIGN KEY (`StatusId`) REFERENCES `Status` (`StatusId`) ON DELETE SET NULL,
+    CONSTRAINT `FK_SuggestionTeam` FOREIGN KEY (`TeamId`) REFERENCES `Team` (`TeamId`) ON DELETE SET NULL
 ) CHARACTER SET=utf8mb4;
 
 CREATE TABLE `Repairs` (
@@ -138,11 +143,11 @@ CREATE TABLE `Repairs` (
     `RepairsEnddate` date NULL,
     `UserId` varchar(255) CHARACTER SET utf8mb4 NULL,
     `TeamId` int NULL,
-    `StatusId` int NULL,
+    `StatusId` int NULL DEFAULT 0,
     PRIMARY KEY (`RepairsId`),
-    CONSTRAINT `FK_RepairsUserId` FOREIGN KEY (`UserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE,
-    CONSTRAINT `FK_RepairStatus` FOREIGN KEY (`StatusId`) REFERENCES `Status` (`StatusId`) ON DELETE CASCADE,
-    CONSTRAINT `FK_RepairTeam` FOREIGN KEY (`TeamId`) REFERENCES `Team` (`TeamId`) ON DELETE CASCADE
+    CONSTRAINT `FK_RepairsUserId` FOREIGN KEY (`UserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE SET NULL,
+    CONSTRAINT `FK_RepairStatus` FOREIGN KEY (`StatusId`) REFERENCES `Status` (`StatusId`) ON DELETE SET NULL,
+    CONSTRAINT `FK_RepairTeam` FOREIGN KEY (`TeamId`) REFERENCES `Team` (`TeamId`) ON DELETE SET NULL
 ) CHARACTER SET=utf8mb4;
 
 -- Test data
@@ -339,6 +344,18 @@ INSERT INTO `Team` (`TeamId`, `TeamName`, `LeaderUserId`) VALUES (8, "Produksjon
 INSERT INTO `Team` (`TeamId`, `TeamName`, `LeaderUserId`) VALUES (9, "Lager avd. A", "88c215e4-0410-4fba-ac81-b94343ec2010");
 INSERT INTO `Team` (`TeamId`, `TeamName`, `LeaderUserId`) VALUES (10, "Lager avd. B", "88c215e4-0410-4fba-ac81-b94343ec2010");
 
+-- Updating users to be part of teams
+UPDATE `AspNetUsers` SET `TeamId` = 1 WHERE `UserName` = "admin@admin.net";
+UPDATE `AspNetUsers` SET `TeamId` = 2 WHERE `UserName` = "user1@users.net";
+UPDATE `AspNetUsers` SET `TeamId` = 3 WHERE `UserName` = "user2@users.net";
+UPDATE `AspNetUsers` SET `TeamId` = 4 WHERE `UserName` = "user3@users.net";
+UPDATE `AspNetUsers` SET `TeamId` = 5 WHERE `UserName` = "user4@users.net";
+UPDATE `AspNetUsers` SET `TeamId` = 6 WHERE `UserName` = "user5@users.net";
+UPDATE `AspNetUsers` SET `TeamId` = 7 WHERE `UserName` = "user6@users.net";
+UPDATE `AspNetUsers` SET `TeamId` = 8 WHERE `UserName` = "user7@users.net";
+UPDATE `AspNetUsers` SET `TeamId` = 9 WHERE `UserName` = "user8@users.net";
+UPDATE `AspNetUsers` SET `TeamId` = 10 WHERE `UserName` = "user9@users.net";
+
 -- Adding statuses
 INSERT INTO `Status` (`StatusId`, `StatusTitle`) VALUES (1, "Ikke vurdert");
 INSERT INTO `Status` (`StatusId`, `StatusTitle`) VALUES (2, "Under vurdering");
@@ -422,7 +439,8 @@ SELECT * FROM `Repairs` ORDER BY `RepairsId` ASC LIMIT 5;
 SELECT * FROM `Status` ORDER BY `StatusId` ASC LIMIT 5;
 
 -- List all suggestions with their suggesting employee and responsible employee
-SELECT `SuggestionTitle`, `SuggestedUserId`, `ResponsibleUserId` FROM `Suggestion`;
+SELECT s.`SuggestedUserId` AS IDofSuggester, u.`empFname` AS SuggestedFirstName, u.`empLname` AS SuggestedLastName, s.`SuggestionTitle`, s.`SuggestionDescription`, s.`ResponsibleUserId` AS IDofResponsible
+FROM `AspNetUsers` AS u JOIN `Suggestion` AS s WHERE u.`Id`=s.`SuggestedUserId`;
 
 -- List all employees that have not submitted any suggestions
 SELECT `Id`, `empFname`, `empLname` FROM `AspNetUsers` WHERE `Id` NOT IN (SELECT `SuggestedUserId` FROM `Suggestion`);
