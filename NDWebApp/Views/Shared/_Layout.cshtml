@@ -28,7 +28,7 @@
                 <div class="logged-in-as">
                     @if (SignInManager.IsSignedIn(User))
                     {
-                        <p>Hello @UserManager.GetUserName(User)!</p>
+                        <p>Hei, @UserManager.GetUserName(User)!</p>
                     } else {
                         <p>not logged in</p>
                     }
@@ -42,10 +42,7 @@
                 <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Index"><div class="btn btn-last">Admin</div></a>
                 <a class="nav-link" asp-area="" asp-controller="Role" asp-action="Index"><div class="btn btn-last">Roles</div></a>
                 <div class="menu"><img src="img/logo.svg"></div>
-                <!--<a class="nav-link"asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })"><div class="btn">Logg ut</div></a>-->
-                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                    <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-                </form>
+                <a class="nav-link"asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })"><div class="btn">Logg ut</div></a>
             </div>
 
             <div class="col-lg-2 menu mobileShow" style="height: auto;">
@@ -89,27 +86,6 @@
                 <div class="row">
                     <div class="col-lg-1"></div>
                     <div class="col-lg-10 infoText">
-                        <!-- remove later-->
-                        @if (SignInManager.IsSignedIn(User))
-                        {
-                            <li class="nav-item">
-                                <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
-                            </li>
-                            <li class="nav-item">
-                                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                                    <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-                                </form>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
-                            </li>
-                        }
                         <!-- content here -->
                         @RenderBody()
                     </div>

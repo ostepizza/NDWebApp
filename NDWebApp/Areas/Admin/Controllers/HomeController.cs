@@ -5,7 +5,8 @@ using System.Diagnostics;
 
 namespace NDWebApp.MVC.Controllers
 {
-    public class AdminController : Controller
+    [Area("Admin")]
+    public class HomeController : Controller
     {
         public IActionResult Index()
         {
