@@ -1,0 +1,34 @@
+@{
+    ViewData["Title"] = "Admin kontrollpanel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Admin kontrollpanel</h1>
+
+<div class="row">
+    <hr />
+    <h2>Administrer brukere:</h2>
+    <div class="col-md-4 d-flex justify-content-center">
+        @Html.ActionLink("Brukerliste", "Index", "Users", new { area = "Admin" }, new{@class="btn btnlightgreen"})
+    </div>
+    <div class="col-md-4 d-flex justify-content-center">
+        @Html.ActionLink("Legg til brukere", "New", "Users", new { area = "Admin" }, new{@class="btn btnlightgreen"})
+    </div>
+    <div class="col-md-4 d-flex justify-content-center">
+        @*@Html.ActionLink("Se brukere", "Index", "Users", new { area = "Admin" }, new{@class="btn btnlightgreen"})*@
+    </div>
+</div>
+
+<div class="row">
+    <hr />
+    <h2>Administrer teams:</h2>
+    <div class="col-md-4 d-flex justify-content-center">
+        @Html.ActionLink("Teamliste", "Index", "Teams", new { area = "Admin" }, new{@class="btn btnlightgreen"})
+    </div>
+    <div class="col-md-4 d-flex justify-content-center">
+        @Html.ActionLink("Opprett team", "New", "Teams", new { area = "Admin" }, new{@class="btn btnlightgreen"})
+    </div>
+    <div class="col-md-4 d-flex justify-content-center">
+        @*@Html.ActionLink("Se brukere", "Index", "Users", new { area = "Admin" }, new{@class="btn btnlightgreen"})*@
+    </div>
+</div>
