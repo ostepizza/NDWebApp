@@ -36,12 +36,14 @@
                     Last activity: timestamp-->
                 </div>
                 <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index"><div class="btn">Hjem</div></a>
+                <a class="nav-link" asp-area="" asp-controller="Teams" asp-action="Index"><div class="btn">Teams</div></a>
                 <a class="nav-link" asp-area="" asp-controller="Repairs" asp-action="Index"><div class="btn">Reparasjoner</div></a>
                 <a class="nav-link" asp-area="" asp-controller="Suggestions" asp-action="Index"><div class="btn">Forslag</div></a>
+                <a class="nav-link" asp-area="" asp-controller="Users" asp-action="Search"><div class="btn">Brukersøk</div></a>
                 <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Index"><div class="btn">Min konto</div></a>
+                <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Index"><div class="btn">Brukerliste</div></a>
                 <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Index"><div class="btn btn-last">Admin</div></a>
-                <a class="nav-link" asp-area="" asp-controller="Role" asp-action="Index"><div class="btn btn-last">Roles</div></a>
-                <div class="menu"><img src="img/logo.svg"></div>
+                <div class="menu"><img src="~/img/logo.svg"></div>
                 <a class="nav-link"asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })"><div class="btn">Logg ut</div></a>
             </div>
 
