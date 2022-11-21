@@ -7,14 +7,11 @@
 <h1>@ViewData["Title"]</h1>
 <a asp-action="Add" class="btn btn-secondary">Legg til bruker</a>
 <div class="alert alert-danger" role="alert">
-<<<<<<< Updated upstream
-    <b>Update:</b> Oppdaterer ikke custom felter, trenger passord for å oppdatere felter<br />
-=======
->>>>>>> Stashed changes
     <b>Delete:</b> Har ingen warning/bekreftelse<br />
     <b>Create:</b> Mangler team felt<br />
-    <b>Reset password:</b> Må legges til<br />
+    <b>Reset password:</b> Trenger bekreftelse på passord / bytte<br />
 </div>
+<br />
 <div class="alert alert-danger" role="alert">
     <b>To be:</b> Alert når en bruker er slettet
 </div>
@@ -28,6 +25,7 @@
         <th>Tlf.nr.</th>
         <th>Se på</th>
         <th>Endre</th>
+        <th>Resett passord</th>
         <th>Slett</th>
     </tr>
     @foreach (NDWebAppUser user in Model)
@@ -47,6 +45,11 @@
             <td>
                 <a class="btn btn-sm btn-primary" asp-action="Update" asp-route-id="@user.Id">
                     Endre
+                </a>
+            </td>
+            <td>
+                <a class="btn btn-sm btn-warning" asp-action="ResetPassword" asp-route-id="@user.Id">
+                    Resett passord
                 </a>
             </td>
             <td>
