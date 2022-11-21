@@ -5,40 +5,40 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-<a asp-action="Index" class="btn btn-secondary">Back</a>
+<a asp-action="Index" class="btn btn-secondary">Tilbake</a>
 <div asp-validation-summary="All" class="text-danger"></div>
  
 <form asp-action="Update" method="post">
     @Html.AntiForgeryToken()
     <div class="form-group">
-        <label asp-for="Id"></label>
+        <label asp-for="Id">System Id</label>
         <input asp-for="Id" class="form-control" disabled />
     </div>
 
     <div class="form-group">
-        <label asp-for="empNr"></label>
+        <label asp-for="empNr">Ansattnr.</label>
         <input asp-for="empNr" class="form-control" />
     </div>
 
     <div class="form-group">
-        <label asp-for="empFname"></label>
+        <label asp-for="empFname">Fornavn</label>
         <input asp-for="empFname" class="form-control" />
     </div>
 
     <div class="form-group">
-        <label asp-for="empLname"></label>
+        <label asp-for="empLname">Etternavn</label>
         <input asp-for="empLname" class="form-control" />
     </div>
 
     <div class="form-group">
-        <label asp-for="Email"></label>
+        <label asp-for="Email">E-post</label>
         <input asp-for="Email" class="form-control" />
     </div>
 
     <div class="form-group">
-        <label asp-for="PhoneNumber"></label>
+        <label asp-for="PhoneNumber">Tlf.nr.</label>
         <input asp-for="PhoneNumber" class="form-control" />
     </div>
 
-    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="submit" class="btn btn-primary">Lagre</button>
 </form>

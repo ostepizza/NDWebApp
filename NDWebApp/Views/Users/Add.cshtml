@@ -10,28 +10,32 @@
 <form method="post">
     @Html.AntiForgeryToken()
     <div class="form-group">
-        <label asp-for="empNr"></label>
-        <input asp-for="empNr" class="form-control" />
+        <label asp-for="empNr">Ansattnr.</label>
+        <input asp-for="empNr" class="form-control" aria-required="true" />
     </div>
     <div class="form-group">
-        <label asp-for="empFname"></label>
-        <input asp-for="empFname" class="form-control" />
+        <label asp-for="empFname">Fornavn</label>
+        <input asp-for="empFname" class="form-control" aria-required="true" />
     </div>
     <div class="form-group">
-        <label asp-for="empLname"></label>
-        <input asp-for="empLname" class="form-control" />
+        <label asp-for="empLname">Etternavn</label>
+        <input asp-for="empLname" class="form-control" aria-required="true" />
     </div>
     <div class="form-group">
-        <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" />
+        <label asp-for="Email">E-post</label>
+        <input asp-for="Email" class="form-control" aria-required="true" />
     </div>
     <div class="form-group">
-        <label asp-for="Phone"></label>
+        <label asp-for="Phone">Tlf.nr.</label>
         <input asp-for="Phone" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="Password"></label>
-        <input asp-for="Password" class="form-control" />
+        <label asp-for="Password">Passord</label>
+        <input asp-for="Password" class="form-control" aria-required="true" />
     </div>
-    <button type="submit" class="btn btn-primary">Create</button>
+    <div class="form-group">
+        <label asp-for="ConfirmPassword">Bekreft passord</label>
+        <input asp-for="ConfirmPassword" class="form-control" aria-required="true" />
+    </div>
+    <button type="submit" class="btn btn-primary">Opprett bruker</button>
 </form>

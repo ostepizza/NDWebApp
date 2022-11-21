@@ -46,8 +46,11 @@ namespace NDWebApp.MVC.Controllers
 
                 IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
 
-                if (result.Succeeded)
+                if (result.Succeeded) { 
+                    TempData["Message"] = "Bruker " + user.Email + " (" + user.empFname + " " + user.empLname + ") ble opprettet.";
+                    TempData["Status"] = "Success";
                     return RedirectToAction("Index");
+                }
                 else
                 {
                     foreach (IdentityError error in result.Errors)
@@ -55,11 +58,6 @@ namespace NDWebApp.MVC.Controllers
                 }
             }
             return View(user);
-        }
-
-        public IActionResult Success()
-        {
-            return View();
         }
 
         public IActionResult NotFound()
@@ -141,8 +139,11 @@ namespace NDWebApp.MVC.Controllers
                 {
                     user.empFname = empfname;
                     IdentityResult result = await userManager.UpdateAsync(user);
-                    if (result.Succeeded)
+                    if (result.Succeeded) { 
+                        TempData["Message"] = "Bruker " + user.UserName + " (" + user.empFname + " " + user.empLname + ") ble oppdatert.";
+                        TempData["Status"] = "Success";
                         return RedirectToAction("Index");
+                    }
                     else
                         ModelState.AddModelError("", "Fornavn kan ikke være tomt");
                 }
@@ -166,35 +167,33 @@ namespace NDWebApp.MVC.Controllers
         [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ResetPassword(string id, string password)
+        public async Task<IActionResult> ResetPassword(string id, string password, string confirmPassword)
         {
             NDWebAppUser user = await userManager.FindByIdAsync(id);
-            if (user != null)
+            if (ModelState.IsValid)
             {
-                if (!string.IsNullOrEmpty(password))
-                { 
-                    user.PasswordHash = passwordHasher.HashPassword(user, password);
-                    IdentityResult result = await userManager.UpdateAsync(user);
-                    if (result.Succeeded)
-                        return RedirectToAction("Index");
+                if (user != null)
+                {
+                    if (!string.IsNullOrEmpty(password) && (password == confirmPassword))
+                    {
+                        user.PasswordHash = passwordHasher.HashPassword(user, password);
+                        IdentityResult result = await userManager.UpdateAsync(user);
+                        if (result.Succeeded)
+                        {
+                            TempData["Message"] = "Passordet til " + user.UserName + " (" + user.empFname + " " + user.empLname + ") ble byttet.";
+                            TempData["Status"] = "Success";
+                            return RedirectToAction("Index");
+                        }
+                        else
+                            Errors(result);
+                    }
                     else
-                        Errors(result);
+                        ModelState.AddModelError("", "Password cannot be empty");
                 }
                 else
-                    ModelState.AddModelError("", "Password cannot be empty");
-
-                //if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
-                //{
-                //    IdentityResult result = await userManager.UpdateAsync(user);
-                //    if (result.Succeeded)
-                //        return RedirectToAction("Index");
-                //    else
-                //        Errors(result);
-                //}
+                    ModelState.AddModelError("", "User Not Found");
 
             }
-            else
-                ModelState.AddModelError("", "User Not Found");
             return View(user);
         }
 
@@ -214,15 +213,20 @@ namespace NDWebApp.MVC.Controllers
             {
                 IdentityResult result = await userManager.DeleteAsync(user);
                 if (result.Succeeded)
-                { 
-                    return RedirectToAction("Index");
+                {
                     TempData["Message"] = "Brukeren ble slettet";
+                    TempData["Status"] = "Success";
+                    return RedirectToAction("Index");
                 }
                 else
                     Errors(result);
+                    TempData["Message"] = "Det skjedde noe galt";
+                    TempData["Status"] = "Danger";
             }
             else
-                ModelState.AddModelError("", "User Not Found");
+                ModelState.AddModelError("", "Bruker ikke funnet");
+                TempData["Message"] = "Bruker ikke funnet";
+                TempData["Status"] = "Danger";
             return View("Index", userManager.Users);
         }
 

@@ -7,17 +7,34 @@
 <h1>@ViewData["Title"]</h1>
 @if (User.IsInRole("Administrator"))
 {
-    <a asp-action="Add" class="btn btn-secondary">Legg til bruker</a>
     <div class="alert alert-danger" role="alert">
-        <b>Delete:</b> Har ingen warning/bekreftelse<br />
         <b>Create:</b> Mangler team felt<br />
-        <b>Reset password:</b> Trenger bekreftelse på passord / bytte<br />
     </div>
     <br />
-    <div class="alert alert-danger" role="alert">
-        <b>To be:</b> Alert når en bruker er slettet
+    @if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Success")
+    {
+        <div class="alert alert-success" role="alert">
         @TempData["Message"]
-    </div>
+        </div>
+        <br />
+    }
+    else if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Danger")
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["Message"]
+        </div>
+        <br />
+    }
+    else if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Warning")
+    {
+        <div class="alert alert-warning" role="alert">
+            @TempData["Message"]
+        </div>
+        <br />
+    }
+    <a asp-action="Add" class="btn btn-secondary">Legg til bruker</a>
+    <br />
+    
 }
 
 <table>
@@ -31,7 +48,7 @@
             <th>Tlf.nr.</th>
             <th>Se på</th>
             <th>Endre</th>
-            <th>Resett passord</th>
+            <th>Bytt passord</th>
             <th>Slett</th>
         </tr>
     } else {
@@ -65,7 +82,7 @@
             </td>
             <td>
                 <a class="btn btn-sm btn-warning" asp-action="ResetPassword" asp-route-id="@user.Id">
-                    Resett passord
+                    Bytt passord
                 </a>
             </td>
             <td>
@@ -102,7 +119,7 @@
                         <b>Bekreft sletting av bruker</b>
                     </div>
                     <div class="modal-body">
-                        Er du sikker på at du ønsker å slette "@user.Email" (@user.empFname @user.empLname) permanent?
+                        Er du sikker på at du ønsker å slette <b>"@user.Email" (@user.empFname @user.empLname)</b> permanent?
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
