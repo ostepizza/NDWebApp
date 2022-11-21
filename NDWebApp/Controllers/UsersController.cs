@@ -66,8 +66,8 @@ namespace NDWebApp.MVC.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> Update(string id)
+        [Authorize(Roles = "Administrator,Team Leader")]
+        public async Task<IActionResult> View(string id)
         {
             NDWebAppUser user = await userManager.FindByIdAsync(id);
             if (user != null)
@@ -76,8 +76,8 @@ namespace NDWebApp.MVC.Controllers
                 return RedirectToAction("NotFound");
         }
 
-        [Authorize(Roles = "Administrator,Team Leader")]
-        public async Task<IActionResult> View(string id)
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> Update(string id)
         {
             NDWebAppUser user = await userManager.FindByIdAsync(id);
             if (user != null)
@@ -93,24 +93,79 @@ namespace NDWebApp.MVC.Controllers
             NDWebAppUser user = await userManager.FindByIdAsync(id);
             if (user != null)
             {
+                //if (!string.IsNullOrEmpty(email))
+                //    user.Email = email;
+                //else
+                //    ModelState.AddModelError("", "Email cannot be empty");
+
+                //if (!string.IsNullOrEmpty(password))
+                //    user.PasswordHash = passwordHasher.HashPassword(user, password);
+                //else
+                //    ModelState.AddModelError("", "Password cannot be empty");
+
+                //if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
+                //{
+                //    IdentityResult result = await userManager.UpdateAsync(user);
+                //    if (result.Succeeded)
+                //        return RedirectToAction("Index");
+                //    else
+                //        Errors(result);
+                //}
+
                 if (!string.IsNullOrEmpty(email))
-                    user.Email = email;
-                else
-                    ModelState.AddModelError("", "Email cannot be empty");
-
-                if (!string.IsNullOrEmpty(password))
-                    user.PasswordHash = passwordHasher.HashPassword(user, password);
-                else
-                    ModelState.AddModelError("", "Password cannot be empty");
-
-                if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
                 {
+                    user.Email = email;
                     IdentityResult result = await userManager.UpdateAsync(user);
                     if (result.Succeeded)
                         return RedirectToAction("Index");
                     else
                         Errors(result);
                 }
+
+            }
+            else
+                ModelState.AddModelError("", "User Not Found");
+            return View(user);
+        }
+
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> ResetPassword(string id)
+        {
+            NDWebAppUser user = await userManager.FindByIdAsync(id);
+            if (user != null)
+                return View(user);
+            else
+                return RedirectToAction("NotFound");
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(string id, string password)
+        {
+            NDWebAppUser user = await userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                if (!string.IsNullOrEmpty(password))
+                { 
+                    user.PasswordHash = passwordHasher.HashPassword(user, password);
+                    IdentityResult result = await userManager.UpdateAsync(user);
+                    if (result.Succeeded)
+                        return RedirectToAction("Index");
+                    else
+                        Errors(result);
+                }
+                else
+                    ModelState.AddModelError("", "Password cannot be empty");
+
+                //if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
+                //{
+                //    IdentityResult result = await userManager.UpdateAsync(user);
+                //    if (result.Succeeded)
+                //        return RedirectToAction("Index");
+                //    else
+                //        Errors(result);
+                //}
+
             }
             else
                 ModelState.AddModelError("", "User Not Found");
