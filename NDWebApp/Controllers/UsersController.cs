@@ -93,32 +93,15 @@ namespace NDWebApp.MVC.Controllers
             NDWebAppUser user = await userManager.FindByIdAsync(id);
             if (user != null)
             {
-                //if (!string.IsNullOrEmpty(email))
-                //    user.Email = email;
-                //else
-                //    ModelState.AddModelError("", "Email cannot be empty");
-
-                //if (!string.IsNullOrEmpty(password))
-                //    user.PasswordHash = passwordHasher.HashPassword(user, password);
-                //else
-                //    ModelState.AddModelError("", "Password cannot be empty");
-
-                //if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
-                //{
-                //    IdentityResult result = await userManager.UpdateAsync(user);
-                //    if (result.Succeeded)
-                //        return RedirectToAction("Index");
-                //    else
-                //        Errors(result);
-                //}
-
                 if (!string.IsNullOrEmpty(email))
+                {
                     user.Email = email;
+                    user.UserName = email;
                     IdentityResult result = await userManager.UpdateAsync(user);
                     if (result.Succeeded)
                     { }
                     else
-                        ModelState.AddModelError("", "Email cannot be empty");
+                        ModelState.AddModelError("", "E-post kan ikke være tomt");
                 }
 
                 if (!string.IsNullOrEmpty(phonenumber))
@@ -128,7 +111,7 @@ namespace NDWebApp.MVC.Controllers
                     if (result.Succeeded)
                     { }
                     else
-                        ModelState.AddModelError("", "Email cannot be empty");
+                        ModelState.AddModelError("", "Noe gikk galt under oppdatering av tlf.nr.");
                 }
 
                 string employeenrString = empnr.ToString();
@@ -139,7 +122,7 @@ namespace NDWebApp.MVC.Controllers
                     if (result.Succeeded)
                     { }
                     else
-                        ModelState.AddModelError("", "Employee number cannot be empty");
+                        ModelState.AddModelError("", "Ansattnummer kan ikke være tomt");
                 }
 
                 if (!string.IsNullOrEmpty(emplname))
@@ -149,7 +132,7 @@ namespace NDWebApp.MVC.Controllers
                     if (result.Succeeded)
                     { }
                     else
-                        ModelState.AddModelError("", "Lname cannot be empty");
+                        ModelState.AddModelError("", "Etternavn kan ikke være tomt");
                 }
 
                 if (!string.IsNullOrEmpty(empfname))
@@ -159,43 +142,14 @@ namespace NDWebApp.MVC.Controllers
                     if (result.Succeeded)
                         return RedirectToAction("Index");
                     else
-                        ModelState.AddModelError("", "Fname cannot be empty");
+                        ModelState.AddModelError("", "Fornavn kan ikke være tomt");
                 }
 
             }
             else
-                ModelState.AddModelError("", "User Not Found");
+                ModelState.AddModelError("", "Bruker ikke funnet");
             return View(user);
         }
-
-        [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> ResetPassword(string id)
-        {
-            NDWebAppUser user = await userManager.FindByIdAsync(id);
-            if (user != null)
-                return View(user);
-            else
-                return RedirectToAction("NotFound");
-        }
-
-                if (!string.IsNullOrEmpty(password))
-                    user.PasswordHash = passwordHasher.HashPassword(user, password);
-                else
-                    ModelState.AddModelError("", "Password cannot be empty");
-
-                if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
-
-                {
-                    user.Email = email;
-                    IdentityResult result = await userManager.UpdateAsync(user);
-                    if (result.Succeeded)
-                        return RedirectToAction("Index");
-                    else
-                        Errors(result);
-                }
-                else
-                    ModelState.AddModelError("", "User Not Found");
-                return View(user);
 
         [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> ResetPassword(string id)
