@@ -88,15 +88,81 @@ namespace NDWebApp.MVC.Controllers
 
         [Authorize(Roles = "Administrator")]
         [HttpPost]
-        public async Task<IActionResult> Update(string id, string email, string password)
+        public async Task<IActionResult> Update(string id, string email, string phonenumber, string empfname, string emplname, int empnr)
         {
             NDWebAppUser user = await userManager.FindByIdAsync(id);
             if (user != null)
             {
                 if (!string.IsNullOrEmpty(email))
                     user.Email = email;
+<<<<<<< Updated upstream
                 else
                     ModelState.AddModelError("", "Email cannot be empty");
+=======
+                    IdentityResult result = await userManager.UpdateAsync(user);
+                    if (result.Succeeded)
+                    { }
+                    else
+                        ModelState.AddModelError("", "Email cannot be empty");
+                }
+
+                if (!string.IsNullOrEmpty(phonenumber))
+                {
+                    user.PhoneNumber = phonenumber;
+                    IdentityResult result = await userManager.UpdateAsync(user);
+                    if (result.Succeeded)
+                    { }
+                    else
+                        ModelState.AddModelError("", "Email cannot be empty");
+                }
+
+                string employeenrString = empnr.ToString();
+                if (!string.IsNullOrEmpty(employeenrString))
+                {
+                    user.empNr = empnr;
+                    IdentityResult result = await userManager.UpdateAsync(user);
+                    if (result.Succeeded)
+                    { }
+                    else
+                        ModelState.AddModelError("", "Employee number cannot be empty");
+                }
+
+                if (!string.IsNullOrEmpty(emplname))
+                {
+                    user.empLname = emplname;
+                    IdentityResult result = await userManager.UpdateAsync(user);
+                    if (result.Succeeded)
+                    { }
+                    else
+                        ModelState.AddModelError("", "Lname cannot be empty");
+                }
+
+                if (!string.IsNullOrEmpty(empfname))
+                {
+                    user.empFname = empfname;
+                    IdentityResult result = await userManager.UpdateAsync(user);
+                    if (result.Succeeded)
+                        return RedirectToAction("Index");
+                    else
+                        ModelState.AddModelError("", "Fname cannot be empty");
+                }
+
+            }
+            else
+                ModelState.AddModelError("", "User Not Found");
+            return View(user);
+        }
+
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> ResetPassword(string id)
+        {
+            NDWebAppUser user = await userManager.FindByIdAsync(id);
+            if (user != null)
+                return View(user);
+            else
+                return RedirectToAction("NotFound");
+        }
+>>>>>>> Stashed changes
 
                 if (!string.IsNullOrEmpty(password))
                     user.PasswordHash = passwordHasher.HashPassword(user, password);
