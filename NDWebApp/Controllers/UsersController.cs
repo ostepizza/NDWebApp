@@ -29,6 +29,7 @@ namespace NDWebApp.MVC.Controllers
 
         [Authorize(Roles = "Administrator")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(UserModel user)
         {
             if (ModelState.IsValid)
@@ -88,6 +89,7 @@ namespace NDWebApp.MVC.Controllers
 
         [Authorize(Roles = "Administrator")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(string id, string email, string phonenumber, string empfname, string emplname, int empnr)
         {
             NDWebAppUser user = await userManager.FindByIdAsync(id);
@@ -163,6 +165,7 @@ namespace NDWebApp.MVC.Controllers
 
         [Authorize(Roles = "Administrator")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetPassword(string id, string password)
         {
             NDWebAppUser user = await userManager.FindByIdAsync(id);
@@ -203,6 +206,7 @@ namespace NDWebApp.MVC.Controllers
 
         [Authorize(Roles = "Administrator")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(string id)
         {
             NDWebAppUser user = await userManager.FindByIdAsync(id);
@@ -210,7 +214,10 @@ namespace NDWebApp.MVC.Controllers
             {
                 IdentityResult result = await userManager.DeleteAsync(user);
                 if (result.Succeeded)
-                    return RedirectToAction("Success");
+                { 
+                    return RedirectToAction("Index");
+                    TempData["Message"] = "Brukeren ble slettet";
+                }
                 else
                     Errors(result);
             }

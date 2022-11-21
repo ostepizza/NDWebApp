@@ -69,6 +69,8 @@ namespace NDWebApp.Data
                 {
                     UserName = config["AdminCredentials:Email"],
                     Email = config["AdminCredentials:Email"],
+                    empFname = "System",
+                    empLname = "Administrator",
                     EmailConfirmed = true
                 };
                 IdentityResult result;
@@ -82,6 +84,34 @@ namespace NDWebApp.Data
                     {
                         // todo: process errors
                         
+                    }
+                }
+            }
+
+            var testtl = await userManager
+                .FindByEmailAsync("team@leader.net");
+
+            if (testtl == null)
+            {
+                testtl = new NDWebAppUser()
+                {
+                    UserName = "team@leader.net",
+                    Email = "team@leader.net",
+                    empFname = "Team",
+                    empLname = "Leader",
+                    EmailConfirmed = true
+                };
+                IdentityResult result;
+                result = await userManager
+                    .CreateAsync(testtl, "asd123");
+                if (result.Succeeded)
+                {
+                    result = await userManager
+                        .AddToRoleAsync(testtl, roleNameTL);
+                    if (!result.Succeeded)
+                    {
+                        // todo: process errors
+
                     }
                 }
             }

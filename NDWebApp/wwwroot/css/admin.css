@@ -16,11 +16,6 @@ html, body {
     text-decoration: underline;
 }*/
 
-.container-fluid div, .container-fluid{
-    margin:0;
-    padding: 0;
-}
-
 .page-index {
     width:100%;
 }
@@ -354,6 +349,8 @@ footer {
     position: sticky;
     top: 0;
     max-width: 20vh;
+    margin: 0;
+    padding: 0;
 }
 
 .mobileShow {

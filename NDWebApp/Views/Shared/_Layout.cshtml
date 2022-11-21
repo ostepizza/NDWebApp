@@ -28,7 +28,11 @@
                 <div class="logged-in-as">
                     @if (SignInManager.IsSignedIn(User))
                     {
-                        <p>Hei, @UserManager.GetUserName(User)!</p>
+                        if (!string.IsNullOrEmpty(UserManager.GetUserAsync(User).Result.empFname) && !string.IsNullOrEmpty(UserManager.GetUserAsync(User).Result.empLname)) {
+                            <p>Hei, @UserManager.GetUserAsync(User).Result.empFname @UserManager.GetUserAsync(User).Result.empLname!</p>
+                        } else {
+                            <p>Hei, @UserManager.GetUserName(User)!</p>
+                        }
                     } else {
                         <p>not logged in</p>
                     }
@@ -40,9 +44,21 @@
                 <a class="nav-link" asp-area="" asp-controller="Repairs" asp-action="Index"><div class="btn">Reparasjoner</div></a>
                 <a class="nav-link" asp-area="" asp-controller="Suggestions" asp-action="Index"><div class="btn">Forslag</div></a>
                 <a class="nav-link" asp-area="" asp-controller="Users" asp-action="Search"><div class="btn">Brukersøk</div></a>
-                <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Index"><div class="btn">Min konto</div></a>
-                <a class="nav-link" asp-area="" asp-controller="Users" asp-action="Index"><div class="btn">Brukerliste</div></a>
-                <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Index"><div class="btn btn-last">Admin</div></a>
+                @if (User.IsInRole("Administrator"))
+                {
+                    <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Index"><div class="btn">Min konto</div></a>
+                    <a class="nav-link" asp-area="" asp-controller="Users" asp-action="Index"><div class="btn">Brukerliste</div></a>
+                    <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Index"><div class="btn btn-last">Admin</div></a>
+                }
+                else if (User.IsInRole("Team Leader"))
+                {
+                    <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Index"><div class="btn">Min konto</div></a>
+                    <a class="nav-link" asp-area="" asp-controller="Users" asp-action="Index"><div class="btn btn-last">Brukerliste</div></a>
+                }
+                else
+                {
+                    <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Index"><div class="btn btn-last">Min konto</div></a>
+                }
                 <div class="menu"><img src="~/img/logo.svg"></div>
                 <a class="nav-link"asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })"><div class="btn">Logg ut</div></a>
             </div>

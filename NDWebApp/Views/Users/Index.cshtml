@@ -5,31 +5,49 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-<a asp-action="Add" class="btn btn-secondary">Legg til bruker</a>
-<div class="alert alert-danger" role="alert">
-    <b>Delete:</b> Har ingen warning/bekreftelse<br />
-    <b>Create:</b> Mangler team felt<br />
-    <b>Reset password:</b> Trenger bekreftelse på passord / bytte<br />
-</div>
-<br />
-<div class="alert alert-danger" role="alert">
-    <b>To be:</b> Alert når en bruker er slettet
-</div>
+@if (User.IsInRole("Administrator"))
+{
+    <a asp-action="Add" class="btn btn-secondary">Legg til bruker</a>
+    <div class="alert alert-danger" role="alert">
+        <b>Delete:</b> Har ingen warning/bekreftelse<br />
+        <b>Create:</b> Mangler team felt<br />
+        <b>Reset password:</b> Trenger bekreftelse på passord / bytte<br />
+    </div>
+    <br />
+    <div class="alert alert-danger" role="alert">
+        <b>To be:</b> Alert når en bruker er slettet
+        @TempData["Message"]
+    </div>
+}
+
 <table>
-    <tr>
-        <th>Ansattnummer</th>
-        <th>Fornavn</th>
-        <th>Etternavn</th>
-        <th>E-post</th>
-        <th>Tlf.nr.</th>
-        <th>Se på</th>
-        <th>Endre</th>
-        <th>Resett passord</th>
-        <th>Slett</th>
-    </tr>
-    @foreach (NDWebAppUser user in Model)
+    @if (User.IsInRole("Administrator"))
     {
         <tr>
+            <th>Ansattnr.</th>
+            <th>Fornavn</th>
+            <th>Etternavn</th>
+            <th>E-post</th>
+            <th>Tlf.nr.</th>
+            <th>Se på</th>
+            <th>Endre</th>
+            <th>Resett passord</th>
+            <th>Slett</th>
+        </tr>
+    } else {
+        <tr>
+            <th>Ansattnr.</th>
+            <th>Fornavn</th>
+            <th>Etternavn</th>
+            <th>E-post</th>
+            <th>Tlf.nr.</th>
+            <th>Se på</th>
+        </tr>
+    }
+    @foreach (NDWebAppUser user in Model)
+    {
+        if (User.IsInRole("Administrator")) {
+            <tr>
             <td>@user.empNr</td>
             <td>@user.empFname</td>
             <td>@user.empLname</td>
@@ -51,13 +69,54 @@
                 </a>
             </td>
             <td>
-                <form asp-action="Delete" asp-route-id="@user.Id" method="post">
-                    <button type="submit" class="btn btn-sm btn-danger">
+                    <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirm-delete-@user.Id">
                         Slett
                     </button>
-                </form>
             </td>
-        </tr>   
+            </tr>
+        } else {
+            <tr>
+            <td>@user.empNr</td>
+            <td>@user.empFname</td>
+            <td>@user.empLname</td>
+            <td>@user.Email</td>
+            <td>@user.PhoneNumber</td>
+            <td>
+                <a class="btn btn-sm btn-primary" asp-action="View" asp-route-id="@user.Id">
+                    Se på
+                </a>
+            </td>
+        </tr>
+        }    
     }
 </table>
+
+@if (User.IsInRole("Administrator"))
+{
+    foreach (NDWebAppUser user in Model)
+    {
+        <div class="modal fade" id="confirm-delete-@user.Id" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <b>Bekreft sletting av bruker</b>
+                    </div>
+                    <div class="modal-body">
+                        Er du sikker på at du ønsker å slette "@user.Email" (@user.empFname @user.empLname) permanent?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <form asp-action="Delete" asp-route-id="@user.Id" method="post">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-danger btn-ok">
+                                Bekreft sletting
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
    
