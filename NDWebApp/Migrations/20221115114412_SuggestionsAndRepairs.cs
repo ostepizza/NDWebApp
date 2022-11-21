@@ -12,7 +12,7 @@ namespace NDWebApp.Migrations
                name: "Status",
                columns: table => new
                {
-                   StatusId = table.Column<string>(type: "int", nullable: false),
+                   StatusId = table.Column<int>(type: "int", nullable: false),
                    StatusTitle = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false)
                        .Annotation("MySql:CharSet", "utf8mb4"),
                },
@@ -26,7 +26,7 @@ namespace NDWebApp.Migrations
                 name: "Suggestion",
                 columns: table => new
                 {
-                    SuggestionId = table.Column<string>(type: "int", nullable: false),
+                    SuggestionId = table.Column<int>(type: "int", nullable: false),
                     SuggestionTitle = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     SuggestionDescription = table.Column<string>(type: "text", nullable: true)
@@ -37,8 +37,8 @@ namespace NDWebApp.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ResponibleUserId = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    TeamId = table.Column<string>(type: "int", nullable: true),
-                    StatusId = table.Column<string>(type: "int", nullable: true),
+                    TeamId = table.Column<int>(type: "int", nullable: true),
+                    StatusId = table.Column<int>(type: "int", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -77,7 +77,7 @@ namespace NDWebApp.Migrations
                 name: "Repairs",
                 columns: table => new
                 {
-                    RepairsId = table.Column<string>(type: "int", nullable: false),
+                    RepairsId = table.Column<int>(type: "int", nullable: false),
                     RepairsTitle = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     RepairsDescription = table.Column<string>(type: "text", nullable: true)
@@ -86,8 +86,8 @@ namespace NDWebApp.Migrations
                     RepairsEnddate = table.Column<string>(type: "datetime", nullable: true),
                     UserId = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    TeamId = table.Column<string>(type: "int", nullable: true),
-                    StatusId = table.Column<string>(type: "int", nullable: true),
+                    TeamId = table.Column<int>(type: "int", nullable: true),
+                    StatusId = table.Column<int>(type: "int", nullable: true),
                 },
                 constraints: table =>
                 {

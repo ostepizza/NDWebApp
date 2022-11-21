@@ -12,7 +12,7 @@ namespace NDWebApp.Migrations
                 name: "Team",
                 columns: table => new
                 {
-                    TeamId = table.Column<string>(type: "int", nullable: false),
+                    TeamId = table.Column<int>(type: "int", nullable: false),
                     TeamName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     LeaderUserId = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
