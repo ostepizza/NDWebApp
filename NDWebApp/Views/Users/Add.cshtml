@@ -1,41 +1,36 @@
+@model UserModel
 @{
-    ViewBag.Title = "Legg til bruker";
+    ViewData["Title"] = "Opprett bruker";
 }
 
-<h1>Legg til ny bruker</h1> 
-<br />
-<p>Vennligst fyll ut for å legge til ny bruker</p>
-<br />
+<h1>@ViewData["Title"]</h1>
+<a asp-action="Index" class="btn btn-secondary">Tilbake</a>
+<div asp-validation-summary="All" class="text-danger"></div>
 
-
-
-<div>
-	<input type="text" placeholder="Fornavn" required />
-	<input type "text" placeholder="Etternavn" required />
-</div>
-
-<br />
-
-<div>
-	<input type="text" placeholder="Ansattnummer" required />
-</div>
-
-<br />
-
-<div>
-	<input type="text" placeholder="Email" required />
-</div>
-
-<br />
-
-<div>
-	<input type="text" placeholder="Telefonnummer" />
-</div>
-
-
-
-
-
-
-
-
+<form method="post">
+    <div class="form-group">
+        <label asp-for="empNr"></label>
+        <input asp-for="empNr" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="empFname"></label>
+        <input asp-for="empFname" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="empLname"></label>
+        <input asp-for="empLname" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Phone"></label>
+        <input asp-for="Phone" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Password"></label>
+        <input asp-for="Password" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
