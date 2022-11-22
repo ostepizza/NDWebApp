@@ -66,7 +66,7 @@
         <tr>
             <td>@team.TeamId</td>
             <td>@team.TeamName</td>
-            <td>@team.LeaderUserId</td>
+            <td>@team.empFname @team.empLname</td>
             <td>NN</td>
             <td>
                 <a class="btn btn-sm btn-primary" asp-action="View" asp-route-id="@team.TeamId">
@@ -93,7 +93,7 @@ else
         <tr>
             <td>@team.TeamId</td>
             <td>@team.TeamName</td>
-            <td>@team.LeaderUserId</td>
+                <td>@team.empFname @team.empLname</td>
             <td>NN</td>
             <td>
                 <a class="btn btn-sm btn-primary" asp-action="View" asp-route-id="@team.TeamId">

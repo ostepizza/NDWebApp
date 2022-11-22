@@ -18,7 +18,7 @@ namespace NDWebApp.Data
         {
             using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
             connection.Open();
-            var reader = ReadData("Select TeamId, TeamName, LeaderUserId from Team;", connection);
+            var reader = ReadData("Select t.TeamId, t.TeamName, t.LeaderUserId, u.Id, u.empFname, u.empLname from Team AS t JOIN AspNetUsers AS u WHERE t.LeaderUserId = u.Id;", connection);
             var teams = new List<TeamEntity>();
             while (reader.Read())
             {
@@ -26,6 +26,9 @@ namespace NDWebApp.Data
                 team.TeamId = reader.GetInt32("TeamId");
                 team.TeamName = reader.GetString(1);
                 team.LeaderUserId = reader.GetString(2);
+                team.Id = reader.GetString(3);
+                team.empFname = reader.GetString(4);
+                team.empLname = reader.GetString(5);
 
                 Console.WriteLine(reader.GetString(1));
                 teams.Add(team);

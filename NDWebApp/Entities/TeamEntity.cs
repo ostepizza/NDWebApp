@@ -9,5 +9,11 @@ namespace NDWebApp.Entities
         public string? TeamName { get; set; }
 
         public string?  LeaderUserId { get; set; }
+
+        public string? Id { get; set; }
+
+        public string? empFname { get; set; }
+
+        public string? empLname { get; set; }
     }
 }

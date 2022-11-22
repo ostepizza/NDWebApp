@@ -4,6 +4,8 @@ using NDWebApp.Models;
 using NDWebApp.Data;
 
 using System.Diagnostics;
+using Microsoft.AspNetCore.Identity;
+using NDWebApp.Areas.Identity.Data;
 
 namespace NDWebApp.MVC.Controllers
 {
@@ -32,7 +34,7 @@ namespace NDWebApp.MVC.Controllers
             return View();
         }
 
-        public IActionResult Detailed()
+        public IActionResult View()
         {
             return View();
         }
