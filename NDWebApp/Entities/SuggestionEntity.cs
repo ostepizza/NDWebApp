@@ -21,7 +21,7 @@ namespace NDWebApp.Entities
 
         public string? StatusId { get; set; }
 
-        public TeamEntity? TeamId { get; set; }
+        public int? TeamId { get; set; }
 
 
 

@@ -1,4 +1,9 @@
 @model NDWebApp.Models.SuggestionModel
+
+{
+    ViewBag.Title = "Forslag";
+}
+
 <ul>
     @foreach (var suggestion in Model.Suggestions)
     {
@@ -7,8 +12,6 @@
         </li>
     }
 </ul>
-    ViewBag.Title = "Forslag";
-}
 
 <link rel="stylesheet" href="~/css/table.css" asp-append-version="true">
 
@@ -18,38 +21,28 @@
     <div class="table-wrapper">
     <table>
         <thead>
+            <th>ID</th>
             <th>Tittel</th>
+            <th>Beskr.</th>
             <th>Deadline</th>
-            <th>Status</th>
-            <th>Ansvarlig</th>
             <th>Sendt inn av</th>
-            <th>Se detaljer</th>
+            <th>Ansvarlig</th>
+            <th>Team ID</th>
         </thead>
         <tbody>
-            <tr>
-                <td>1 time til Ørsta Rådhus</td>
-                <td>01.01.23</td>
-                <td>Godkjent</td>
-                <td>Prell Arne</td>
-                <td>Jens Rosamann</td>
-                <td><a asp-controller="Suggestions" asp-action="Detailed">Se detajler</a></td>
-            </tr>
-            <tr>
-                <td>1 time til Ørsta Rådhus</td>
-                <td>01.01.23</td>
-                <td>Godkjent</td>
-                <td>Prell Arne</td>
-                <td>Jens Rosamann</td>
-                <td><a asp-controller="Suggestions" asp-action="Detailed">Se detajler</a></td>
-            </tr>
-            <tr>
-                <td>1 time til Ørsta Rådhus</td>
-                <td>01.01.23</td>
-                <td>Godkjent</td>
-                <td>Prell Arne</td>
-                <td>Jens Rosamann</td>
-                <td><a asp-controller="Suggestions" asp-action="Detailed">Se detajler</a></td>
-            </tr>
+            @foreach (var suggestion in Model.Suggestions)
+            {
+                <tr>
+                    <td>@suggestion.SuggestionId</td>
+                    <td>@suggestion.SuggestionTitle</td>
+                    <td>@suggestion.SuggestionDescription</td>
+                    <td>@suggestion.SuggestionDeadline</td>
+                    <td>@suggestion.SuggestedUserId</td>
+                    <td>@suggestion.ResponsibleUserId</td>
+                    <td>@suggestion.TeamId</td>
+                    <td><a asp-controller="Suggestions" asp-action="Detailed">Se detajler</a></td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>
