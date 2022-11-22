@@ -1,4 +1,12 @@
-@{
+@model NDWebApp.Models.SuggestionModel
+<ul>
+    @foreach (var suggestion in Model.Suggestions)
+    {
+        <li>
+            Id: @suggestion.SuggestionId , Tittel: @suggestion.SuggestionTitle , Beskrivelse: @suggestion.SuggestionDescription , Frist: @suggestion.SuggestionDeadline ,  @suggestion.SuggestionEnddate
+        </li>
+    }
+</ul>
     ViewBag.Title = "Forslag";
 }
 

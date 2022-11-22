@@ -1,4 +1,5 @@
-﻿using NDWebApp.MVC.Controllers;
+﻿using NDWebApp.Entities;
+using NDWebApp.MVC.Controllers;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NDWebApp.Models
@@ -20,9 +21,6 @@ namespace NDWebApp.Models
 
         public StatusModel? StatusId { get; set; }
 
-        public SuggestionModel()
-        {
-            
-        }
+        public IEnumerable<SuggestionEntity> Suggestions { get;set; }
     }
 }

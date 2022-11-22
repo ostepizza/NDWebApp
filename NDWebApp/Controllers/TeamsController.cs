@@ -10,9 +10,9 @@ namespace NDWebApp.MVC.Controllers
     public class TeamsController : Controller
     {
         private ILogger<TeamsController> _logger;
-        private readonly ISqlConnector teamSqlConnector;
+        private readonly ITeamSqlConnector teamSqlConnector;
         
-        public TeamsController(ILogger<TeamsController> logger, ISqlConnector teamSqlConnector)
+        public TeamsController(ILogger<TeamsController> logger, ITeamSqlConnector teamSqlConnector)
         {
             _logger = logger;
             this.teamSqlConnector = teamSqlConnector;

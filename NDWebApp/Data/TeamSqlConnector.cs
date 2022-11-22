@@ -5,7 +5,7 @@ using System.Data.Common;
 
 namespace NDWebApp.Data
 {
-    public class TeamSqlConnector : ISqlConnector
+    public class TeamSqlConnector : ITeamSqlConnector
     {
         private readonly IConfiguration config;
 

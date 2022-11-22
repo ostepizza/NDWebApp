@@ -25,8 +25,7 @@ builder.Services.AddDbContext<NDWebAppContext>(options =>
 builder.Services.AddDefaultIdentity<NDWebAppUser>(options => options.SignIn.RequireConfirmedAccount = reqConfirmedAccount)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<NDWebAppContext>();
-builder.Services.AddScoped<ISqlConnector, TeamSqlConnector>();
-
+builder.Services.AddScoped<ITeamSqlConnector, TeamSqlConnector>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
