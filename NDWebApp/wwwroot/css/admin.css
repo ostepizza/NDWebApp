@@ -83,21 +83,9 @@ div .page-index-panel {
 }
 
 .menu .btn  {
-    height: 3rem;
-    cursor: pointer;
     display: flex;
-    flex-flow:column;
-    justify-content: center;
-    align-content: center;
     transition: 500ms;
-    border-top: #000000 solid 2px;
-    border-radius: 0rem;
-    font-family: Lato;
     font-size: 0.8em;
-}
-
-.menu .btn-last {
-    border-bottom: #000000 solid 2px;
 }
 
 .menu .btn:hover {
@@ -399,4 +387,18 @@ footer {
         float: left; /* label to left */
         font-weight: 700;
     }
+}
+
+.fas {
+    margin: auto 6px auto 0;
+}
+
+table .fas {
+    margin:0;
+    padding:0;
+}
+
+.fill {
+    padding-left: 15px;
+    padding-right: 15px;
 }

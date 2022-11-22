@@ -14,25 +14,25 @@
     @if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Success")
     {
         <div class="alert alert-success" role="alert">
-        @TempData["Message"]
+            <i class="fas fa-circle-exclamation"></i> @TempData["Message"]
         </div>
         <br />
     }
     else if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Danger")
     {
         <div class="alert alert-danger" role="alert">
-            @TempData["Message"]
+            <i class="fas fa-triangle-exclamation"></i> @TempData["Message"]
         </div>
         <br />
     }
     else if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Warning")
     {
         <div class="alert alert-warning" role="alert">
-            @TempData["Message"]
+            <i class="fas fa-triangle-exclamation"></i> @TempData["Message"]
         </div>
         <br />
     }
-    <a asp-action="Add" class="btn btn-secondary">Legg til bruker</a>
+    <a asp-action="Add" class="btn btn-secondary"><i class="fas fa-circle-plus"></i> Legg til bruker</a>
     <br />
     
 }
@@ -46,10 +46,7 @@
             <th>Etternavn</th>
             <th>E-post</th>
             <th>Tlf.nr.</th>
-            <th>Se på</th>
-            <th>Endre</th>
-            <th>Bytt passord</th>
-            <th>Slett</th>
+            <th></th>
         </tr>
     } else {
         <tr>
@@ -58,38 +55,32 @@
             <th>Etternavn</th>
             <th>E-post</th>
             <th>Tlf.nr.</th>
-            <th>Se på</th>
+            <th></th>
         </tr>
     }
     @foreach (NDWebAppUser user in Model)
     {
         if (User.IsInRole("Administrator")) {
             <tr>
-            <td>@user.empNr</td>
-            <td>@user.empFname</td>
-            <td>@user.empLname</td>
-            <td>@user.Email</td>
-            <td>@user.PhoneNumber</td>
-            <td>
-                <a class="btn btn-sm btn-primary" asp-action="View" asp-route-id="@user.Id">
-                    Se på
-                </a>
-            </td>
-            <td>
-                <a class="btn btn-sm btn-primary" asp-action="Update" asp-route-id="@user.Id">
-                    Endre
-                </a>
-            </td>
-            <td>
-                <a class="btn btn-sm btn-warning" asp-action="ResetPassword" asp-route-id="@user.Id">
-                    Bytt passord
-                </a>
-            </td>
-            <td>
-                    <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirm-delete-@user.Id">
-                        Slett
-                    </button>
-            </td>
+                <td>@user.empNr</td>
+                <td>@user.empFname</td>
+                <td>@user.empLname</td>
+                <td>@user.Email</td>
+                <td>@user.PhoneNumber</td>
+                <td>
+                        <a class="btn btn-sm btn-primary" asp-action="View" asp-route-id="@user.Id">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                        <a class="btn btn-sm btn-success" asp-action="Update" asp-route-id="@user.Id">
+                            <i class="fas fa-pen-to-square"></i>
+                        </a>
+                        <a class="btn btn-sm btn-warning" asp-action="ResetPassword" asp-route-id="@user.Id">
+                             <i class="fas fa-key"></i>
+                        </a>
+                        <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirm-delete-@user.Id">
+                            <i class="fas fa-trash-can"></i>
+                        </button>
+                </td>
             </tr>
         } else {
             <tr>
@@ -100,7 +91,7 @@
             <td>@user.PhoneNumber</td>
             <td>
                 <a class="btn btn-sm btn-primary" asp-action="View" asp-route-id="@user.Id">
-                    Se på
+                    <i class="fas fa-eye"></i>
                 </a>
             </td>
         </tr>
@@ -122,11 +113,11 @@
                         Er du sikker på at du ønsker å slette <b>"@user.Email" (@user.empFname @user.empLname)</b> permanent?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-xmark"></i> Cancel</button>
                         <form asp-action="Delete" asp-route-id="@user.Id" method="post">
                             @Html.AntiForgeryToken()
                             <button type="submit" class="btn btn-danger btn-ok">
-                                Bekreft sletting
+                                <i class="fas fa-trash-can"></i> Bekreft sletting
                             </button>
                         </form>
                     </div>

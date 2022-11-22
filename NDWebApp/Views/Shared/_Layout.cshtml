@@ -20,6 +20,10 @@
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true">
     <link rel="stylesheet" href="~/bacit_dotnet.MVC.styles.css" asp-append-version="true" />
     <link href="https://fonts.googleapis.com/css?family=Nunito|Lato|Open+Sans|Raleway|Roboto" rel="stylesheet">
+    <!-- FONT AWESOME -->
+    <link href="~/css/fontawesome.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/css/brands.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/css/solid.css" rel="stylesheet" asp-append-version="true">
 </head>
 <body>
     <div class="container-fluid">
@@ -39,28 +43,28 @@
                     <!--Logged in as USER<br>
                     Last activity: timestamp-->
                 </div>
-                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index"><div class="btn">Hjem</div></a>
-                <a class="nav-link" asp-area="" asp-controller="Teams" asp-action="Index"><div class="btn">Teams</div></a>
-                <a class="nav-link" asp-area="" asp-controller="Repairs" asp-action="Index"><div class="btn">Reparasjoner</div></a>
-                <a class="nav-link" asp-area="" asp-controller="Suggestions" asp-action="Index"><div class="btn">Forslag</div></a>
-                <a class="nav-link" asp-area="" asp-controller="Users" asp-action="Search"><div class="btn">Brukersøk</div></a>
+                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index"><div class="btn"><i class="fas fa-house"></i>Hjem</div></a>
+                <a class="nav-link" asp-area="" asp-controller="Teams" asp-action="Index"><div class="btn"><i class="fas fa-users"></i>Teams</div></a>
+                <a class="nav-link" asp-area="" asp-controller="Repairs" asp-action="Index"><div class="btn"><i class="fas fa-wrench"></i>Reparasjoner</div></a>
+                <a class="nav-link" asp-area="" asp-controller="Suggestions" asp-action="Index"><div class="btn"><i class="fas fa-lightbulb"></i>Forslag</div></a>
+                <a class="nav-link" asp-area="" asp-controller="Users" asp-action="Search"><div class="btn"><i class="fas fa-magnifying-glass"></i>Brukersøk</div></a>
                 @if (User.IsInRole("Administrator"))
                 {
-                    <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Index"><div class="btn">Min konto</div></a>
-                    <a class="nav-link" asp-area="" asp-controller="Users" asp-action="Index"><div class="btn">Brukerliste</div></a>
-                    <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Index"><div class="btn btn-last">Admin</div></a>
+                    <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Index"><div class="btn"><i class="fas fa-user"></i>Min konto</div></a>
+                    <a class="nav-link" asp-area="" asp-controller="Users" asp-action="Index"><div class="btn"><i class="fas fa-box-archive"></i>Brukerliste</div></a>
+                    <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Index"><div class="btn"><i class="fas fa-gears"></i>Admin</div></a>
                 }
                 else if (User.IsInRole("Team Leader"))
                 {
-                    <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Index"><div class="btn">Min konto</div></a>
-                    <a class="nav-link" asp-area="" asp-controller="Users" asp-action="Index"><div class="btn btn-last">Brukerliste</div></a>
+                    <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Index"><div class="btn"><i class="fas fa-user"></i>Min konto</div></a>
+                    <a class="nav-link" asp-area="" asp-controller="Users" asp-action="Index"><div class="btn"><i class="fas fa-box-archive"></i>Brukerliste</div></a>
                 }
                 else
                 {
-                    <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Index"><div class="btn btn-last">Min konto</div></a>
+                    <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Index"><div class="btn"><i class="fas fa-user"></i>Min konto</div></a>
                 }
                 <div class="menu"><img src="~/img/logo.svg"></div>
-                <a class="nav-link"asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })"><div class="btn">Logg ut</div></a>
+                <a class="nav-link" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })"><div class="btn"><i class="fas fa-right-from-bracket"></i><b>Logg ut</b></div></a>
             </div>
 
             <div class="col-lg-2 menu mobileShow" style="height: auto;">
