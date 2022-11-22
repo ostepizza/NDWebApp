@@ -1,9 +1,136 @@
 @model NDWebApp.Models.TeamModel
-<ul>
+@using NDWebApp.Areas.Identity.Data
+@{
+    ViewBag.Title = "Teams";
+}
+<h1>@ViewData["Title"]</h1>
+@if (User.IsInRole("Administrator"))
+{
+    <div class="alert alert-danger" role="alert">
+        <b>Create:</b> Ikke funksjonelt<br />
+        <b>Ant. medl.:</b> Ikke funksjonelt<br />
+        <b>Se på:</b> Ikke funksjonelt<br />
+        <b>Endre:</b> Ikke funksjonelt<br />
+        <b>Slett:</b> Ikke funksjonelt<br />
+    </div>
+    <br />
+    @if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Success")
+    {
+        <div class="alert alert-success" role="alert">
+        @TempData["Message"]
+        </div>
+        <br />
+    }
+    else if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Danger")
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["Message"]
+        </div>
+        <br />
+    }
+    else if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Warning")
+    {
+        <div class="alert alert-warning" role="alert">
+            @TempData["Message"]
+        </div>
+        <br />
+    }
+    <a asp-action="Add" class="btn btn-secondary">Legg til team</a>
+    <br />
+    
+}
+
+<table>
+    <tr>
+        @if (User.IsInRole("Administrator"))
+        {
+            <th>Team ID</th>
+            <th>Team Navn</th>
+            <th>Team Leader</th>
+            <th>Ant. medlemmer</th>
+            <th>Se på</th>
+            <th>Endre</th>
+            <th>Slett</th>
+        } else {
+            <th>Team ID</th>
+            <th>Team Navn</th>
+            <th>Team Leader</th>
+            <th>Ant. medlemmer</th>
+            <th>Se på</th>
+        }
+    </tr>
+@if (User.IsInRole("Administrator"))
+{
     @foreach (var team in Model.Teams)
     {
-        <li>
-            LE ebic team: @team.TeamId, Etternavn: @team.TeamName , E-post: @team.LeaderUserId
-        </li>
+        <tr>
+            <td>@team.TeamId</td>
+            <td>@team.TeamName</td>
+            <td>@team.LeaderUserId</td>
+            <td>NN</td>
+            <td>
+                <a class="btn btn-sm btn-primary" asp-action="View" asp-route-id="@team.TeamId">
+                    Se på
+                </a>
+            </td>
+            <td>
+                <a class="btn btn-sm btn-primary" asp-action="Update" asp-route-id="@team.TeamId">
+                    Endre
+                </a>
+            </td>
+            <td>
+                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirm-delete-@team.TeamId">
+                    Slett
+                </button>
+            </td>
+        </tr>
     }
-</ul>
+}
+else
+{
+    @foreach (var team in Model.Teams)
+    {
+        <tr>
+            <td>@team.TeamId</td>
+            <td>@team.TeamName</td>
+            <td>@team.LeaderUserId</td>
+            <td>NN</td>
+            <td>
+                <a class="btn btn-sm btn-primary" asp-action="View" asp-route-id="@team.TeamId">
+                    Se på
+                </a>
+            </td>
+        </tr>
+    }
+}
+</table>
+
+@if (User.IsInRole("Administrator"))
+{
+    foreach (var team in Model.Teams)
+    {
+        <div class="modal fade" id="confirm-delete-@team.TeamId" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <b>Bekreft sletting av bruker</b>
+                    </div>
+                    <div class="modal-body">
+                        Er du sikker på at du ønsker å slette team <b>"@team.TeamName" (@team.TeamId)</b> permanent?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <form asp-action="Delete" asp-route-id="@team.TeamId" method="post">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-danger btn-ok">
+                                Bekreft sletting
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+} 
+
+   
