@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using NDWebApp.Entities;
 
 namespace NDWebApp.Models
 {
@@ -9,11 +10,9 @@ namespace NDWebApp.Models
 
         public string? TeamName { get; set; }
 
-        public string? LeaderEmpNr { get; set; }
+        public string? LeaderUserId { get; set; }
 
-        public TeamModel()
-        {
+        public IEnumerable<TeamEntity> Teams { get; set; }
 
-        }
     }
 }

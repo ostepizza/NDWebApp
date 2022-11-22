@@ -8,6 +8,6 @@ namespace NDWebApp.Entities
 
         public string? TeamName { get; set; }
 
-        public int  LeaderEmpNr { get; set; }
+        public string?  LeaderUserId { get; set; }
     }
 }

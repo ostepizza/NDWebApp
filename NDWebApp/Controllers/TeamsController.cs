@@ -10,21 +10,21 @@ namespace NDWebApp.MVC.Controllers
     public class TeamsController : Controller
     {
         private ILogger<TeamsController> _logger;
-        private readonly ISqlConnector sqlConnector;
+        private readonly ISqlConnector teamSqlConnector;
         
-        public TeamsController(ILogger<TeamsController> logger, ISqlConnector sqlConnector)
+        public TeamsController(ILogger<TeamsController> logger, ISqlConnector teamSqlConnector)
         {
             _logger = logger;
-            this.sqlConnector = sqlConnector;
+            this.teamSqlConnector = teamSqlConnector;
         }
         
         [HttpGet]
         public IActionResult Index()
         {
-            var data = sqlConnector.GetTeams();
+            var data = teamSqlConnector.GetTeams();
             var model = new TeamModel();
             model.Teams = data;
-            return View("Teams", model);
+            return View(model);
         }
 
         public IActionResult Add()
