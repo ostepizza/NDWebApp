@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using static System.Formats.Asn1.AsnWriter;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Data.SqlClient;
+using SqlConnection = NDWebApp.Data.SqlConnection;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("NDWebAppContextConnection") ?? throw new InvalidOperationException("Connection string 'NDWebAppContextConnection' not found.");
@@ -26,6 +28,8 @@ builder.Services.AddDefaultIdentity<NDWebAppUser>(options => options.SignIn.Requ
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<NDWebAppContext>();
 builder.Services.AddScoped<ITeamSqlConnector, TeamSqlConnector>();
+builder.Services.AddTransient<ISqlConnection, SqlConnection>();
+builder.Services.AddScoped<ISuggestionRepository, SuggestionRepository>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

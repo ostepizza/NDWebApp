@@ -35,7 +35,7 @@ namespace NDWebApp.Migrations
                     SuggestionEnddate = table.Column<string>(type: "datetime", nullable: true),
                     SuggestedUserId = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ResponibleUserId = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
+                    ResponsibleUserId = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     TeamId = table.Column<int>(type: "int", nullable: true),
                     StatusId = table.Column<int>(type: "int", nullable: true),
@@ -52,7 +52,7 @@ namespace NDWebApp.Migrations
 
                     table.ForeignKey(
                         name: "FK_ResponsibleUserId",
-                        column: x => x.ResponibleUserId,
+                        column: x => x.ResponsibleUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
