@@ -1,9 +1,15 @@
+@using Microsoft.AspNetCore.Identity
+@using NDWebApp.Areas.Identity.Data
+@using NDWebApp.Models
+
+@inject UserManager<NDWebAppUser> UserManager
+
 @{
     ViewBag.Title = "Min Konto";
 }
 
-<style>
 
+<style>
     .profile-img img{
         width: 70%;
         height: 100%;
@@ -24,133 +30,194 @@
         right: 0;
         top: 0;
     }
-
-
-
-
 </style>
-                  
+
+<h1>@ViewData["Title"]</h1>     
 <div class="container emp-profile">
-                        <form method="post">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="profile-img" style="margin-top: 80px;">
-                                        <img src="https://avatars.akamai.steamstatic.com/53b122596546700879f9aa226b1cbb57d0ec7bff_full.jpg" alt=""/>
-                                        <div class="file btn btn-lg btn-primary">
-                                            Endre Profilbilde
-                                            <input type="file" name="file"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="profile-head" style="margin-top: 80px;">
-                                        <h2>
-                                            Mister Garf
-                                        </h2>
-                                        <h6>
-                                            IKT-ansvarlig
-                                        </h6>
-                                        <ul class="nav nav-tabs" id="myTab" role="tablist" >
-                                            <li class="nav-item">
-                                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Kontaktinfo</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Forslag</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <fieldset class="clearfix">
+    <div class="row">
+        @*<div class="col-md-4">
+            <form method="post">
+                <div class="profile-img" style="margin-top: 80px;">
+                    <img src="https://avatars.akamai.steamstatic.com/53b122596546700879f9aa226b1cbb57d0ec7bff_full.jpg" alt=""/>
+                    <div class="file btn btn-lg btn-primary">
+                        Endre Profilbilde
+                        <input type="file" name="file"/>
+                    </div>
+                </div>
+            </form>
+        </div>*@
+        <div class="col-md-12">
+            <div class="profile-head">
+                <h2>
+                    @UserManager.GetUserAsync(User).Result.empFname @UserManager.GetUserAsync(User).Result.empLname
+                </h2>
+                <h6>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <p>Administrator</p>
+                    }
+                    else if (User.IsInRole("Team Leader")) 
+                    {
+                        <p>Teamleder</p>
+                    }
+                    else
+                    {
+                        <p>Ansatt</p>
+                    }
+                </h6>
 
-                                        <div>
-                                            <label for="username">Nytt passord:</label><br>
-                                            <input type="password" id="username" name="username" style="width: fit-content;">
-                                        </div>
+                <br />
+                <div class="alert alert-danger" role="alert">
+                    <b>Kontaktinfo:</b> Team -> Ikke funksjonell<br />
+                    <b>Endre profilbilde:</b> Ikke funksjonell<br />
+                    <b>Endre passord:</b> Ikke funksjonell<br />
+                    <b>Suggestions</b> Ikke funksjonell<br />
+                </div>
+                <br />
 
-                                        <div>
-                                            <label for="pass">Bekreft passord:</label><br>
-                                            <input type="password" id="pass" name="password" style="width: fit-content;">
-                                        </div><br>
-
-                                        <input type="submit" value="Endre passord" style="width: fit-content;">
-
-                                    </fieldset>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="tab-content profile-tab" id="myTabContent">
-                                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label>Ansatt-ID</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p>001</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label>Navn</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p>Mister Garf</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label>Email</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p>lasagner@gmail.com</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label>Telefon-nummer</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p>+47 97878582</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label>Avdeling</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p>IKT</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label>Team</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p>Team-01</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label>Pågående forslag</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p>2</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label>Alle forslag</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p>7</p>
-                                                </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+                <ul class="nav nav-tabs" role="tablist" >
+                    <li class="nav-item">
+                        <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="true">Kontaktinfo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="suggestions-tab" data-toggle="tab" href="#suggestions" role="tab" aria-controls="suggestions" aria-selected="false">Forslag</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="repairs-tab" data-toggle="tab" href="#repairs" role="tab" aria-controls="repairs" aria-selected="false">Reparasjoner</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="changepassword-tab" data-toggle="tab" href="#changepassword" role="tab" aria-controls="changepassword" aria-selected="false">Bytt passord</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
+    <div class="row">
+        @*<div class="col-md-4">
+        </div>*@
+        <div class="col-md-12">
+            <div class="tab-content profile-tab">
+                <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="row">
+                        <div col-md-3></div>
+                        <div col-md-6>
+                            <div class="alert alert-primary" role="alert">
+                                Ta kontakt med systemadministrator for endring av personalia.
+                            </div>
+                        </div>
+                        <div col-md-3></div>   
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>System-ID</label>
+                        </div>
+                        <div class="col-md-9">
+                            <p>@UserManager.GetUserAsync(User).Result.Id</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Ansattnummer</label>
+                        </div>
+                        <div class="col-md-9">
+                            @if (UserManager.GetUserAsync(User).Result.empNr != 0)
+                            {
+                                <p>@UserManager.GetUserAsync(User).Result.empNr</p>
+                            }
+                            else
+                            {
+                                <p>Ingen ansattnummer registrert</p>
+                            }
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>E-post</label>
+                        </div>
+                        <div class="col-md-9">
+                            @if (!string.IsNullOrEmpty(UserManager.GetUserAsync(User).Result.Email))
+                            {
+                            <p>@UserManager.GetUserAsync(User).Result.Email</p>
+                            }
+                            else
+                            {
+                            <p>Ingen e-post registrert</p>
+                            }
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Telefon-nummer</label>
+                        </div>
+                        <div class="col-md-9">
+                            @if (!string.IsNullOrEmpty(UserManager.GetUserAsync(User).Result.PhoneNumber))
+                            {
+                                <p>@UserManager.GetUserAsync(User).Result.PhoneNumber</p>
+                            }
+                            else
+                            {
+                                <p>Ingen telefonnummer registrert</p>
+                            }
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Team</label>
+                        </div>
+                        <div class="col-md-9">
+                            <p>NN</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="suggestions" role="tabpanel" aria-labelledby="suggestions-tab">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Team</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Team-01</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Pågående forslag</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>2</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Alle forslag</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>7</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="repairs" role="tabpanel" aria-labelledby="repairs-tab">
+                    <p>Under construction :D</p>
+                </div>
+                <div class="tab-pane fade" id="changepassword" role="tabpanel" aria-labelledby="changepassword-tab">
+                    <form method="post">
+                        <fieldset class="clearfix">
+                            <div>
+                                <label for="username">Nytt passord:</label><br>
+                                <input type="password" id="username" name="username" style="width: fit-content;">
+                            </div>
+
+                            <div>
+                                <label for="pass">Bekreft passord:</label><br>
+                                <input type="password" id="pass" name="password" style="width: fit-content;">
+                            </div>
+                            <br>
+
+                            <input type="submit" value="Endre passord" style="width: fit-content;">
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

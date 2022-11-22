@@ -402,3 +402,7 @@ table .fas {
     padding-left: 15px;
     padding-right: 15px;
 }
+
+.nav-tabs {
+    margin-bottom: 20px;
+}
