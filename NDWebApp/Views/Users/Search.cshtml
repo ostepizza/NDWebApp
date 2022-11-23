@@ -4,13 +4,33 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-<div asp-validation-summary="All" class="text-danger"></div>
 
 <form method="post">
     @Html.AntiForgeryToken()
     <div class="form-group">
-        <label asp-for="empNr">Ansattnr.</label>
-        <input asp-for="empNr" class="form-control" aria-required="true" />
+        <label asp-for="search">Søk etter ansatt (fritekst):</label>
+        <input asp-for="search" class="form-control" aria-required="true" />
     </div>
     <button type="submit" class="btn btn-primary">Søk</button>
 </form>
+<hr />
+@if (Model.Users != null)
+{
+    <table>
+        <thead>
+            <th>Navn:</th>
+            <th>Epost:</th>
+            <th>Tlf.nr.:</th>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@user.empFname @user.empLname</td>
+                    <td>@user.Email</td>
+                    <td>@user.Phone</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

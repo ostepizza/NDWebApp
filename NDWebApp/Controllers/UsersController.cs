@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NDWebApp.Areas.Identity.Data;
+using NDWebApp.Data;
 using NDWebApp.Models;
 using System.Diagnostics;
 
@@ -11,11 +12,15 @@ namespace NDWebApp.MVC.Controllers
     {
         private UserManager<NDWebAppUser> userManager;
         private IPasswordHasher<NDWebAppUser> passwordHasher;
+        private ILogger<UsersController> _logger;
+        private readonly IUsersSqlConnector usersSqlConnector;
 
-        public UsersController(UserManager<NDWebAppUser> usrMgr, IPasswordHasher<NDWebAppUser> passwordHash)
+        public UsersController(UserManager<NDWebAppUser> usrMgr, IPasswordHasher<NDWebAppUser> passwordHash, ILogger<UsersController> logger, IUsersSqlConnector usersSqlConnector)
         {
             userManager = usrMgr;
             passwordHasher = passwordHash;
+            _logger = logger;
+            this.usersSqlConnector = usersSqlConnector;
         }
 
         [Authorize(Roles = "Administrator,Team Leader")]
@@ -67,7 +72,19 @@ namespace NDWebApp.MVC.Controllers
 
         public IActionResult Search()
         {
-            return View();
+            var data = usersSqlConnector.GetMatchingUsers("AINTNOBODYGONNASEARCHTHISTERMAHAAXAXAXHAHAHAHHAAHAHTOMMORELLOGUITAR");
+            var model = new UserModel();
+            model.Users = data;
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Search(string search)
+        {
+            var data = usersSqlConnector.GetMatchingUsers(search);
+            var model = new UserModel();
+            model.Users = data;
+            return View(model);
         }
 
         [Authorize(Roles = "Administrator,Team Leader")]
