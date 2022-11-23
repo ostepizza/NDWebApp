@@ -1,6 +1,7 @@
 ﻿using MySqlConnector;
 using System.Data;
 using NDWebApp.Entities;
+using NDWebApp.Models;
 using System.Data.Common;
 
 namespace NDWebApp.Data
@@ -37,6 +38,23 @@ namespace NDWebApp.Data
             return teams;
 
         }
+
+        public TeamModel GetTeamById(int id)
+        {
+            using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
+            connection.Open();
+            var query = ("SELECT TeamId, TeamName, LeaderUserId FROM Team WHERE TeamId = " + id + ";");
+            var reader = ReadData(query, connection);
+            var team = new TeamModel();
+            while (reader.Read())
+            {
+                team.TeamId = reader.GetInt32("TeamId");
+                team.TeamName = reader.GetString(1);
+                team.LeaderUserId = reader.GetString(2);
+            }
+            return team;
+        }
+
         private MySqlDataReader ReadData(string query, MySqlConnection conn)
         {
             using var command = conn.CreateCommand();

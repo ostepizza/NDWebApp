@@ -34,9 +34,10 @@ namespace NDWebApp.MVC.Controllers
             return View();
         }
 
-        public IActionResult View()
+        public IActionResult View(int id)
         {
-            return View();
+            var model = teamSqlConnector.GetTeamById(id);
+            return View(model);
         }
     }
 }
