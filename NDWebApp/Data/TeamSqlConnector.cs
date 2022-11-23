@@ -52,6 +52,18 @@ namespace NDWebApp.Data
                 team.TeamName = reader.GetString(1);
                 team.LeaderUserId = reader.GetString(2);
             }
+            connection.Close();
+
+            connection.Open();
+            var query2 = ("SELECT empFname, empLname FROM AspNetUsers WHERE Id = '" + team.LeaderUserId + "';");
+            var reader2 = ReadData(query2, connection);
+            while (reader2.Read())
+            {
+                team.LeaderFirstname = reader2.GetString(0);
+                team.LeaderLastname = reader2.GetString(1);
+            }
+            connection.Close();
+
             return team;
         }
 

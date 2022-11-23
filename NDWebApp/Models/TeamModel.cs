@@ -12,6 +12,10 @@ namespace NDWebApp.Models
 
         public string? LeaderUserId { get; set; }
 
+        public string? LeaderFirstname { get; set; }
+
+        public string? LeaderLastname { get; set; }
+
         public IEnumerable<TeamEntity> Teams { get; set; }
 
     }
