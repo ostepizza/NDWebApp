@@ -41,7 +41,8 @@ namespace NDWebApp.MVC.Controllers
                     empLname = user.empLname,
                     UserName = user.Email,
                     Email = user.Email,
-                    PhoneNumber = user.Phone
+                    PhoneNumber = user.Phone,
+                    Photo = user.Photo
                 };
 
                 IdentityResult result = await userManager.CreateAsync(appUser, user.Password);

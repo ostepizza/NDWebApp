@@ -6,6 +6,7 @@
 
 @{
     ViewBag.Title = "Min Konto";
+    var photoPath = "~/images/noimage.jpg";
 }
 
 
@@ -35,17 +36,17 @@
 <h1>@ViewData["Title"]</h1>     
 <div class="container emp-profile">
     <div class="row">
-        @*<div class="col-md-4">
+        <div class="col-md-4">
             <form method="post">
                 <div class="profile-img" style="margin-top: 80px;">
-                    <img src="https://avatars.akamai.steamstatic.com/53b122596546700879f9aa226b1cbb57d0ec7bff_full.jpg" alt=""/>
+                    <img src="@photoPath" asp-append-version="true" alt="" />
                     <div class="file btn btn-lg btn-primary">
                         Endre Profilbilde
                         <input type="file" name="file"/>
                     </div>
                 </div>
             </form>
-        </div>*@
+        </div>
         <div class="col-md-12">
             <div class="profile-head">
                 <h2>

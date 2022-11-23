@@ -1,9 +1,9 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
 
 namespace NDWebApp.Models
 {
-    public class UserModel
+    public class UserCreateModel
     {
         [Required]
         [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail is not valid")]
@@ -28,7 +28,7 @@ namespace NDWebApp.Models
         public string empFname { get; set; } = "";
 
         [Required]
-        public string empLname { get; set; } = "";
+        public string empLname { get; set; } = ""; 
 
         public IFormFile Photo { get; set; }
     }

@@ -7,7 +7,7 @@
 <a asp-action="Index" class="btn btn-secondary">Tilbake</a>
 <div asp-validation-summary="All" class="text-danger"></div>
 
-<form method="post">
+<form enctype="multipart/form-data" method="post">
     @Html.AntiForgeryToken()
     <div class="form-group">
         <label asp-for="empNr">Ansattnr.</label>
@@ -29,6 +29,15 @@
         <label asp-for="Phone">Tlf.nr.</label>
         <input asp-for="Phone" class="form-control" />
     </div>
+
+    <div class="form-group">
+        <label asp-for="Photo">Bilde</label>
+        <div class="custom-file">
+        <input asp-for="Photo" class="form-control custom-file-input" aria-required="true" />
+        <label class="custom-file-label"></label>
+        </div>
+    </div>
+
     <div class="form-group">
         <label asp-for="Password">Passord</label>
         <input asp-for="Password" class="form-control" aria-required="true" />
