@@ -35,6 +35,14 @@ namespace NDWebApp.Migrations
                table: "AspNetUsers",
                type: "int",
                nullable: true);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_MembershipTeamId",
+                table: "AspNetUsers",
+                column: "TeamId",
+                principalTable: "Team",
+                principalColumn: "TeamId",
+                onDelete: ReferentialAction.SetNull);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
