@@ -3,6 +3,7 @@ using System.Data;
 using NDWebApp.Entities;
 using NDWebApp.Models;
 using System.Data.Common;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace NDWebApp.Data
 {
@@ -41,9 +42,9 @@ namespace NDWebApp.Data
 
         public TeamModel GetTeamById(int id)
         {
-            using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
-            connection.Open();
-            var query = ("SELECT TeamId, TeamName, LeaderUserId FROM Team WHERE TeamId = " + id + ";");
+            using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection")); //Specifies connection
+            connection.Open(); //Opens connection
+            var query = ("SELECT TeamId, TeamName, LeaderUserId FROM Team WHERE TeamId = " + id + ";"); //Specifies first query
             var reader = ReadData(query, connection);
             var team = new TeamModel();
             while (reader.Read())
@@ -52,19 +53,19 @@ namespace NDWebApp.Data
                 team.TeamName = reader.GetString(1);
                 team.LeaderUserId = reader.GetString(2);
             }
-            connection.Close();
+            connection.Close(); //Closes the connection
 
-            connection.Open();
-            var query2 = ("SELECT empFname, empLname FROM AspNetUsers WHERE Id = '" + team.LeaderUserId + "';");
-            var reader2 = ReadData(query2, connection);
-            while (reader2.Read())
+            connection.Open(); //Reopens the connection. Reset needed or would cause errors.
+            query = ("SELECT empFname, empLname FROM AspNetUsers WHERE Id = '" + team.LeaderUserId + "';"); //New query, takes LeaderUserId and uses it to find name from AspNetUsers
+            reader = ReadData(query, connection);
+            while (reader.Read())
             {
-                team.LeaderFirstname = reader2.GetString(0);
-                team.LeaderLastname = reader2.GetString(1);
+                team.LeaderFirstname = reader.GetString(0); //Reader starts at 0 again, puts first name in model
+                team.LeaderLastname = reader.GetString(1); //Last name in model
             }
             connection.Close();
 
-            return team;
+            return team; //Returns the team model, ready for use in View
         }
 
         private MySqlDataReader ReadData(string query, MySqlConnection conn)
