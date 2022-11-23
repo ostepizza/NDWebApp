@@ -65,6 +65,11 @@ namespace NDWebApp.MVC.Controllers
             return View();
         }
 
+        public IActionResult Search()
+        {
+            return View();
+        }
+
         [Authorize(Roles = "Administrator,Team Leader")]
         public async Task<IActionResult> View(string id)
         {
