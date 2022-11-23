@@ -1,4 +1,5 @@
-﻿using NDWebApp.MVC.Controllers;
+﻿using NDWebApp.Entities;
+using NDWebApp.MVC.Controllers;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NDWebApp.Models
@@ -16,13 +17,16 @@ namespace NDWebApp.Models
 
         public DateTime? SuggestionEndDate { get; set;}
 
-        public TeamModel? TeamId { get; set; }
+        public string? SuggestedUserId { get; set; }
 
-        public StatusModel? StatusId { get; set; }
+        public string? ResponsibleUserId { get; set; }
+        
+        public int TeamId { get; set; }
 
-        public SuggestionModel()
-        {
-            
-        }
+        public int StatusId { get; set; }
+
+        
+        public IEnumerable<SuggestionEntity> Suggestions { get; set; }
+
     }
 }

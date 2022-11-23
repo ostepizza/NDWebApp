@@ -5,6 +5,15 @@
 <link rel="stylesheet" href="~/css/table.css" asp-append-version="true">
 
     <h1 class="h1">Forslag</h1>
+@model NDWebApp.Models.SuggestionModel
+<ul>
+    @foreach (var suggestion in Model.Suggestions)
+    {
+        <li>
+            Forslagsnummer: @suggestion.SuggestionId, Tittel: @suggestion.SuggestionTitle, Beskrivelse: @suggestion.SuggestionDescription, Frist: @suggestion.SuggestionDeadline, Sluttdato: @suggestion.SuggestionEnddate, Forslag av: @suggestion.SuggestedUserId, Ansvarlig: @suggestion.ResponsibleUserId
+        </li>
+    }
+</ul>
 
     <div class="outer-wrapper">
     <div class="table-wrapper">

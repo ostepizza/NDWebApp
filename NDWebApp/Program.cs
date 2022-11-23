@@ -26,6 +26,7 @@ builder.Services.AddDefaultIdentity<NDWebAppUser>(options => options.SignIn.Requ
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<NDWebAppContext>();
 builder.Services.AddScoped<ISqlConnector, TeamSqlConnector>();
+builder.Services.AddScoped<ISuggestionConnector, SuggestionSqlConnector>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
