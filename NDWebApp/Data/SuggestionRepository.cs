@@ -15,16 +15,38 @@ namespace NDWebApp.Data
         public SuggestionRepository(ISqlConnection sqlConnector)
         {
             this.sqlConnector = sqlConnector;
-
         }
+       
         public List<SuggestionEntity> GetSuggestions()
         {
             using (var connection = sqlConnector.GetDbConnection() as MySqlConnection)
             {
-                var users = connection.Query<SuggestionEntity>("Select SuggestionId, SuggestionTitle, SuggestionDescription, SuggestionDeadline, SuggestionEnddate, SuggestedUserId, ResponsibleUserId, TeamId, StatusId  from Suggestion;");
+                var users = connection.Query<SuggestionEntity>("SELECT SuggestionId, SuggestionTitle, SuggestionDescription, SuggestionDeadline, SuggestionEnddate, SuggestedUserId, ResponsibleUserId, TeamId, StatusId  FROM Suggestion;");
                 return users.ToList();
             }
         }
 
+        public void Delete(int id)
+        {
+            var user = GetSuggestionById(id);
+            if (user == null)
+            {
+                return;
+            }
+            using (var connection = sqlConnector.GetDbConnection() as MySqlConnection)
+            {
+                connection.QueryFirstOrDefault("DELETE FROM suggestion WHERE SuggestionId = @idParameter",
+                new { idParameter = id });
+            }
+        }
+        
+        public SuggestionEntity GetSuggestionById(int id)
+        {
+            using (var connection = sqlConnector.GetDbConnection() as MySqlConnection)
+            {
+                return connection.QueryFirstOrDefault("SELECT SuggestionId, SuggestionTitle, SuggestionDescription, SuggestionDeadline, SuggestionEnddate, SuggestedUserId, ResponsibleUserId, TeamId, StatusId  FROM Suggestion WHERE SuggestionId = @idParameter",
+                new { idParameter = id});
+            }
+        }
     }
 }
