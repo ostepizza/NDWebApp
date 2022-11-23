@@ -7,11 +7,8 @@
 @if (User.IsInRole("Administrator"))
 {
     <div class="alert alert-danger" role="alert">
-        <b>Create:</b> Ikke funksjonelt<br />
-        <b>Ant. medl.:</b> Ikke funksjonelt<br />
-        <b>Se på:</b> Ikke funksjonelt<br />
+        <b>Create:</b> Må skrive inn bruker-ID for teamleder<br />
         <b>Endre:</b> Ikke funksjonelt<br />
-        <b>Slett:</b> Ikke funksjonelt<br />
     </div>
     <br />
     @if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Success")
@@ -67,7 +64,7 @@
             <td>@team.TeamId</td>
             <td>@team.TeamName</td>
             <td>@team.empFname @team.empLname</td>
-            <td>NN</td>
+            <td>@team.TeamMemberAmount</td>
             <td>
                 <a class="btn btn-sm btn-primary" asp-action="View" asp-route-id="@team.TeamId">
                     Se på
@@ -113,7 +110,7 @@ else
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <b>Bekreft sletting av bruker</b>
+                        <b>Bekreft sletting av team</b>
                     </div>
                     <div class="modal-body">
                         Er du sikker på at du ønsker å slette team <b>"@team.TeamName" (@team.TeamId)</b> permanent?

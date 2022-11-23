@@ -1,0 +1,29 @@
+@model TeamModel
+
+@{
+    ViewBag.Title = "Legg til team";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>@ViewData["Title"]</h1>
+<a asp-action="Index" class="btn btn-secondary">Tilbake</a>
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-action="Update" method="post">
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label asp-for="TeamId">Team Id</label>
+        <input asp-for="TeamId" class="form-control" disabled />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TeamName">Teamnavn</label>
+        <input asp-for="TeamName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LeaderUserId">Teamleder bruker ID</label>
+        <input asp-for="LeaderUserId" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Lagre</button>
+</form>

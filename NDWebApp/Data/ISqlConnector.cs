@@ -10,6 +10,12 @@ namespace NDWebApp.Data
 
         TeamModel GetTeamById(int id);
 
+        void CreateTeam(string teamName, string leaderId);
+
+        void DeleteTeam(int teamId);
+
+        void UpdateTeam(int teamId, string teamName, string leaderUserId);
+
         IDbConnection GetDbConnection();
     }
 }

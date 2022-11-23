@@ -2,12 +2,48 @@
     ViewBag.Title = "Team";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1>Detaljer over et team</h1>
-<a asp-controller="Teams" asp-action="Index">Tilbake</a>
-@Model.TeamId
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Team</h1>
+            <h2><b>@Model.TeamName</b></h2>
+            <hr>
+        </div>
+    </div>
 
-@Model.TeamName
+    <div class="row">
+        <div class="col-md-4">
+            <b>Teamleder:</b>
+            <p>@Model.LeaderFirstname @Model.LeaderLastname</p>
+        </div>
 
-@Model.LeaderUserId
+        <div class="col-md-4">
+            <b>Antall medlemmer:</b>
+            <p>@Model.TeamMemberAmount</p>
+        </div>
 
-<b>Leader: @Model.LeaderFirstname @Model.LeaderLastname</b>
+        <div class="col-md-4">
+            @if (User.IsInRole("Administrator"))
+            {
+                <b>Team ID:</b>
+                <p>@Model.TeamId</p>
+            }
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <b>Medlemmer:</b>
+            <p>
+                Her kommer liste av medlemmer (foreach aspnetuser w teamid this team id)
+
+            </p>
+        </div>
+    </div>
+</div>

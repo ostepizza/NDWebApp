@@ -16,6 +16,8 @@ namespace NDWebApp.Models
 
         public string? LeaderLastname { get; set; }
 
+        public int? TeamMemberAmount { get; set; }
+
         public IEnumerable<TeamEntity> Teams { get; set; }
 
     }

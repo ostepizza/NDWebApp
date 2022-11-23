@@ -15,5 +15,7 @@ namespace NDWebApp.Entities
         public string? empFname { get; set; }
 
         public string? empLname { get; set; }
+
+        public int? TeamMemberAmount { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using NDWebApp.Entities;
 using NDWebApp.Models;
 using System.Data.Common;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Collections.Generic;
 
 namespace NDWebApp.Data
 {
@@ -32,7 +33,8 @@ namespace NDWebApp.Data
                 team.empFname = reader.GetString(4);
                 team.empLname = reader.GetString(5);
 
-                Console.WriteLine(reader.GetString(1));
+                team.TeamMemberAmount = CountTeamMembers(team.TeamId);
+
                 teams.Add(team);
             }
             connection.Close();
@@ -65,7 +67,80 @@ namespace NDWebApp.Data
             }
             connection.Close();
 
+            team.TeamMemberAmount = CountTeamMembers(id);
+
             return team; //Returns the team model, ready for use in View
+        }
+
+        public int CountTeamMembers(int id)
+        {
+            using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
+            connection.Open();
+            var query = ("SELECT COUNT(TeamId) FROM `aspnetusers` WHERE `TeamId` = " + id + ";");
+            var reader = ReadData(query, connection);
+            int count = 0;
+            while (reader.Read())
+            {
+                count = reader.GetInt32("COUNT(TeamId)");
+            }
+            connection.Close();
+            return count;
+        }
+
+        public int CountTeams()
+        {
+            using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
+            connection.Open();
+            var query = ("SELECT TeamId FROM `Team` WHERE `TeamId` = (SELECT MAX(TeamId) FROM Team);");
+            var reader = ReadData(query, connection);
+            int highestId = 0;
+            while (reader.Read())
+            {
+                highestId = reader.GetInt32("TeamId");
+            }
+            connection.Close();
+            return highestId;
+        }
+
+        public void CreateTeam(string teamName, string leaderId)
+        {
+            //First creates a team
+            using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
+            var newTeamId = (CountTeams() + 1);
+            connection.Open();
+            var query = ("INSERT INTO `team` (`TeamId`, `TeamName`, `LeaderUserId`) VALUES ('" + newTeamId + "', '" + teamName + "', '" + leaderId + "');");
+            System.Diagnostics.Debug.WriteLine(query);
+            var reader = ReadData(query, connection);
+            reader.Read();
+            connection.Close();
+
+            //Updates AspNetUsers to show new team for Leader
+            connection.Open();
+            query = ("UPDATE `AspNetUsers` SET `TeamId` = '" + newTeamId + "' WHERE `Id` = '" + leaderId + "';");
+            reader = ReadData(query, connection);
+            reader.Read();
+            connection.Close();
+        }
+
+        public void DeleteTeam(int teamId)
+        {
+            using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
+            connection.Open();
+            var query = ("DELETE FROM team WHERE `team`.`TeamId` = "+ teamId +";");
+            var reader = ReadData(query, connection);
+            reader.Read();
+            connection.Close();
+        }
+
+        public void UpdateTeam(int teamId, string teamName, string leaderUserId)
+        {
+            using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
+            connection.Open();
+            var query = ("UPDATE `team` SET `TeamName` = '" + teamName + "', `LeaderUserId` = '" + leaderUserId + "' WHERE `team`.`TeamId` = "+teamId+";");
+            System.Diagnostics.Debug.WriteLine(query);
+            var reader = ReadData(query, connection);
+            reader.Read();
+            connection.Close();
         }
 
         private MySqlDataReader ReadData(string query, MySqlConnection conn)
@@ -75,6 +150,7 @@ namespace NDWebApp.Data
             command.CommandText = query;
             return command.ExecuteReader();
         }
+
         public IDbConnection GetDbConnection()
         {
             return new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
