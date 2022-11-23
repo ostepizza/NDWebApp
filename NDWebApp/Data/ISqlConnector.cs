@@ -16,6 +16,8 @@ namespace NDWebApp.Data
 
         void UpdateTeam(int teamId, string teamName, string leaderUserId);
 
+        IEnumerable<TeamMemberEntity> GetTeamMembers(int id);
+
         IDbConnection GetDbConnection();
     }
 }

@@ -72,6 +72,27 @@ namespace NDWebApp.Data
             return team; //Returns the team model, ready for use in View
         }
 
+        public IEnumerable<TeamMemberEntity> GetTeamMembers(int id)
+        {
+            using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
+            connection.Open();
+            var query = ("Select TeamId, Id, empFname, empLname from AspNetUsers WHERE TeamId = '"+id+"';");
+            var reader = ReadData(query, connection);
+            var teamMembers = new List<TeamMemberEntity>();
+            while (reader.Read())
+            {
+                var teamMember = new TeamMemberEntity();
+                teamMember.TeamId = reader.GetInt32("TeamId");
+                teamMember.UserId = reader.GetString(1);
+                teamMember.empFname = reader.GetString(2);
+                teamMember.empLname = reader.GetString(3);
+
+                teamMembers.Add(teamMember);
+            }
+            connection.Close();
+            return teamMembers;
+        }
+
         public int CountTeamMembers(int id)
         {
             using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));

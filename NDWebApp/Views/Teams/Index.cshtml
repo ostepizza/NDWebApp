@@ -8,7 +8,8 @@
 {
     <div class="alert alert-danger" role="alert">
         <b>Create:</b> Må skrive inn bruker-ID for teamleder<br />
-        <b>Endre:</b> Ikke funksjonelt<br />
+        <b>Endre:</b> Må skrive inn bruker-ID for teamleder<br />
+        <b>Slett:</b> Oppdaterer ikke team ID i AspNetUsers<br />
     </div>
     <br />
     @if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Success")
@@ -90,8 +91,8 @@ else
         <tr>
             <td>@team.TeamId</td>
             <td>@team.TeamName</td>
-                <td>@team.empFname @team.empLname</td>
-            <td>NN</td>
+            <td>@team.empFname @team.empLname</td>
+                <td>@team.TeamMemberAmount</td>
             <td>
                 <a class="btn btn-sm btn-primary" asp-action="View" asp-route-id="@team.TeamId">
                     Se på

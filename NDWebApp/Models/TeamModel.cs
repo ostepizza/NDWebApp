@@ -20,5 +20,7 @@ namespace NDWebApp.Models
 
         public IEnumerable<TeamEntity> Teams { get; set; }
 
+        public IEnumerable<TeamMemberEntity> TeamMembers { get; set; }
+
     }
 }
