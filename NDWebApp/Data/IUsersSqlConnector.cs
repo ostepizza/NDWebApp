@@ -9,6 +9,8 @@ namespace NDWebApp.Data
     {
         IEnumerable<UserEntity> GetMatchingUsers(string search);
 
+        IEnumerable<TeamEntity> GetAvailableTeams();
+
         IDbConnection GetDbConnection();
     }
 }

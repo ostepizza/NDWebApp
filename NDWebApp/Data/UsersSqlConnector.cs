@@ -45,6 +45,25 @@ namespace NDWebApp.Data
             return users;
         }
 
+        public IEnumerable<TeamEntity> GetAvailableTeams()
+        {
+            using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
+            connection.Open();
+            var query = ("Select TeamId, TeamName from Team;");
+            var reader = ReadData(query, connection);
+            var availableTeams = new List<TeamEntity>();
+            while (reader.Read())
+            {
+                var team = new TeamEntity();
+                team.TeamId = reader.GetInt32("TeamId");
+                team.TeamName = reader.GetString(1);
+
+                availableTeams.Add(team);
+            }
+            connection.Close();
+            return availableTeams;
+        }
+
         private MySqlDataReader ReadData(string query, MySqlConnection conn)
         {
             using var command = conn.CreateCommand();

@@ -34,6 +34,10 @@ namespace NDWebApp.Models
         [RegularExpression(@"^[^\\/:*;\.\)\(]+$", ErrorMessage = "Symbolene ':', '.' ';', '*', '/' og '\' er ikke tillatt")]
         public string? search { get; set; }
 
+        public int? teamId { get; set; }
+
         public IEnumerable<UserEntity>? Users { get; set; }
+
+        public IEnumerable<TeamEntity>? AvailableTeams { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 @model UserModel
+@using NDWebApp.Entities
 @{
     ViewData["Title"] = "Opprett bruker";
 }
@@ -36,6 +37,17 @@
     <div class="form-group">
         <label asp-for="ConfirmPassword">Bekreft passord</label>
         <input asp-for="ConfirmPassword" class="form-control" aria-required="true" />
+    </div>
+    <div class="form-group">
+        <label asp-for="teamId">Team</label>
+        <select asp-for="teamId" class="form-control" id="teamId" name="teamId">
+            <option value="">Ingen team</option>
+             @foreach (var team in Model.AvailableTeams)
+            {
+                <option value="@team.TeamId">@team.TeamName</option>
+            }
+
+        </select>
     </div>
     <button type="submit" class="btn btn-primary">Opprett bruker</button>
 </form>

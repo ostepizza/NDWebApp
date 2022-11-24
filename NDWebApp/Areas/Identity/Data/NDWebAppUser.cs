@@ -20,5 +20,8 @@ public class NDWebAppUser : IdentityUser
 
     [DisplayName("Etternavn")]
     public string empLname { get; set; } = "";
+
+    [DisplayName("Team ID")]
+    public int? teamId { get; set; }
 }
 

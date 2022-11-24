@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using NDWebApp.Areas.Identity.Data;
 using NDWebApp.Data;
 using NDWebApp.Models;
+using NDWebApp.Entities;
 using System.Diagnostics;
 using System.Linq;
 
@@ -31,7 +32,13 @@ namespace NDWebApp.MVC.Controllers
         }
 
         [Authorize(Roles = "Administrator")]
-        public ViewResult Add() => View();
+        public IActionResult Add()
+        {
+            var availableTeams = usersSqlConnector.GetAvailableTeams();
+            var model = new UserModel();
+            model.AvailableTeams = availableTeams;
+            return View(model);
+        }
 
         [Authorize(Roles = "Administrator")]
         [HttpPost]
@@ -47,7 +54,8 @@ namespace NDWebApp.MVC.Controllers
                     empLname = user.empLname,
                     UserName = user.Email,
                     Email = user.Email,
-                    PhoneNumber = user.Phone
+                    PhoneNumber = user.Phone,
+                    teamId = user.teamId
                 };
 
                 IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
