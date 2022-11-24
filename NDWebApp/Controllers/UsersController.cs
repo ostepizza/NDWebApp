@@ -43,25 +43,25 @@ namespace NDWebApp.MVC.Controllers
         [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Add(UserModel user)
+        public async Task<IActionResult> Add(string email, string phone, string empfname, string emplname, int empnr, int? teamid, string password)
         {
             if (ModelState.IsValid)
             {
                 NDWebAppUser appUser = new NDWebAppUser
                 {
-                    empNr = user.empNr,
-                    empFname = user.empFname,
-                    empLname = user.empLname,
-                    UserName = user.Email,
-                    Email = user.Email,
-                    PhoneNumber = user.Phone,
-                    teamId = user.teamId
+                    empNr = empnr,
+                    empFname = empfname,
+                    empLname = emplname,
+                    UserName = email,
+                    Email = email,
+                    PhoneNumber = phone,
+                    teamId = teamid
                 };
 
-                IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
+                IdentityResult result = await userManager.CreateAsync(appUser, password);
 
                 if (result.Succeeded) { 
-                    TempData["Message"] = "Bruker " + user.Email + " (" + user.empFname + " " + user.empLname + ") ble opprettet.";
+                    TempData["Message"] = "Bruker " + email + " (" + empfname + " " + emplname + ") ble opprettet.";
                     TempData["Status"] = "Success";
                     return RedirectToAction("Index");
                 }
@@ -71,7 +71,7 @@ namespace NDWebApp.MVC.Controllers
                         ModelState.AddModelError("", error.Description);
                 }
             }
-            return View(user);
+            return View();
         }
 
         public IActionResult NotFound()
@@ -145,7 +145,7 @@ namespace NDWebApp.MVC.Controllers
         [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(string id, string email, string phonenumber, string empfname, string emplname, int empnr, int? teamid)
+        public async Task<IActionResult> Update(string id, string email, string phone, string empfname, string emplname, int empnr, int? teamid)
         {
             NDWebAppUser user = await userManager.FindByIdAsync(id);
             if (user != null)
@@ -161,9 +161,9 @@ namespace NDWebApp.MVC.Controllers
                         ModelState.AddModelError("", "E-post kan ikke være tomt");
                 }
 
-                if (!string.IsNullOrEmpty(phonenumber))
+                if (!string.IsNullOrEmpty(phone))
                 {
-                    user.PhoneNumber = phonenumber;
+                    user.PhoneNumber = phone;
                     IdentityResult result = await userManager.UpdateAsync(user);
                     if (result.Succeeded)
                     { }

@@ -1,5 +1,5 @@
+@using NDWebApp.Areas.Identity.Data
 @model UserModel
-@using NDWebApp.Entities
 @{
     ViewData["Title"] = "Opprett bruker";
 }
@@ -42,11 +42,10 @@
         <label asp-for="teamId">Team</label>
         <select asp-for="teamId" class="form-control" id="teamId" name="teamId">
             <option value="">Ingen team</option>
-             @foreach (var team in Model.AvailableTeams)
+            @foreach (var team in Model.AvailableTeams)
             {
                 <option value="@team.TeamId">@team.TeamName</option>
             }
-
         </select>
     </div>
     <button type="submit" class="btn btn-primary">Opprett bruker</button>
