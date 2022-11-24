@@ -1,0 +1,57 @@
+﻿@model UserModel
+@{
+    ViewData["Title"] = "Søk etter bruker";
+}
+
+<h1>@ViewData["Title"]</h1>
+<form method="post">
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label asp-for="search">Søk etter ansatt (fritekst):</label>
+        <input asp-for="search" class="form-control" aria-required="true" />
+    </div>
+    <button type="submit" class="btn btn-primary">Søk</button>
+</form>
+<hr />
+@if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Success")
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Message"]
+    </div>
+    <br />
+}
+else if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Danger")
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Message"]
+    </div>
+    <br />
+}
+else if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Warning")
+{
+    <div class="alert alert-warning" role="alert">
+        @TempData["Message"]
+    </div>
+    <br />
+}
+
+@if (Model.Users != null)
+{
+    <table>
+        <thead>
+            <th>Navn:</th>
+            <th>Epost:</th>
+            <th>Tlf.nr.:</th>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@user.empFname @user.empLname</td>
+                    <td>@user.Email</td>
+                    <td>@user.Phone</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

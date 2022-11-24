@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using NDWebApp.Entities;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace NDWebApp.Models
@@ -29,5 +30,10 @@ namespace NDWebApp.Models
 
         [Required]
         public string empLname { get; set; } = "";
+
+        [RegularExpression(@"^[^\\/:*;\.\)\(]+$", ErrorMessage = "Symbolene ':', '.' ';', '*', '/' og '\' er ikke tillatt")]
+        public string? search { get; set; }
+
+        public IEnumerable<UserEntity>? Users { get; set; }
     }
 }
