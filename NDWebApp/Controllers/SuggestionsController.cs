@@ -25,13 +25,19 @@ namespace NDWebApp.MVC.Controllers
 
         public IActionResult Add()
         {
-            return View();
+            var users = suggestionConnector.GetUsers();
+            var teams = suggestionConnector.GetTeams();
+            var model = new SuggestionModel();
+            model.Users = users;
+            model.Teams = teams;
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Add(string SuggestionTitle, string SuggestionDescription, DateTime SuggestionDeadline, string SuggestedUserId, string ResponsibleUserId, int TeamId)
         {
+            System.Diagnostics.Debug.WriteLine("Attempts to parse: Title: " + SuggestionTitle + ", Descr: " + SuggestionDescription + ", Deadline: " + SuggestionDeadline + ", Sug. ID: " + SuggestedUserId + ", Res. ID: " + ResponsibleUserId + ", Team ID: " + TeamId);
             int id = suggestionConnector.CreateSuggestion(SuggestionTitle, SuggestionDescription, SuggestionDeadline, SuggestedUserId, ResponsibleUserId, TeamId);
             return RedirectToAction("View", new { id = id });
         }

@@ -37,23 +37,21 @@
     
 }
 
-<table>
+<table class="table">
     <tr>
         @if (User.IsInRole("Administrator"))
         {
-            <th>Team ID</th>
-            <th>Team Navn</th>
-            <th>Team Leader</th>
-            <th>Ant. medlemmer</th>
-            <th>Se på</th>
-            <th>Endre</th>
-            <th>Slett</th>
+            <th scope="col">Team ID</th>
+            <th scope="col">Team Navn</th>
+            <th scope="col">Team Leader</th>
+            <th scope="col">Ant. medlemmer</th>
+            <th scope="col"></th>
         } else {
-            <th>Team ID</th>
-            <th>Team Navn</th>
-            <th>Team Leader</th>
-            <th>Ant. medlemmer</th>
-            <th>Se på</th>
+            <th scope="col">Team ID</th>
+            <th scope="col">Team Navn</th>
+            <th scope="col">Team Leader</th>
+            <th scope="col">Ant. medlemmer</th>
+            <th scope="col"></th>
         }
     </tr>
 @if (User.IsInRole("Administrator"))
@@ -61,7 +59,7 @@
     @foreach (var team in Model.Teams)
     {
         <tr>
-            <td>@team.TeamId</td>
+            <td scope="row">@team.TeamId</td>
             <td>@team.TeamName</td>
             <td>@team.empFname @team.empLname</td>
             <td>@team.TeamMemberAmount</td>
@@ -69,13 +67,9 @@
                 <a class="btn btn-sm btn-primary" asp-action="View" asp-route-id="@team.TeamId">
                     Se på
                 </a>
-            </td>
-            <td>
-                <a class="btn btn-sm btn-primary" asp-action="Update" asp-route-id="@team.TeamId">
+                <a class="btn btn-sm btn-success" asp-action="Update" asp-route-id="@team.TeamId">
                     Endre
                 </a>
-            </td>
-            <td>
                 <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirm-delete-@team.TeamId">
                     Slett
                 </button>
@@ -88,7 +82,7 @@ else
     @foreach (var team in Model.Teams)
     {
         <tr>
-            <td>@team.TeamId</td>
+            <td scope="row">@team.TeamId</td>
             <td>@team.TeamName</td>
             <td>@team.empFname @team.empLname</td>
                 <td>@team.TeamMemberAmount</td>

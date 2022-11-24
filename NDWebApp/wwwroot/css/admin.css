@@ -116,7 +116,7 @@ div .page-index-panel {
     padding-top: 5%;
 }
 
-table, tr, td, th {
+/*table, tr, td, th {
     border: solid black 2px;
 }
 
@@ -132,7 +132,7 @@ th, td, tr {
 
 th {
     text-align: center;
-}
+}*/
 
 .tc {
     text-align: center;
@@ -405,4 +405,17 @@ table .fas {
 
 .nav-tabs {
     margin-bottom: 20px;
+}
+
+.progress-bar-animated {
+    -webkit-animation: progress-bar-stripes 1s linear infinite;
+    animation: progress-bar-stripes 2s linear infinite;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-delay: 0s;
+    animation-iteration-count: infinite;
+    animation-direction: reverse;
+    animation-fill-mode: none;
+    animation-play-state: running;
+    animation-name: progress-bar-stripes;
 }

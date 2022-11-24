@@ -194,6 +194,45 @@ namespace NDWebApp.Data
             return newSuggestionId; //Returns ID for added suggestion so Controller can redirect to the page for it
         }
 
+        public IEnumerable<UserEntity> GetUsers()
+        {
+            using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
+            connection.Open();
+            var reader = ReadData("Select Id, empFname, empLname FROM AspNetUsers", connection);
+            var users = new List<UserEntity>();
+            while (reader.Read())
+            {
+                var user = new UserEntity();
+
+                user.Id = reader.GetString(0);
+                user.empFname = reader.GetString(1);
+                user.empLname = reader.GetString(2);
+
+                users.Add(user);
+            }
+            connection.Close();
+            return users;
+        }
+
+        public IEnumerable<TeamEntity> GetTeams()
+        {
+            using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
+            connection.Open();
+            var query = ("Select TeamId, TeamName from Team;");
+            var reader = ReadData(query, connection);
+            var availableTeams = new List<TeamEntity>();
+            while (reader.Read())
+            {
+                var team = new TeamEntity();
+                team.TeamId = reader.GetInt32("TeamId");
+                team.TeamName = reader.GetString(1);
+
+                availableTeams.Add(team);
+            }
+            connection.Close();
+            return availableTeams;
+        }
+
         public void DeleteSuggestion(int suggestionId)
         {
             using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));

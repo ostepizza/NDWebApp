@@ -1,4 +1,8 @@
 @model SuggestionModel
+@using NDWebApp.Areas.Identity.Data
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<NDWebAppUser> UserManager
+
 @{
     ViewBag.Title = "Send inn forslag";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,28 +14,40 @@
 <form method="post">
     @Html.AntiForgeryToken()
     <div class="form-group">
-        <label asp-for="SuggestionTitle">Tittel:</label>
+        <input asp-for="SuggestedUserId" class="form-control" aria-required="true" value="@UserManager.GetUserAsync(User).Result.Id" hidden />
+    </div>
+    <div class="form-group">
+        <label asp-for="SuggestionTitle">Tittel på forslag:</label>
         <input asp-for="SuggestionTitle" class="form-control" aria-required="true" />
     </div>
     <div class="form-group">
-        <label asp-for="SuggestionDescription">Beskrivelse:</label>
+        <label asp-for="SuggestionDescription">Beskrivelse av forslag:</label>
         <input asp-for="SuggestionDescription" class="form-control" aria-required="true" />
     </div>
     <div class="form-group">
         <label asp-for="SuggestionDeadline">Deadline:</label>
         <input asp-for="SuggestionDeadline" class="form-control" aria-required="true" />
     </div>
+
     <div class="form-group">
-        <label asp-for="SuggestedUserId">Hvem har foreslått:</label>
-        <input asp-for="SuggestedUserId" class="form-control" aria-required="true" />
+        <label asp-for="ResponsibleUserId">Hvem skal være ansvarlig for gjennomføring?</label>
+        <select asp-for="ResponsibleUserId" class="form-control">
+            <option value="@UserManager.GetUserAsync(User).Result.Id" selected hidden>Du er selv ansvarlig</option>
+            @foreach (var user in Model.Users)
+            {
+                <option value="@user.Id">@user.empFname @user.empLname</option>
+            }
+        </select>
     </div>
     <div class="form-group">
-        <label asp-for="ResponsibleUserId">Hvem er ansvarlig:</label>
-        <input asp-for="ResponsibleUserId" class="form-control" aria-required="true" />
+        <label asp-for="TeamId">Hvilke team er forslaget relevant for?</label>
+        <select asp-for="TeamId" class="form-control" id="teamId" name="teamId">
+            @foreach (var team in Model.Teams)
+            {
+                <option value="@team.TeamId">@team.TeamName</option>
+            }
+        </select>
     </div>
-    <div class="form-group">
-        <label asp-for="TeamId">ID for team:</label>
-        <input asp-for="TeamId" class="form-control" aria-required="true" />
-    </div>
+
     <button type="submit" class="btn btn-primary">Send inn forslag</button>
 </form>

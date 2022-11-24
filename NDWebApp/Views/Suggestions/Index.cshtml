@@ -6,9 +6,8 @@
 <h1>@ViewData["Title"]</h1>
 <div class="alert alert-danger" role="alert">
     <b>ALT I SUGGESTIONS MANGLER NOE AUTHENTICATION ELLER SJEKK. ALLE BRUKERE KAN SE, OG SLETTE ALLE FORSLAG</b><br />
-    <b>Add:</b> Må skrive inn ID'er'<br />
-    <b>View:</b> Mangler kun å vise oppdateringer for status<br />
     <b>Endre:</b> Ikke implementert<br />
+    <b>Oppdater status:</b> Ikke implementert<br />
 </div>
 <br />
 @if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Success")
@@ -35,20 +34,18 @@ else if (TempData["Message"] != null && TempData["Status"] != null && TempData["
 
 <a asp-action="Add" class="btn btn-secondary">Send inn nytt forslag</a>
 
-<table>
+<table class="table">
     <tr>
-        <th>Tittel</th>
-        <th>Innsendt av</th>
-        <th>Ansvarlig bruker</th>
-        <th>Deadline</th>
-        <th>Se på</th>
-        <th>Endre</th>
-        <th>Slett</th>
+        <th scope="col">Tittel</th>
+        <th scope="col">Innsendt av</th>
+        <th scope="col">Ansvarlig bruker</th>
+        <th scope="col">Deadline</th>
+        <th scope="col"></th>
     </tr>
 @foreach (var suggestion in Model.Suggestions)
 {
     <tr>
-        <td>@suggestion.SuggestionTitle</td>
+        <td scope="row">@suggestion.SuggestionTitle</td>
         <td>@suggestion.SuggestedFirstname @suggestion.SuggestedLastname</td>
         <td>@suggestion.ResponsibleFirstname @suggestion.ResponsibleLastname</td>
         <td>@suggestion.SuggestionDeadline</td>
@@ -56,13 +53,9 @@ else if (TempData["Message"] != null && TempData["Status"] != null && TempData["
             <a class="btn btn-sm btn-primary" asp-action="View" asp-route-id="@suggestion.SuggestionId">
                 Se på
             </a>
-        </td>
-        <td>
-                <a class="btn btn-sm btn-primary" asp-action="Update" asp-route-id="@suggestion.SuggestionId">
+            <a class="btn btn-sm btn-success" asp-action="Update" asp-route-id="@suggestion.SuggestionId">
                 Endre
             </a>
-        </td>
-        <td>
             <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirm-delete-@suggestion.SuggestionId">
                 Slett
             </button>

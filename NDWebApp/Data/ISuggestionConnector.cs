@@ -16,6 +16,10 @@ namespace NDWebApp.Data
 
         void DeleteSuggestion(int suggestionId);
 
+        IEnumerable<UserEntity> GetUsers();
+
+        IEnumerable<TeamEntity> GetTeams();
+
         IDbConnection GetDbConnection();
     }
 }

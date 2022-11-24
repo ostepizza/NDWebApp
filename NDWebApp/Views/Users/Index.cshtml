@@ -7,10 +7,6 @@
 <h1>@ViewData["Title"]</h1>
 @if (User.IsInRole("Administrator"))
 {
-    <div class="alert alert-danger" role="alert">
-        <b>Create:</b> Mangler team felt<br />
-    </div>
-    <br />
     @if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Success")
     {
         <div class="alert alert-success" role="alert">
@@ -37,32 +33,32 @@
     
 }
 
-<table>
+<table class="table">
     @if (User.IsInRole("Administrator"))
     {
         <tr>
-            <th>Ansattnr.</th>
-            <th>Fornavn</th>
-            <th>Etternavn</th>
-            <th>E-post</th>
-            <th>Tlf.nr.</th>
-            <th></th>
+            <th scope="col">Ansattnr.</th>
+            <th scope="col">Fornavn</th>
+            <th scope="col">Etternavn</th>
+            <th scope="col">E-post</th>
+            <th scope="col">Tlf.nr.</th>
+            <th scope="col"></th>
         </tr>
     } else {
         <tr>
-            <th>Ansattnr.</th>
-            <th>Fornavn</th>
-            <th>Etternavn</th>
-            <th>E-post</th>
-            <th>Tlf.nr.</th>
-            <th></th>
+            <th scope="col">Ansattnr.</th>
+            <th scope="col">Fornavn</th>
+            <th scope="col">Etternavn</th>
+            <th scope="col">E-post</th>
+            <th scope="col">Tlf.nr.</th>
+            <th scope="col"></th>
         </tr>
     }
     @foreach (NDWebAppUser user in Model)
     {
         if (User.IsInRole("Administrator")) {
             <tr>
-                <td>@user.empNr</td>
+                <td scope="row">@user.empNr</td>
                 <td>@user.empFname</td>
                 <td>@user.empLname</td>
                 <td>@user.Email</td>
@@ -84,7 +80,7 @@
             </tr>
         } else {
             <tr>
-            <td>@user.empNr</td>
+                <td scope="row">@user.empNr</td>
             <td>@user.empFname</td>
             <td>@user.empLname</td>
             <td>@user.Email</td>
