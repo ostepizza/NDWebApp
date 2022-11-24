@@ -48,28 +48,28 @@ namespace NDWebApp.Migrations
                         column: x => x.SuggestedUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
 
                     table.ForeignKey(
                         name: "FK_ResponsibleUserId",
                         column: x => x.ResponsibleUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
 
                     table.ForeignKey(
                         name: "FK_SuggestionStatus",
                         column: x => x.StatusId,
                         principalTable: "Status",
                         principalColumn: "StatusId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
 
                     table.ForeignKey(
                         name: "FK_SuggestionTeam",
                         column: x => x.TeamId,
                         principalTable: "Team",
                         principalColumn: "TeamId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -98,21 +98,21 @@ namespace NDWebApp.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
 
                     table.ForeignKey(
                         name: "FK_RepairStatus",
                         column: x => x.StatusId,
                         principalTable: "Status",
                         principalColumn: "StatusId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
 
                     table.ForeignKey(
                         name: "FK_RepairTeam",
                         column: x => x.TeamId,
                         principalTable: "Team",
                         principalColumn: "TeamId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
         }

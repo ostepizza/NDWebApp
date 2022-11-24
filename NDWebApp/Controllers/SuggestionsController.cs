@@ -13,6 +13,7 @@ namespace NDWebApp.MVC.Controllers
         public SuggestionsController(ISuggestionConnector suggestionConnector)
         {
             this.suggestionConnector = suggestionConnector;
+            suggestionConnector.PopulateStatusInDB();
         }
         public IActionResult Index()
         {

@@ -10,6 +10,7 @@ namespace NDWebApp.Data
 
         SuggestionModel GetSuggestionById(int id);
 
+        void PopulateStatusInDB();
 
         IDbConnection GetDbConnection();
     }
