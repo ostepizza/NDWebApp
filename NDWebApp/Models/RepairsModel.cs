@@ -15,8 +15,10 @@ namespace NDWebApp.Models
 
         public DateTime? RepairsEnddate { get; set; }
 
-        public TeamModel? TeamId { get; set; }
+        public string UserId { get; set; }
+        
+        public int TeamId { get; set; }
 
-        public StatusModel? StatusId { get; set; }
+        public int StatusId { get; set; }
     }
 }
