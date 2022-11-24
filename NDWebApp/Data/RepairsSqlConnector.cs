@@ -24,9 +24,13 @@ namespace NDWebApp.Data
                 var repair = new RepairsEntity();
                 repair.RepairsId = reader.GetInt32("RepairsId");
                 repair.RepairsTitle = reader.GetString(1);
-                repair.RepairsDescription = reader.GetString(2);
+                if (!reader.IsDBNull(2))
+                    repair.RepairsDescription = reader.GetString(2);
+                else repair.RepairsDescription = string.Empty;
                 repair.RepairsDeadline = reader.GetDateTime(3);
-                repair.RepairsEnddate = reader.GetDateTime(4);
+                if (!reader.IsDBNull(4))
+                    repair.RepairsEnddate = reader.GetDateTime(4);
+                else repair.RepairsEnddate = DateTime.MinValue;
                 repair.UserId = reader.GetString(5);
                 repair.TeamId = reader.GetInt32(6);
                 repair.StatusId = reader.GetInt32(7);
@@ -34,7 +38,56 @@ namespace NDWebApp.Data
                 repairs.Add(repair);
             }
             connection.Close();
+
+            var query = "";
+
+
+            //Loop to get users name
+            foreach (var repair in repairs)
+            {
+                System.Diagnostics.Debug.WriteLine(repair.RepairsTitle);
+                connection.Open();
+                query = ("SELECT empFname, empLname FROM AspNetUsers WHERE Id = '" + repair.UserId + "';");
+                reader = ReadData(query, connection);
+                while (reader.Read())
+                {
+                    repair.UserFirstname = reader.GetString(0);
+                    repair.UserLastname = reader.GetString(1);
+                }
+                connection.Close();
+            }
+
+            //Loop to get Team name
+            foreach (var repair in repairs)
+            {
+                System.Diagnostics.Debug.WriteLine(repair.RepairsTitle);
+                connection.Open();
+                query = ("SELECT TeamName FROM Team WHERE TeamId = '" + repair.TeamId + "';");
+                reader = ReadData(query, connection);
+                while (reader.Read())
+                {
+                    repair.TeamName = reader.GetString(0);
+                }
+                connection.Close();
+            }
+
+            //Loop to get Status title
+            foreach (var repair in repairs)
+            {
+                System.Diagnostics.Debug.WriteLine(repair.RepairsTitle);
+                connection.Open();
+                query = ("SELECT StatusTitle FROM Status WHERE StatusId = '" + repair.StatusId + "';");
+                reader = ReadData(query, connection);
+                while (reader.Read())
+                {
+                    repair.StatusName = reader.GetString(0);
+                }
+                connection.Close();
+            }
+
             return repairs;
+
+
         }
 
         public RepairsModel GetRepairById(int id)
@@ -50,12 +103,46 @@ namespace NDWebApp.Data
                 repair.RepairsTitle = reader.GetString(1);
                 repair.RepairsDescription = reader.GetString(2);
                 repair.RepairsDeadline = reader.GetDateTime(3);
-                repair.RepairsEnddate = reader.GetDateTime(4);
+                if (!reader.IsDBNull(4))
+                    repair.RepairsEnddate = reader.GetDateTime(4);
+                else repair.RepairsEnddate = DateTime.MinValue;
                 repair.UserId = reader.GetString(5);
                 repair.TeamId = reader.GetInt32(6);
                 repair.StatusId = reader.GetInt32(7);
             }
             connection.Close(); //Closes the connection
+
+            //Takes User ID and finds a name
+            connection.Open();
+            query = ("SELECT `empFname`, `empLname` FROM `AspNetUsers` WHERE Id = '" + repair.UserId + "';");
+            reader = ReadData(query, connection);
+            while (reader.Read())
+            {
+                repair.UserFirstname = reader.GetString(0);
+                repair.UserLastname = reader.GetString(1);
+            }
+            connection.Close();
+
+            //Takes team ID and finds the team name
+            connection.Open();
+            query = ("SELECT `TeamName` FROM `Team` WHERE TeamId = '" + repair.TeamId + "';");
+            reader = ReadData(query, connection);
+            while (reader.Read())
+            {
+                repair.TeamName = reader.GetString(0);
+            }
+            connection.Close();
+
+            //Takes status ID and finds the status name
+            connection.Open();
+            query = ("SELECT `StatusTitle` FROM `Status` WHERE StatusId = '" + repair.StatusId + "';");
+            reader = ReadData(query, connection);
+            while (reader.Read())
+            {
+                repair.StatusName = reader.GetString(0);
+            }
+            connection.Close();
+
             return repair;
         }
 

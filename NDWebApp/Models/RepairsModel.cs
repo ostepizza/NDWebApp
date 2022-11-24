@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using NDWebApp.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NDWebApp.Models
 {
@@ -16,9 +17,21 @@ namespace NDWebApp.Models
         public DateTime? RepairsEnddate { get; set; }
 
         public string UserId { get; set; }
-        
+
+        public string? UserFirstname { get; set; }
+
+        public string? UserLastname { get; set; }
+
         public int TeamId { get; set; }
 
+        public string? TeamName { get; set; }
+        
         public int StatusId { get; set; }
+
+        public string? StatusName { get; set; }
+
+        public IEnumerable<TeamEntity>? Teams { get; set; }
+
+        public IEnumerable<RepairsEntity> Repairs { get; set; }
     }
 }

@@ -17,8 +17,16 @@ namespace NDWebApp.Entities
 
         public string  UserId { get; set; }
 
+        public string? UserFirstname { get; set; }
+
+        public string? UserLastname { get; set; }
+
         public int TeamId { get; set; }
 
+        public string? TeamName { get; set; }
+
         public int StatusId { get; set; }
+
+        public string? StatusName { get; set; }
     }
 }
