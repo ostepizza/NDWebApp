@@ -56,7 +56,9 @@ namespace NDWebApp.Data
                 suggestion.SuggestionTitle = reader.GetString(1);
                 suggestion.SuggestionDescription = reader.GetString(2);
                 suggestion.SuggestionDeadline = reader.GetDateTime(3);
-                suggestion.SuggestionEndDate = reader.GetDateTime(4);
+                if (!reader.IsDBNull(4))
+                    suggestion.SuggestionEndDate = reader.GetDateTime(4);
+                else suggestion.SuggestionEndDate = DateTime.MinValue;
                 suggestion.SuggestedUserId= reader.GetString(5);
                 suggestion.ResponsibleUserId = reader.GetString(6);
                 suggestion.TeamId = reader.GetInt32(7);

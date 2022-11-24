@@ -1,0 +1,67 @@
+@{
+    ViewBag.Title = "Forslag";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="row">
+        <div class="col-md-12">
+            <a asp-action="Index" class="btn btn-secondary">Back</a>
+            <h1>Forslag</h1>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <u>Tittel:</u>
+            <p>@Model.SuggestionTitle</p>
+        </div>
+
+        <div class="col-md-4">
+            <u>Ansvarlig for utførelse:</u>
+            <p>@Model.ResponsibleUserId</p>
+        </div>
+
+        <div class="col-md-4">
+            <u>Sendt inn av:</u>
+            <p>@Model.SuggestedUserId</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <u>Status:</u>
+            <p>@Model.StatusId</p>
+        </div>
+
+        <div class="col-md-4">
+            <u>Deadline:</u>
+            <p>@Model.SuggestionDeadline</p>
+        </div>
+
+        <div class="col-md-4">
+        @if (Model.SuggestionEndDate == new DateTime(0001, 01, 01, 0, 0, 0))
+            {
+                <p></p>
+            } else {
+                <u>Fullført:</u>
+                <p>@Model.SuggestionEndDate</p>
+            }
+            
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <u>Beskrivelse:</u>
+            <p>
+            @Model.SuggestionDescription
+            </p>
+        </div>
+    </div>

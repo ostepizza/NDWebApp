@@ -28,9 +28,10 @@ namespace NDWebApp.MVC.Controllers
             return View();
         }
 
-        public IActionResult Detailed()
+        public IActionResult View(int id)
         {
-            return View();
+            var model = suggestionConnector.GetSuggestionById(id);
+            return View(model);
         }
     }
 }
