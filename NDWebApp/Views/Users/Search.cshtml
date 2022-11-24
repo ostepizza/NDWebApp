@@ -4,7 +4,6 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-
 <form method="post">
     @Html.AntiForgeryToken()
     <div class="form-group">
@@ -14,6 +13,28 @@
     <button type="submit" class="btn btn-primary">Søk</button>
 </form>
 <hr />
+@if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Success")
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Message"]
+    </div>
+    <br />
+}
+else if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Danger")
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Message"]
+    </div>
+    <br />
+}
+else if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Warning")
+{
+    <div class="alert alert-warning" role="alert">
+        @TempData["Message"]
+    </div>
+    <br />
+}
+
 @if (Model.Users != null)
 {
     <table>

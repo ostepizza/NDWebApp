@@ -5,6 +5,7 @@ using NDWebApp.Areas.Identity.Data;
 using NDWebApp.Data;
 using NDWebApp.Models;
 using System.Diagnostics;
+using System.Linq;
 
 namespace NDWebApp.MVC.Controllers
 {
@@ -81,9 +82,35 @@ namespace NDWebApp.MVC.Controllers
         [HttpPost]
         public IActionResult Search(string search)
         {
-            var data = usersSqlConnector.GetMatchingUsers(search);
-            var model = new UserModel();
-            model.Users = data;
+            // Should be checked better before letting all users search!!
+            var searchNN = Convert.ToString(search + "");
+            var model = new UserModel(); //Må opprettes for å ha noe å returne uansett søkeresultat, i utgangspunktet null
+            if (!searchNN.Contains("'") && searchNN != "")
+            {
+                var data = usersSqlConnector.GetMatchingUsers(search);
+                System.Diagnostics.Debug.WriteLine("Attempting to write this: " + data.ToString());
+                model = new UserModel();
+                model.Users = data;
+                //This shit broky and will NEVER return null, can't figure out what else to do instead :DD
+                if(data != null)
+                {
+                    return View(model);
+                }
+                // Since above is broken, program will never ever get here D:
+                TempData["Message"] = "Fant ingen resultater!";
+                TempData["Status"] = "Warning";
+                return View(model);
+            }
+            else if (searchNN.Contains("'"))
+            {
+                //Gir et lite klask på baken til ansatte som vil prøve seg på spicy symbol i søkefeltet
+                //(Programmet thrower en exception om søkefeltet inneholder ')
+                TempData["Message"] = "Ap-ap-ap! Symbolet du forsøkte å søke med er FORBUDT å bruke her!";
+                TempData["Status"] = "Danger";
+                return View(model);
+            }
+            TempData["Message"] = "Søkefeltet kan ikke være tomt!";
+            TempData["Status"] = "Warning";
             return View(model);
         }
 

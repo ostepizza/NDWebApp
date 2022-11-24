@@ -31,6 +31,7 @@ namespace NDWebApp.Models
         [Required]
         public string empLname { get; set; } = "";
 
+        [RegularExpression(@"^[^\\/:*;\.\)\(]+$", ErrorMessage = "Symbolene ':', '.' ';', '*', '/' og '\' er ikke tillatt")]
         public string? search { get; set; }
 
         public IEnumerable<UserEntity>? Users { get; set; }
