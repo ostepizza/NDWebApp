@@ -11,6 +11,8 @@ namespace NDWebApp.Data
 
         IEnumerable<TeamEntity> GetAvailableTeams();
 
+        UserModel GetUserById(string id);
+
         IDbConnection GetDbConnection();
     }
 }

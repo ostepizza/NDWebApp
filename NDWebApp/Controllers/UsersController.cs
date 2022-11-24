@@ -135,7 +135,7 @@ namespace NDWebApp.MVC.Controllers
         [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Update(string id)
         {
-            NDWebAppUser user = await userManager.FindByIdAsync(id);
+            UserModel user = usersSqlConnector.GetUserById(id);
             if (user != null)
                 return View(user);
             else
@@ -145,7 +145,7 @@ namespace NDWebApp.MVC.Controllers
         [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(string id, string email, string phonenumber, string empfname, string emplname, int empnr)
+        public async Task<IActionResult> Update(string id, string email, string phonenumber, string empfname, string emplname, int empnr, int? teamid)
         {
             NDWebAppUser user = await userManager.FindByIdAsync(id);
             if (user != null)
@@ -181,6 +181,14 @@ namespace NDWebApp.MVC.Controllers
                     else
                         ModelState.AddModelError("", "Ansattnummer kan ikke være tomt");
                 }
+
+                System.Diagnostics.Debug.WriteLine("Supplied team id: "+teamid);
+                user.teamId = teamid;
+                IdentityResult resultTeamId = await userManager.UpdateAsync(user);
+                if (resultTeamId.Succeeded)
+                { }
+                else
+                    ModelState.AddModelError("", "Ansattnummer kan ikke være tomt");
 
                 if (!string.IsNullOrEmpty(emplname))
                 {

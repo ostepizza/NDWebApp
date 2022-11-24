@@ -45,6 +45,33 @@ namespace NDWebApp.Data
             return users;
         }
 
+        public UserModel GetUserById(string id)
+        {
+            using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection")); //Specifies connection
+            connection.Open(); //Opens connection
+            var query = ("SELECT Id, Email, PhoneNumber, empFname, empLname, empNr, teamId FROM AspNetUsers WHERE Id = '" + id + "';"); //Specifies first query
+            var reader = ReadData(query, connection);
+            var user = new UserModel();
+            while (reader.Read())
+            {
+                user.Id = reader.GetString(0);
+                user.Email = reader.GetString(1);
+                user.Phone = reader.GetString(2);
+                user.empFname = reader.GetString(3);
+                user.empLname = reader.GetString(4);
+                user.empNr = reader.GetInt32(5);
+                if (!reader.IsDBNull(6))
+                    user.teamId = reader.GetInt32(6);
+                else user.teamId = null;
+
+            }
+            connection.Close(); //Closes the connection
+
+            user.AvailableTeams = GetAvailableTeams();
+
+            return user; //Returns the team model, ready for use in View
+        }
+
         public IEnumerable<TeamEntity> GetAvailableTeams()
         {
             using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));

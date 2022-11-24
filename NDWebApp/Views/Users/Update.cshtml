@@ -1,5 +1,5 @@
 ﻿@using NDWebApp.Areas.Identity.Data
-@model NDWebAppUser
+@model UserModel
 @{
     ViewBag.Title = "Oppdater bruker";
 }
@@ -36,8 +36,20 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="PhoneNumber">Tlf.nr.</label>
-        <input asp-for="PhoneNumber" class="form-control" />
+        <label asp-for="Phone">Tlf.nr.</label>
+        <input asp-for="Phone" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="teamId">Team</label>
+        <select asp-for="teamId" class="form-control" id="teamId" name="teamId">
+            <option value="">Ingen team</option>
+            @foreach (var team in Model.AvailableTeams)
+            {
+                <option value="@team.TeamId">@team.TeamName</option>
+            }
+
+        </select>
     </div>
 
     <button type="submit" class="btn btn-primary">Lagre</button>

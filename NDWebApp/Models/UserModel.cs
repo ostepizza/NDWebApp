@@ -22,6 +22,8 @@ namespace NDWebApp.Models
 
         public string Phone { get; set; } = "";
 
+        public string Id { get; set; }
+
         [Required]
         public int empNr { get; set; }
 
