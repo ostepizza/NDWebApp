@@ -56,7 +56,9 @@ namespace NDWebApp.Data
             {
                 user.Id = reader.GetString(0);
                 user.Email = reader.GetString(1);
-                user.Phone = reader.GetString(2);
+                if (!reader.IsDBNull(2))
+                    user.Phone = reader.GetString(2);
+                else user.Phone = string.Empty;
                 user.empFname = reader.GetString(3);
                 user.empLname = reader.GetString(4);
                 user.empNr = reader.GetInt32(5);
@@ -66,6 +68,17 @@ namespace NDWebApp.Data
 
             }
             connection.Close(); //Closes the connection
+
+            connection.Open();
+            query = ("SELECT TeamName FROM Team WHERE TeamId = '" + user.teamId + "';"); //Specifies first query
+            reader = ReadData(query, connection);
+            while (reader.Read())
+            {
+                if (!reader.IsDBNull(0))
+                    user.teamName = reader.GetString(0);
+                else user.teamName = null;
+            }
+            connection.Close();
 
             user.AvailableTeams = GetAvailableTeams();
 

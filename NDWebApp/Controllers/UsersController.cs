@@ -125,7 +125,7 @@ namespace NDWebApp.MVC.Controllers
         [Authorize(Roles = "Administrator,Team Leader")]
         public async Task<IActionResult> View(string id)
         {
-            NDWebAppUser user = await userManager.FindByIdAsync(id);
+            UserModel user = usersSqlConnector.GetUserById(id);
             if (user != null)
                 return View(user);
             else

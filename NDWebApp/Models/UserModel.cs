@@ -38,6 +38,8 @@ namespace NDWebApp.Models
 
         public int? teamId { get; set; }
 
+        public string? teamName { get; set; }
+
         public IEnumerable<UserEntity>? Users { get; set; }
 
         public IEnumerable<TeamEntity>? AvailableTeams { get; set; }

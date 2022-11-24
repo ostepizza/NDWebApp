@@ -70,7 +70,7 @@
                 <br />
                 <div class="alert alert-danger" role="alert">
                 <i class="fa-solid fa-triangle-exclamation"></i>
-                    <b>Kontaktinfo:</b> Team -> Ikke funksjonell<br />
+                    <b>Kontaktinfo:</b> Team -> Viser bare team ID<br />
                     <i class="fa-solid fa-triangle-exclamation"></i>
                     <b>Endre profilbilde:</b> Ikke funksjonell<br />
                     <i class="fa-solid fa-triangle-exclamation"></i>
@@ -172,7 +172,14 @@
                             <label>Team</label>
                         </div>
                         <div class="col-md-9">
-                            <p>NN</p>
+                            <p>
+                                @if (UserManager.GetUserAsync(User).Result.teamId != null)
+                                {
+                                    <a asp-controller="Teams" asp-action="View" asp-route-id="@UserManager.GetUserAsync(User).Result.teamId"><p>@UserManager.GetUserAsync(User).Result.teamId</a>
+                                } else {
+                                    <span>Ikke medlem av et team.</span>
+                                }
+                            </p>
                         </div>
                     </div>
                 </div>
