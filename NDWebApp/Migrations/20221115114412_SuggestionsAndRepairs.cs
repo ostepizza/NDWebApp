@@ -35,10 +35,10 @@ namespace NDWebApp.Migrations
                     SuggestionEnddate = table.Column<string>(type: "datetime", nullable: true),
                     SuggestedUserId = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ResponibleUserId = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
+                    ResponsibleUserId = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     TeamId = table.Column<int>(type: "int", nullable: true),
-                    StatusId = table.Column<int>(type: "int", nullable: true),
+                    StatusId = table.Column<int>(type: "int", nullable: true, defaultValue: 0),
                 },
                 constraints: table =>
                 {
@@ -48,28 +48,28 @@ namespace NDWebApp.Migrations
                         column: x => x.SuggestedUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
 
                     table.ForeignKey(
                         name: "FK_ResponsibleUserId",
-                        column: x => x.ResponibleUserId,
+                        column: x => x.ResponsibleUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
 
                     table.ForeignKey(
                         name: "FK_SuggestionStatus",
                         column: x => x.StatusId,
                         principalTable: "Status",
                         principalColumn: "StatusId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
 
                     table.ForeignKey(
                         name: "FK_SuggestionTeam",
                         column: x => x.TeamId,
                         principalTable: "Team",
                         principalColumn: "TeamId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -98,21 +98,21 @@ namespace NDWebApp.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
 
                     table.ForeignKey(
                         name: "FK_RepairStatus",
                         column: x => x.StatusId,
                         principalTable: "Status",
                         principalColumn: "StatusId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
 
                     table.ForeignKey(
                         name: "FK_RepairTeam",
                         column: x => x.TeamId,
                         principalTable: "Team",
                         principalColumn: "TeamId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
         }

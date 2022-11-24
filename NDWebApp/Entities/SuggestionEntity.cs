@@ -1,21 +1,19 @@
-﻿using NDWebApp.Entities;
-using NDWebApp.MVC.Controllers;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace NDWebApp.Models
+namespace NDWebApp.Entities
 {
-    public class SuggestionModel
+    [Table("Suggestion")]
+    public class SuggestionEntity
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SuggestionId { get; set; }
 
         public string? SuggestionTitle { get; set; }
 
         public string? SuggestionDescription { get; set; }
 
-        public DateTime? SuggestionDeadline { get; set;}
+        public DateTime? SuggestionDeadline { get; set; }
 
-        public DateTime? SuggestionEndDate { get; set;}
+        public DateTime? SuggestionEnddate { get; set; }
 
         public string? SuggestedUserId { get; set; }
 
@@ -29,16 +27,12 @@ namespace NDWebApp.Models
 
         public string? ResponsibleLastname { get; set; }
 
-        public int TeamId { get; set; }
+        public int? TeamId { get; set; }
 
         public string? TeamName { get; set; }
 
-        public int StatusId { get; set; }
+        public int? StatusId { get; set; }
 
         public string? StatusName { get; set; }
-
-
-        public IEnumerable<SuggestionEntity> Suggestions { get; set; }
-
     }
 }

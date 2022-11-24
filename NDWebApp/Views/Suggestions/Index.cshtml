@@ -1,49 +1,100 @@
+@model NDWebApp.Models.SuggestionModel
 @{
     ViewBag.Title = "Forslag";
 }
 
-<link rel="stylesheet" href="~/css/table.css" asp-append-version="true">
-
-    <h1 class="h1">Forslag</h1>
-
-    <div class="outer-wrapper">
-    <div class="table-wrapper">
-    <table>
-        <thead>
-            <th>Tittel</th>
-            <th>Deadline</th>
-            <th>Status</th>
-            <th>Ansvarlig</th>
-            <th>Sendt inn av</th>
-            <th>Se detaljer</th>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1 time til Ørsta Rådhus</td>
-                <td>01.01.23</td>
-                <td>Godkjent</td>
-                <td>Prell Arne</td>
-                <td>Jens Rosamann</td>
-                <td><a asp-controller="Suggestions" asp-action="Detailed">Se detajler</a></td>
-            </tr>
-            <tr>
-                <td>1 time til Ørsta Rådhus</td>
-                <td>01.01.23</td>
-                <td>Godkjent</td>
-                <td>Prell Arne</td>
-                <td>Jens Rosamann</td>
-                <td><a asp-controller="Suggestions" asp-action="Detailed">Se detajler</a></td>
-            </tr>
-            <tr>
-                <td>1 time til Ørsta Rådhus</td>
-                <td>01.01.23</td>
-                <td>Godkjent</td>
-                <td>Prell Arne</td>
-                <td>Jens Rosamann</td>
-                <td><a asp-controller="Suggestions" asp-action="Detailed">Se detajler</a></td>
-            </tr>
-        </tbody>
-    </table>
+<h1>@ViewData["Title"]</h1>
+<div class="alert alert-danger" role="alert">
+    <b>ALT I SUGGESTIONS MANGLER NOE AUTHENTICATION ELLER SJEKK. ALLE BRUKERE KAN SE, OG SLETTE ALLE FORSLAG</b><br />
+    <b>Add:</b> Må skrive inn ID'er'<br />
+    <b>View:</b> Mangler kun å vise oppdateringer for status<br />
+    <b>Endre:</b> Ikke implementert<br />
 </div>
-</div>
-<a asp-controller="Suggestions" asp-action="Add" class="button">Legg til nytt forslag</a>
+<br />
+@if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Success")
+{
+    <div class="alert alert-success" role="alert">
+    @TempData["Message"]
+    </div>
+    <br />
+}
+else if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Danger")
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Message"]
+    </div>
+    <br />
+}
+else if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Warning")
+{
+    <div class="alert alert-warning" role="alert">
+        @TempData["Message"]
+    </div>
+    <br />
+}
+
+<a asp-action="Add" class="btn btn-secondary">Send inn nytt forslag</a>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Tittel</th>
+        <th>Innsendt av</th>
+        <th>Ansvarlig bruker</th>
+        <th>Se på</th>
+        <th>Endre</th>
+        <th>Slett</th>
+    </tr>
+@foreach (var suggestion in Model.Suggestions)
+{
+    <tr>
+        <td>@suggestion.SuggestionId</td>
+        <td>@suggestion.SuggestionTitle</td>
+        <td>@suggestion.SuggestedUserId</td>
+        <td>@suggestion.ResponsibleUserId</td>
+        <td>
+            <a class="btn btn-sm btn-primary" asp-action="View" asp-route-id="@suggestion.SuggestionId">
+                Se på
+            </a>
+        </td>
+        <td>
+                <a class="btn btn-sm btn-primary" asp-action="Update" asp-route-id="@suggestion.SuggestionId">
+                Endre
+            </a>
+        </td>
+        <td>
+            <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirm-delete-@suggestion.SuggestionId">
+                Slett
+            </button>
+        </td>
+    </tr>
+}
+</table>
+
+@if (User.IsInRole("Administrator"))
+{
+    foreach (var suggestion in Model.Suggestions)
+    {
+                <div class="modal fade" id="confirm-delete-@suggestion.SuggestionId" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <b>Bekreft sletting av forslag</b>
+                            </div>
+                            <div class="modal-body">
+                                Er du sikker på at du ønsker å slette forslag <b>"@suggestion.SuggestionTitle"</b>, innsendt av @suggestion.SuggestedUserId?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <form asp-action="Delete" asp-route-id="@suggestion.SuggestionId" method="post">
+                            @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-danger btn-ok">
+                                        Bekreft sletting
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    }
+} 
