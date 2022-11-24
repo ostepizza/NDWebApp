@@ -8,6 +8,16 @@
     ViewBag.Title = "Min Konto";
 }
 
+<!-- STYLESHEETS -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/bacit_dotnet.MVC.styles.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito|Lato|Open+Sans|Raleway|Roboto" rel="stylesheet">
+<!-- FONT AWESOME -->
+    <link href="~/css/fontawesome.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/css/brands.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/css/solid.css" rel="stylesheet" asp-append-version="true">
+
 
 <style>
     .profile-img img{
@@ -48,6 +58,7 @@
         </div>*@
         <div class="col-md-12">
             <div class="profile-head">
+
                 <h2>
                     @UserManager.GetUserAsync(User).Result.empFname @UserManager.GetUserAsync(User).Result.empLname
                 </h2>
@@ -68,9 +79,13 @@
 
                 <br />
                 <div class="alert alert-danger" role="alert">
+                <i class="fa-solid fa-triangle-exclamation"></i>
                     <b>Kontaktinfo:</b> Team -> Ikke funksjonell<br />
+                    <i class="fa-solid fa-triangle-exclamation"></i>
                     <b>Endre profilbilde:</b> Ikke funksjonell<br />
+                    <i class="fa-solid fa-triangle-exclamation"></i>
                     <b>Endre passord:</b> Ikke funksjonell<br />
+                    <i class="fa-solid fa-triangle-exclamation"></i>
                     <b>Suggestions</b> Ikke funksjonell<br />
                 </div>
                 <br />
@@ -102,6 +117,7 @@
                         <div col-md-3></div>
                         <div col-md-6>
                             <div class="alert alert-primary" role="alert">
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
                                 Ta kontakt med systemadministrator for endring av personalia.
                             </div>
                         </div>
@@ -203,17 +219,18 @@
                     <form method="post">
                         <fieldset class="clearfix">
                             <div>
-                                <label for="username">Nytt passord:</label><br>
-                                <input type="password" id="username" name="username" style="width: fit-content;">
+                            
+                                <label for="pwd">Nytt passord:</label><br>
+                                <input type="password" class="form-control" id="pwd" name="pwd" style="width: fit-content;">
                             </div>
 
                             <div>
-                                <label for="pass">Bekreft passord:</label><br>
-                                <input type="password" id="pass" name="password" style="width: fit-content;">
+                                <label for="pwd">Bekreft passord:</label><br>
+                                <input type="password" class="form-control" id="pwd" name="pwd" style="width: fit-content;">
                             </div>
                             <br>
 
-                            <input type="submit" value="Endre passord" style="width: fit-content;">
+                            <input type="submit" value="Endre passord" class="btn btn-outline-primary" style="width: fit-content;">
                         </fieldset>
                     </form>
                 </div>
