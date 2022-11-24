@@ -37,10 +37,10 @@ else if (TempData["Message"] != null && TempData["Status"] != null && TempData["
 
 <table>
     <tr>
-        <th>ID</th>
         <th>Tittel</th>
         <th>Innsendt av</th>
         <th>Ansvarlig bruker</th>
+        <th>Deadline</th>
         <th>Se på</th>
         <th>Endre</th>
         <th>Slett</th>
@@ -48,10 +48,10 @@ else if (TempData["Message"] != null && TempData["Status"] != null && TempData["
 @foreach (var suggestion in Model.Suggestions)
 {
     <tr>
-        <td>@suggestion.SuggestionId</td>
         <td>@suggestion.SuggestionTitle</td>
-        <td>@suggestion.SuggestedUserId</td>
-        <td>@suggestion.ResponsibleUserId</td>
+        <td>@suggestion.SuggestedFirstname @suggestion.SuggestedLastname</td>
+        <td>@suggestion.ResponsibleFirstname @suggestion.ResponsibleLastname</td>
+        <td>@suggestion.SuggestionDeadline</td>
         <td>
             <a class="btn btn-sm btn-primary" asp-action="View" asp-route-id="@suggestion.SuggestionId">
                 Se på

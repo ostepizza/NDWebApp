@@ -44,6 +44,68 @@ namespace NDWebApp.Data
                 // Kan evt se på metoden nedenfor og se om du kan tenke deg til noe som ligner
             }
             connection.Close();
+
+            var query = "";
+
+
+            //Loop to get Suggested users name
+            foreach (var suggestion in suggestions)
+            {
+                System.Diagnostics.Debug.WriteLine(suggestion.SuggestionTitle);
+                connection.Open();
+                query = ("SELECT empFname, empLname FROM AspNetUsers WHERE Id = '" + suggestion.SuggestedUserId + "';");
+                reader = ReadData(query, connection);
+                while (reader.Read())
+                {
+                    suggestion.SuggestedFirstname = reader.GetString(0);
+                    suggestion.SuggestedLastname = reader.GetString(1);
+                }
+                connection.Close();
+            }
+
+            //Loop to get Responsible users name
+            foreach (var suggestion in suggestions)
+            {
+                System.Diagnostics.Debug.WriteLine(suggestion.SuggestionTitle);
+                connection.Open();
+                query = ("SELECT empFname, empLname FROM AspNetUsers WHERE Id = '" + suggestion.ResponsibleUserId + "';");
+                reader = ReadData(query, connection);
+                while (reader.Read())
+                {
+                    suggestion.ResponsibleFirstname = reader.GetString(0);
+                    suggestion.ResponsibleLastname = reader.GetString(1);
+                }
+                connection.Close();
+            }
+
+            //Loop to get Team name
+            foreach (var suggestion in suggestions)
+            {
+                System.Diagnostics.Debug.WriteLine(suggestion.SuggestionTitle);
+                connection.Open();
+                query = ("SELECT TeamName FROM Team WHERE TeamId = '" + suggestion.TeamId + "';");
+                reader = ReadData(query, connection);
+                while (reader.Read())
+                {
+                    suggestion.TeamName = reader.GetString(0);
+                }
+                connection.Close();
+            }
+
+            //Loop to get Status title
+            foreach (var suggestion in suggestions)
+            {
+                System.Diagnostics.Debug.WriteLine(suggestion.SuggestionTitle);
+                connection.Open();
+                query = ("SELECT StatusTitle FROM Status WHERE StatusId = '" + suggestion.StatusId + "';");
+                reader = ReadData(query, connection);
+                while (reader.Read())
+                {
+                    suggestion.StatusName = reader.GetString(0);
+                }
+                connection.Close();
+            }
+
             return suggestions;
         }
         public SuggestionModel GetSuggestionById(int id)
