@@ -5,33 +5,36 @@
 
     <div class="row">
         <div class="col-md-12">
-            <a asp-action="Index" class="btn btn-secondary">Back</a>
             <h1>Forslag</h1>
+            <a asp-action="Index" class="btn btn-secondary">Back</a>
+            <h2>"@Model.SuggestionTitle"</h2>
             <hr>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-4">
-            <u>Tittel:</u>
-            <p>@Model.SuggestionTitle</p>
+            <u>Sendt inn av:</u>
+            <p>@Model.SuggestedFirstname @Model.SuggestedLastname</p>
+        </div>
+
+        <div class="col-md-4">
+            <u>Innsenders team:</u>
+            <p>@Model.TeamName</p>
         </div>
 
         <div class="col-md-4">
             <u>Ansvarlig for utførelse:</u>
-            <p>@Model.ResponsibleUserId</p>
+            <p>@Model.ResponsibleFirstname @Model.ResponsibleLastname</p>
         </div>
 
-        <div class="col-md-4">
-            <u>Sendt inn av:</u>
-            <p>@Model.SuggestedUserId</p>
-        </div>
+        
     </div>
 
     <div class="row">
         <div class="col-md-4">
             <u>Status:</u>
-            <p>@Model.StatusId</p>
+            <p>@Model.StatusName</p>
         </div>
 
         <div class="col-md-4">

@@ -19,13 +19,25 @@ namespace NDWebApp.Models
 
         public string? SuggestedUserId { get; set; }
 
+        public string? SuggestedFirstname { get; set; }
+
+        public string? SuggestedLastname { get; set; }
+
         public string? ResponsibleUserId { get; set; }
-        
+
+        public string? ResponsibleFirstname { get; set; }
+
+        public string? ResponsibleLastname { get; set; }
+
         public int TeamId { get; set; }
+
+        public string? TeamName { get; set; }
 
         public int StatusId { get; set; }
 
-        
+        public string? StatusName { get; set; }
+
+
         public IEnumerable<SuggestionEntity> Suggestions { get; set; }
 
     }

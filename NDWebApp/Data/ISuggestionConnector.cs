@@ -12,6 +12,10 @@ namespace NDWebApp.Data
 
         void PopulateStatusInDB();
 
+        int CreateSuggestion(string sugTitle, string sugDesc, DateTime sugDea, string sugUse, string resUse, int teamId);
+
+        void DeleteSuggestion(int suggestionId);
+
         IDbConnection GetDbConnection();
     }
 }
