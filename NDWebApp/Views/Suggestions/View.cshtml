@@ -9,13 +9,13 @@
             <br />
             @if (User.IsInRole("Administrator"))
             {
-            <a asp-action="Index" class="btn btn-sm btn-secondary">Tilbake</a>
-            <a class="btn btn-sm btn-success" asp-action="Update" asp-route-id="@Model.SuggestionId">Endre</a>
-            <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirm-delete-@Model.SuggestionId">
+            <a asp-action="Index" class="btn btn-sm btn-secondary"> <i class="fa-solid fa-circle-chevron-left"></i> Tilbake</a>
+            <a class="btn btn-sm btn-success" asp-action="Update" asp-route-id="@Model.SuggestionId"> <i class="fas fa-pen-to-square"></i> Endre</a>
+            <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirm-delete-@Model.SuggestionId"> <i class="fas fa-trash-can"></i>
                 Slett
             </button>
             } else {
-            <a asp-action="Index" class="btn btn-sm btn-secondary">Tilbake</a>
+            <a asp-action="Index" class="btn btn-sm btn-secondary"> <i class="fa-solid fa-circle-chevron-left"></i> Tilbake</a>
             }
             <h1>Forslag</h1>
             <h2>"@Model.SuggestionTitle"</h2>
@@ -73,7 +73,7 @@
                     <p>@Model.StatusName</p>
                 </div>
                 <div class="col-md-6">
-                    <p><a class="btn btn-sm btn-success" data-toggle="modal" data-target="#edit-status-@Model.SuggestionId">Endre status</a></p>
+                    <p><a class="btn btn-sm btn-success" data-toggle="modal" data-target="#edit-status-@Model.SuggestionId"> <i class="fa-solid fa-gears"></i> Endre status</a></p>
                 </div>
             </div>
             } else {

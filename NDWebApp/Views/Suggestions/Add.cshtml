@@ -8,7 +8,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h1>@ViewData["Title"]</h1>
-<a asp-action="Index" class="btn btn-secondary">Tilbake</a>
+<a asp-action="Index" class="btn btn-secondary"> <i class="fa-solid fa-circle-chevron-left"></i> Tilbake</a>
 <div asp-validation-summary="All" class="text-danger"></div>
 
 <form method="post">
@@ -17,7 +17,7 @@
         <input asp-for="SuggestedUserId" class="form-control" aria-required="true" value="@UserManager.GetUserAsync(User).Result.Id" hidden />
     </div>
     <div class="form-group">
-        <label asp-for="SuggestionTitle">Tittel på forslag:</label>
+        <label asp-for="SuggestionTitle">Tittel pÃ¥ forslag:</label>
         <input asp-for="SuggestionTitle" class="form-control" aria-required="true" />
     </div>
     <div class="form-group">
@@ -30,7 +30,7 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="ResponsibleUserId">Hvem skal være ansvarlig for gjennomføring?</label>
+        <label asp-for="ResponsibleUserId">Hvem skal vÃ¦re ansvarlig for gjennomfÃ¸ring?</label>
         <select asp-for="ResponsibleUserId" class="form-control">
             <option value="@UserManager.GetUserAsync(User).Result.Id" selected hidden>Du er selv ansvarlig</option>
             @foreach (var user in Model.Users)
@@ -49,5 +49,5 @@
         </select>
     </div>
 
-    <button type="submit" class="btn btn-primary">Send inn forslag</button>
+    <button type="submit" class="btn btn-primary"> <i class="fa-solid fa-lightbulb"></i> Send inn forslag</button>
 </form>
