@@ -2,48 +2,91 @@
     ViewBag.Title = "Reparasjoner";
 }
 
-<link rel="stylesheet" href="~/css/table.css" asp-append-version="true">
-
-<h1 class="h1">Reparasjoner</h1>
-
-    <div class="outer-wrapper">
-    <div class="table-wrapper">
-    <table>
-        <thead>
-            <th>Tittel</th>
-            <th>Deadline</th>
-            <th>Status</th>
-            <th>Ansvarlig</th>
-            <th>Sendt inn av</th>
-            <th>Se detaljer</th>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1 time til Ørsta Kaffereparasjon</td>
-                <td>01.01.23</td>
-                <td>Godkjent</td>
-                <td>Grim Arne</td>
-                <td>Petter</td>
-                <td><a asp-controller="Repairs" asp-action="Detailed">Se detajler</a></td>
-            </tr>
-            <tr>
-                <td>1 time til Ørsta Kaffereparasjon</td>
-                <td>01.01.23</td>
-                <td>Godkjent</td>
-                <td>Grim Arne</td>
-                <td>Petter</td>
-                <td><a asp-controller="Repairs" asp-action="Detailed">Se detajler</a></td>
-            </tr>
-            <tr>
-                <td>1 time til Ørsta Kaffereparasjon</td>
-                <td>01.01.23</td>
-                <td>Godkjent</td>
-                <td>Grim Arne</td>
-                <td>Petter</td>
-                <td><a asp-controller="Repairs" asp-action="Detailed">Se detajler</a></td>
-            </tr>
-        </tbody>
-    </table>
+<h1>@ViewData["Title"]</h1>
+<div class="alert alert-danger" role="alert">
+    <b>ALT I REPAIRS MANGLER NOE AUTHENTICATION ELLER SJEKK. ALLE BRUKERE KAN SE, OG SLETTE ALLE REPARASJONER</b><br />
+    <b>Endre:</b> Ikke implementert<br />
+    <b>Oppdater status:</b> Ikke implementert<br />
 </div>
-</div>
-<a asp-controller="Repairs" asp-action="Add" class="button">Legg til ny reparasjon</a>
+<br />
+@if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Success")
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Message"]
+    </div>
+    <br />
+}
+else if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Danger")
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Message"]
+    </div>
+    <br />
+}
+else if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Warning")
+{
+    <div class="alert alert-warning" role="alert">
+        @TempData["Message"]
+    </div>
+    <br />
+}
+
+<a asp-action="Add" class="btn btn-secondary">Send inn nytt reparasjon</a>
+
+<table class="table">
+    <tr>
+        <th scope="col">Tittel</th>
+        <th scope="col">Innsendt av</th>
+        <th scope="col">Team</th>
+        <th scope="col">Deadline</th>
+        <th scope="col"></th>
+    </tr>
+    @foreach (var repair in Model.Repairs)
+    {
+        <tr>
+            <td scope="row">@repair.RepairTitle</td>
+            <td>@repair.UserFirstname @repair.UserLastname</td>
+            <td>@repair.TeamName</td>
+            <td>@repair.RepairDeadline</td>
+            <td>
+                <a class="btn btn-sm btn-primary" asp-action="View" asp-route-id="@repair.RepairId">
+                    Se på
+                </a>
+                <a class="btn btn-sm btn-success" asp-action="Update" asp-route-id="@repair.RepairId">
+                    Endre
+                </a>
+                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirm-delete-@repair.RepairId">
+                    Slett
+                </button>
+            </td>
+        </tr>
+    }
+</table>
+
+@if (User.IsInRole("Administrator"))
+{
+    foreach (var repair in Model.Repairs)
+    {
+        <div class="modal fade" id="confirm-delete-@repair.RepairId" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <b>Bekreft sletting av forslag</b>
+                    </div>
+                    <div class="modal-body">
+                        Er du sikker på at du ønsker å slette reparasjon <b>"@repair.RepairTitle"</b>, innsendt av @repair.UserFirstname @repair.UserLastname?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <form asp-action="Delete" asp-route-id="@repair.RepairId" method="post">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-danger btn-ok">
+                                Bekreft sletting
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+} 

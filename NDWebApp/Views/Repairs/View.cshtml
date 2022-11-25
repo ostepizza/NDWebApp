@@ -1,0 +1,112 @@
+@{
+    ViewBag.Title = "Reparasjon";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <br />
+        @if (User.IsInRole("Administrator"))
+        {
+            <a asp-action="Index" class="btn btn-sm btn-secondary">Tilbake</a>
+            <a class="btn btn-sm btn-success" asp-action="Update" asp-route-id="@Model.RepairId">Endre</a>
+            <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@Model.RepairId">Slett</a>
+        }
+        else
+        {
+            <a asp-action="Index" class="btn btn-sm btn-secondary">Tilbake</a>
+        }
+        <h1>Reparasjon</h1>
+        <h2>"@Model.RepairTitle"</h2>
+        <hr>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <u>Sendt inn av:</u>
+        <p>@Model.UserFirstname @Model.UserLastname</p>
+    </div>
+
+    <div class="col-md-4">
+        <u>Innsenders team:</u>
+        <p>@Model.TeamName</p>
+    </div>
+
+    <div class="col-md-4">
+
+    </div>
+
+
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <u>Status:</u>
+        @if (User.IsInRole("Administrator") || User.IsInRole("Team Leader"))
+        {
+            <p>@Model.StatusName <a class="btn btn-sm btn-success" asp-action="Update" asp-route-id="@Model.RepairId">Endre status</a></p>
+        }
+        else
+        {
+            <p>@Model.StatusName</p>
+        }
+    </div>
+
+    <div class="col-md-4">
+        <u>Deadline:</u>
+        <p>@Model.RepairDeadline</p>
+    </div>
+
+    <div class="col-md-4">
+        @if (Model.RepairEnddate == new DateTime(0001, 01, 01, 0, 0, 0))
+        {
+            <p></p>
+        }
+        else
+        {
+            <u>Fullført:</u>
+            <p>@Model.RepairEnddate</p>
+        }
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @if (Model.StatusId == 2)
+        {
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">Reparasjon er avbrutt</div>
+            </div>
+        }
+        else if (Model.StatusId == 3)
+        {
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%">Reparasjon gjennomføres</div>
+            </div>
+        }
+        else if (Model.StatusId == 4)
+        {
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped bg-secondary" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%">Reparasjon er satt på pause</div>
+            </div>
+        }
+        else if (Model.StatusId == 5)
+        {
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">Reparasjon er ferdig utført</div>
+            </div>
+        }
+        <hr>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <u>Beskrivelse:</u>
+        <p>
+            @Model.RepairDescription
+        </p>
+    </div>
+</div>
