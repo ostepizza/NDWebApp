@@ -7,4 +7,6 @@
     public int RequiredLength { get; set; }
     public int RequiredUniqueChars { get; set; }
     public bool RequireConfirmedAccount { get; set; }
+
+    public bool CreateTeamLeaderTestAccount { get; set; }
 }

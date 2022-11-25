@@ -17,7 +17,9 @@ var reqNonAlphanumeric = settings.RequireNonAlphanumeric;
 var reqUppercase = settings.RequireUppercase;
 var reqLength = settings.RequiredLength;
 var reqUniqueChars = settings.RequiredUniqueChars;
-var reqConfirmedAccount = settings.RequireConfirmedAccount;
+//Require Confirmed Accounts should always be false as this isn't being used
+//var reqConfirmedAccount = settings.RequireConfirmedAccount;
+var reqConfirmedAccount = false;
 
 builder.Services.AddDbContext<NDWebAppContext>(options =>
     options.UseMySql(connectionString, new MySqlServerVersion(new Version(10, 4, 25))));
@@ -71,10 +73,7 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 
-//app.MapControllerRoute(
-//    name: "Admin",
-//    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
+//This area isn't used but is still added for future development possibilities
 app.MapAreaControllerRoute(
         name: "adminArea",
         areaName: "Admin",

@@ -30,6 +30,7 @@ namespace NDWebApp.Data
                 }
             }
 
+            //This role is not used within the system but is added for future use
             var roleNameTL = "Team Leader";
             IdentityResult resultTL;
             var roleExistTL = await roleManager.RoleExistsAsync(roleNameTL);
@@ -43,6 +44,7 @@ namespace NDWebApp.Data
                 }
             }
 
+            //This role is not used within the system but is added for future use
             var roleNameEmp = "Employee";
             IdentityResult resultEmp;
             var roleExistEmp = await roleManager.RoleExistsAsync(roleNameEmp);
@@ -63,6 +65,10 @@ namespace NDWebApp.Data
             var admin = await userManager
                 .FindByEmailAsync(config["AdminCredentials:Email"]);
 
+            //Admin settings can be changed later as long as the email in the config matches the one you want to use
+            //In theory you can set an email, launch and have an account created,
+            //then set another email, launch and have two sys-admin accounts
+            //This is because the program always checks for a matching admin account to the email in the config when starting
             if (admin == null)
             {
                 admin = new NDWebAppUser()
@@ -88,33 +94,38 @@ namespace NDWebApp.Data
                 }
             }
 
-            var testtl = await userManager
+            var testTeamLeaderAccount = await userManager
                 .FindByEmailAsync("team@leader.net");
 
-            if (testtl == null)
-            {
-                testtl = new NDWebAppUser()
-                {
-                    UserName = "team@leader.net",
-                    Email = "team@leader.net",
-                    empFname = "Team",
-                    empLname = "Leader",
-                    EmailConfirmed = true
-                };
-                IdentityResult result;
-                result = await userManager
-                    .CreateAsync(testtl, "asd123");
-                if (result.Succeeded)
-                {
-                    result = await userManager
-                        .AddToRoleAsync(testtl, roleNameTL);
-                    if (!result.Succeeded)
-                    {
-                        // todo: process errors
+            bool createTeamLeaderAccount = Convert.ToBoolean(config["TeamLeaderTestAccount:CreateTeamLeaderTestAccount"]);
 
+            if (createTeamLeaderAccount == true)
+            {
+                if (testTeamLeaderAccount == null)
+                {
+                    testTeamLeaderAccount = new NDWebAppUser()
+                    {
+                        UserName = config["TeamLeaderTestAccount:Email"],
+                        Email = config["TeamLeaderTestAccount:Email"],
+                        empFname = "Team",
+                        empLname = "Leader",
+                        EmailConfirmed = true
+                    };
+                    IdentityResult result;
+                    result = await userManager
+                        .CreateAsync(testTeamLeaderAccount, config["TeamLeaderTestAccount:Password"]);
+                    if (result.Succeeded)
+                    {
+                        result = await userManager
+                            .AddToRoleAsync(testTeamLeaderAccount, roleNameTL);
+                        if (!result.Succeeded)
+                        {
+                            // todo: process errors
+
+                        }
                     }
                 }
-            }
+            }         
         }
     }
 }
