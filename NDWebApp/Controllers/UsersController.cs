@@ -127,6 +127,8 @@ namespace NDWebApp.MVC.Controllers
         public async Task<IActionResult> View(string id)
         {
             UserModel user = usersSqlConnector.GetUserById(id);
+            user.SuggestionsSubmitted = usersSqlConnector.GetUserSuggestions(id);
+            user.RepairsSubmitted = usersSqlConnector.GetUserRepairs(id);
             if (user != null)
                 return View(user);
             else

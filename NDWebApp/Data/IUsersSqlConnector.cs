@@ -13,6 +13,10 @@ namespace NDWebApp.Data
 
         UserModel GetUserById(string id);
 
+        IEnumerable<SuggestionEntity> GetUserSuggestions(string id);
+
+        IEnumerable<RepairsEntity> GetUserRepairs(string id);
+
         IDbConnection GetDbConnection();
     }
 }

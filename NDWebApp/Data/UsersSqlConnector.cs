@@ -127,6 +127,44 @@ namespace NDWebApp.Data
             return availableTeams;
         }
 
+        public IEnumerable<SuggestionEntity> GetUserSuggestions(string id)
+        {
+            using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
+            connection.Open();
+            var query = ("Select SuggestionId, SuggestionTitle from Suggestion where SuggestedUserId = '"+id+"';");
+            var reader = ReadData(query, connection);
+            var suggestions = new List<SuggestionEntity>();
+            while (reader.Read())
+            {
+                var suggestion = new SuggestionEntity();
+                suggestion.SuggestionId = reader.GetInt32(0);
+                suggestion.SuggestionTitle = reader.GetString(1);
+
+                suggestions.Add(suggestion);
+            }
+            connection.Close();
+            return suggestions;
+        }
+
+        public IEnumerable<RepairsEntity> GetUserRepairs(string id)
+        {
+            using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
+            connection.Open();
+            var query = ("Select RepairsId, RepairsTitle from Repairs where UserId = '" + id + "';");
+            var reader = ReadData(query, connection);
+            var repairs = new List<RepairsEntity>();
+            while (reader.Read())
+            {
+                var repair = new RepairsEntity();
+                repair.RepairId = reader.GetInt32(0);
+                repair.RepairTitle = reader.GetString(1);
+
+                repairs.Add(repair);
+            }
+            connection.Close();
+            return repairs;
+        }
+
         private MySqlDataReader ReadData(string query, MySqlConnection conn)
         {
             using var command = conn.CreateCommand();
