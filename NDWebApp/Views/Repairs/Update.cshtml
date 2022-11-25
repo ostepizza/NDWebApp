@@ -10,7 +10,7 @@
 
 <br />
 <div class="alert alert-danger" role="alert">
-    <i class="fas fa-triangle-exclamation"></i> Sluttdato resettes på hver oppdatering. Er reparasjonen ferdig utført bør det dermed ikke oppdateres.
+    <i class="fas fa-triangle-exclamation"></i> Fyll kun ut sluttdato når reparasjonen markeres "gjennomført".
 </div>
 
 <form asp-action="Update" method="post">
@@ -35,11 +35,6 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="RepairEnddate">Sluttdato:</span></label>
-        <input asp-for="RepairEnddate" class="form-control" value="@Model.RepairEnddate" />
-    </div>
-
-    <div class="form-group">
         <label asp-for="UserId">Sendt inn av:</label>
         <input type="text" class="form-control" value="@Model.UserFirstname @Model.UserLastname" disabled>
         <input asp-for="UserId" class="form-control" value="@Model.UserId" disabled />
@@ -54,6 +49,13 @@
             <option value="5">Ferdig</option>
         </select>
     </div>
+
+      <div class="form-group">
+        <label asp-for="RepairEnddate">Sluttdato:</span></label>
+        <input asp-for="RepairEnddate" class="form-control" value="@Model.RepairEnddate" />
+    </div>
+    
+    <br>
 
     <button type="submit" class="btn btn-primary"> <i class="fa-solid fa-floppy-disk"></i> Lagre</button>
 </form>
