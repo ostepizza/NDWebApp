@@ -1,6 +1,7 @@
 @using Microsoft.AspNetCore.Identity
 @using NDWebApp.Areas.Identity.Data
 @using NDWebApp.Models
+@model UserModel
 
 @inject UserManager<NDWebAppUser> UserManager
 
@@ -66,18 +67,6 @@
                         <p>Ansatt</p>
                     }
                 </h6>
-
-                <br />
-                <div class="alert alert-danger" role="alert">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-                    <b>Kontaktinfo:</b> Team -> Viser bare team ID<br />
-                    <i class="fa-solid fa-triangle-exclamation"></i>
-                    <b>Endre profilbilde:</b> Ikke funksjonell<br />
-                    <i class="fa-solid fa-triangle-exclamation"></i>
-                    <b>Endre passord:</b> Ikke funksjonell<br />
-                    <i class="fa-solid fa-triangle-exclamation"></i>
-                    <b>Suggestions</b> Ikke funksjonell<br />
-                </div>
                 <br />
 
                 <ul class="nav nav-tabs" role="tablist" >
@@ -111,30 +100,43 @@
                                 Ta kontakt med systemadministrator for endring av personalia.
                             </div>
                         </div>
-                        <div col-md-3></div>   
+                        <div col-md-3></div>
+                    </div>
+
+                    <div class="row">
+                        <div col-md-3></div>
+                        <div col-md-6>
+                            @if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Success")
+                            {
+                                <div class="alert alert-success" role="alert">
+                                    <i class="fas fa-circle-exclamation"></i> @TempData["Message"]
+                                </div>
+                                <br />
+                            }
+                            else if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Danger")
+                            {
+                                <div class="alert alert-danger" role="alert">
+                                    <i class="fas fa-triangle-exclamation"></i> @TempData["Message"]
+                                </div>
+                                <br />
+                            }
+                            else if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Warning")
+                            {
+                                <div class="alert alert-warning" role="alert">
+                                    <i class="fas fa-triangle-exclamation"></i> @TempData["Message"]
+                                </div>
+                                <br />
+                            }
+                        </div>
+                        <div col-md-3></div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-3">
-                            <label>System-ID</label>
+                            <label>Navn:</label>
                         </div>
                         <div class="col-md-9">
-                            <p>@UserManager.GetUserAsync(User).Result.Id</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label>Ansattnummer</label>
-                        </div>
-                        <div class="col-md-9">
-                            @if (UserManager.GetUserAsync(User).Result.empNr != 0)
-                            {
-                                <p>@UserManager.GetUserAsync(User).Result.empNr</p>
-                            }
-                            else
-                            {
-                                <p>Ingen ansattnummer registrert</p>
-                            }
+                            <p>@UserManager.GetUserAsync(User).Result.empFname @UserManager.GetUserAsync(User).Result.empLname</p>
                         </div>
                     </div>
                     <div class="row">
@@ -144,11 +146,11 @@
                         <div class="col-md-9">
                             @if (!string.IsNullOrEmpty(UserManager.GetUserAsync(User).Result.Email))
                             {
-                            <p>@UserManager.GetUserAsync(User).Result.Email</p>
+                                <p>@UserManager.GetUserAsync(User).Result.Email</p>
                             }
                             else
                             {
-                            <p>Ingen e-post registrert</p>
+                                <p>Ingen e-post registrert</p>
                             }
                         </div>
                     </div>
@@ -172,48 +174,99 @@
                             <label>Team</label>
                         </div>
                         <div class="col-md-9">
-                            <p>
-                                @if (UserManager.GetUserAsync(User).Result.teamId != null)
-                                {
-                                    <a asp-controller="Teams" asp-action="View" asp-route-id="@UserManager.GetUserAsync(User).Result.teamId"><p>@UserManager.GetUserAsync(User).Result.teamId</a>
-                                } else {
-                                    <span>Ikke medlem av et team.</span>
-                                }
-                            </p>
+                            @if (Model.teamId != null)
+                            {
+                                <a asp-controller="Teams" asp-action="View" asp-route-id="@Model.teamId"><p>@Model.teamName</a>
+                            }
+                            else
+                            {
+                                <p>Ikke medlem av et team.</p>
+                            }
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Ansattnummer</label>
+                        </div>
+                        <div class="col-md-9">
+                            @if (UserManager.GetUserAsync(User).Result.empNr != 0)
+                            {
+                                <p>@UserManager.GetUserAsync(User).Result.empNr</p>
+                            }
+                            else
+                            {
+                                <p>Ingen ansattnummer registrert</p>
+                            }
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>System-ID</label>
+                        </div>
+                        <div class="col-md-9">
+                            <p>@UserManager.GetUserAsync(User).Result.Id</p>
+                        </div>
+                    </div>
+                    
                 </div>
                 <div class="tab-pane fade" id="suggestions" role="tabpanel" aria-labelledby="suggestions-tab">
                     <div class="row">
-                        <div class="col-md-6">
-                            <label>Team</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>Team-01</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Pågående forslag</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>2</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Alle forslag</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>7</p>
-                        </div>
+                        @if (Model.SuggestionsSubmitted.Any())
+                        {
+                            <table class="table">
+                                <tr>
+                                    <th scope="col">Tittel</th>
+                                    <th scope="col">Gå til forslag</th>
+                                </tr>
+                                @foreach (var suggestion in Model.SuggestionsSubmitted)
+                                {
+                                    <tr>
+                                        <td scope="row">@suggestion.SuggestionTitle</td>
+                                        <td>
+                                            <a class="btn btn-sm btn-primary" asp-controller="Suggestions" asp-action="View" asp-route-id="@suggestion.SuggestionId">
+                                                <i class="fas fa-eye"></i> Gå til forslag
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="text-center"><i>Du har ikke sendt inn noen forslag</i></div>
+                        }
                     </div>
                 </div>
                 <div class="tab-pane fade" id="repairs" role="tabpanel" aria-labelledby="repairs-tab">
-                    <p>Under construction :D</p>
+                    <div class="row">
+                        @if (Model.RepairsSubmitted.Any())
+                        {
+                            <table class="table">
+                                <tr>
+                                    <th scope="col">Tittel</th>
+                                    <th scope="col">Gå til forslag</th>
+                                </tr>
+                                @foreach (var repair in Model.RepairsSubmitted)
+                                {
+                                    <tr>
+                                        <td scope="row">@repair.RepairTitle</td>
+                                        <td>
+                                            <a class="btn btn-sm btn-primary" asp-controller="Repairs" asp-action="View" asp-route-id="@repair.RepairId">
+                                                <i class="fas fa-eye"></i> Gå til forslag
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="text-center"><i>Du har ikke sendt inn noen forslag</i></div>
+                        }
+                    </div>
                 </div>
                 <div class="tab-pane fade" id="changepassword" role="tabpanel" aria-labelledby="changepassword-tab">
-                    <form method="post">
+                    @*<form method="post">
                         <fieldset class="clearfix">
                             <div>
                             
@@ -229,6 +282,20 @@
 
                             <input type="submit" value="Endre passord" class="btn btn-outline-primary" style="width: fit-content;">
                         </fieldset>
+                    </form>*@
+                    <form asp-action="ResetPassword" method="post">
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <label for="Password">Passord</label>
+                            <input name="Password" class="form-control" type="password" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ConfirmPassword">Bekreft passord</label>
+                            <input name="ConfirmPassword" class="form-control" type="password" />
+                        </div>
+
+                        <button type="submit" class="btn btn-primary"> <i class="fa-solid fa-floppy-disk"></i> Lagre</button>
                     </form>
                 </div>
             </div>
