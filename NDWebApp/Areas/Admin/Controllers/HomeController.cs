@@ -6,6 +6,7 @@ using System.Diagnostics;
 namespace NDWebApp.MVC.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Administrator")]
     public class HomeController : Controller
     {
         public IActionResult Index()
