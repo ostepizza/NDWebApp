@@ -23,6 +23,7 @@ using NDWebApp.Data;
 
 namespace NDWebApp.Areas.Identity.Pages.Account
 {
+    [Authorize(Roles = "Administrator")]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<NDWebAppUser> _signInManager;

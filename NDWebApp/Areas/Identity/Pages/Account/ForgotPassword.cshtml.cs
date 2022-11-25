@@ -17,6 +17,7 @@ using NDWebApp.Areas.Identity.Data;
 
 namespace NDWebApp.Areas.Identity.Pages.Account
 {
+    [Authorize(Roles = "Administrator")]
     public class ForgotPasswordModel : PageModel
     {
         private readonly UserManager<NDWebAppUser> _userManager;

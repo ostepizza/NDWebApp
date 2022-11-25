@@ -1,7 +1,9 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 using System;
+using System.Data;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,6 +12,7 @@ using NDWebApp.Areas.Identity.Data;
 
 namespace NDWebApp.Areas.Identity.Pages.Account.Manage
 {
+    [Authorize(Roles = "Administrator")]
     public class PersonalDataModel : PageModel
     {
         private readonly UserManager<NDWebAppUser> _userManager;

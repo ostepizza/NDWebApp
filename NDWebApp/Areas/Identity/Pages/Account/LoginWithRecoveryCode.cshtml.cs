@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using NDWebApp.Areas.Identity.Data;
 namespace NDWebApp.Areas.Identity.Pages.Account
 {
+    [Authorize(Roles = "Administrator")]
     public class LoginWithRecoveryCodeModel : PageModel
     {
         private readonly SignInManager<NDWebAppUser> _signInManager;

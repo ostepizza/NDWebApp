@@ -21,7 +21,8 @@ using NDWebApp.Areas.Identity.Data;
 
 namespace NDWebApp.Areas.Identity.Pages.Account
 {
-    [AllowAnonymous]
+    //[AllowAnonymous]
+    [Authorize(Roles = "Administrator")]
     public class ExternalLoginModel : PageModel
     {
         private readonly SignInManager<NDWebAppUser> _signInManager;

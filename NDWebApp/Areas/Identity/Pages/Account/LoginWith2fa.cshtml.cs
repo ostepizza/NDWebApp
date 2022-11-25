@@ -15,6 +15,7 @@ using NDWebApp.Areas.Identity.Data;
 
 namespace NDWebApp.Areas.Identity.Pages.Account
 {
+    [Authorize(Roles = "Administrator")]
     public class LoginWith2faModel : PageModel
     {
         private readonly SignInManager<NDWebAppUser> _signInManager;

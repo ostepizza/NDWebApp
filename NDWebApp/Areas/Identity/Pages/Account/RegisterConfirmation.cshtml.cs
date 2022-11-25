@@ -15,7 +15,8 @@ using NDWebApp.Areas.Identity.Data;
 
 namespace NDWebApp.Areas.Identity.Pages.Account
 {
-    [AllowAnonymous]
+    //[AllowAnonymous]
+    [Authorize(Roles = "Administrator")]
     public class RegisterConfirmationModel : PageModel
     {
         private readonly UserManager<NDWebAppUser> _userManager;
