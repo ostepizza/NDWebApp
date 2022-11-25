@@ -10,6 +10,7 @@ using System.Linq;
 
 namespace NDWebApp.MVC.Controllers
 {
+    [Authorize]
     public class UsersController : Controller
     {
         private UserManager<NDWebAppUser> userManager;

@@ -5,6 +5,7 @@ using System.Data;
 
 namespace NDWebApp.Controllers
 {
+    [Authorize]
     public class RoleController : Controller
     {
         RoleManager<IdentityRole> roleManager;

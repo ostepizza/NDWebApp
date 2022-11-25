@@ -6,6 +6,7 @@ using System.Diagnostics;
 
 namespace NDWebApp.MVC.Controllers
 {
+    [Authorize]
     public class SuggestionsController : Controller
     {
         private readonly ISuggestionConnector suggestionConnector;

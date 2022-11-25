@@ -9,6 +9,7 @@ using System.Diagnostics;
 
 namespace NDWebApp.MVC.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         public IActionResult Index()

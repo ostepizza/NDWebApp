@@ -10,6 +10,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace NDWebApp.MVC.Controllers
 {
+    [Authorize]
     public class TeamsController : Controller
     {
         private ILogger<TeamsController> _logger;

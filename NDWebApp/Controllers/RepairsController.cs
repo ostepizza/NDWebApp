@@ -6,6 +6,7 @@ using System.Diagnostics;
 
 namespace NDWebApp.MVC.Controllers
 {
+    [Authorize]
     public class RepairsController : Controller
     {
         private readonly IRepairsSqlConnector repairConnector;
