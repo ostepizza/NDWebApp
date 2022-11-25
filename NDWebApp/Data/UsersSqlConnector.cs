@@ -38,10 +38,33 @@ namespace NDWebApp.Data
                 //user.Phone = reader.GetString(2);
                 user.empFname = reader.GetString(3);
                 user.empLname = reader.GetString(4);
+                if (!reader.IsDBNull(5))
+                    user.TeamId = reader.GetInt32(5);
+                else user.TeamId = null;
+                
 
                 users.Add(user);
             }
             connection.Close();
+
+            var query = "";
+
+            //Loop to get Team name
+            foreach (var user in users)
+            {
+                if (user.TeamId != null)
+                {
+                    connection.Open();
+                    query = ("SELECT TeamName FROM Team WHERE TeamId = '" + user.TeamId + "';");
+                    reader = ReadData(query, connection);
+                    while (reader.Read())
+                    {
+                        user.TeamName = reader.GetString(0);
+                    }
+                    connection.Close();
+                }        
+            }
+
             return users;
         }
 

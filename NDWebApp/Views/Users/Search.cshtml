@@ -43,6 +43,7 @@ else if (TempData["Message"] != null && TempData["Status"] != null && TempData["
         <th scope="col">Navn:</th>
         <th scope="col">Epost:</th>
         <th scope="col">Tlf.nr.:</th>
+        <th scope="col">Team:</th>
     </tr>
     @foreach (var user in Model.Users)
     {
@@ -50,6 +51,7 @@ else if (TempData["Message"] != null && TempData["Status"] != null && TempData["
             <td>@user.empFname @user.empLname</td>
             <td>@user.Email</td>
             <td>@user.Phone</td>
+            <td>@user.TeamName</td>
         </tr>
     }
 </table>

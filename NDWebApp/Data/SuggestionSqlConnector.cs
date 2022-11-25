@@ -39,11 +39,7 @@ namespace NDWebApp.Data
                 else suggestion.TeamId = null;
                 suggestion.StatusId = reader.GetInt32(8);
 
-                suggestions.Add(suggestion); //@Lucky: Må finne en måte å få navn på ting inn i suggestion før den er adda til lista. 
-                // Entityen er klar for å ta imot informasjon men denne metoden fungerer annerledes en enkelt-tilfeller
-                // Må basically per response ta SuggestedUserId = AspNetUsers.Id og få empFname og empLname
-                // Klokka er nøyaktig 5:43 og jeg sliter i hodet takk
-                // Kan evt se på metoden nedenfor og se om du kan tenke deg til noe som ligner
+                suggestions.Add(suggestion);
             }
             connection.Close();
 

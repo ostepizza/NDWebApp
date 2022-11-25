@@ -11,5 +11,9 @@
         public string? empLname { get; set; }
 
         public string? Phone { get; set; }
+
+        public int? TeamId { get; set; }
+
+        public string? TeamName { get; set; }
     }
 }
