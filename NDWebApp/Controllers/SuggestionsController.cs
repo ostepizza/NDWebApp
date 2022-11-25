@@ -79,6 +79,17 @@ namespace NDWebApp.MVC.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Administrator")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult UpdateStatus(int SuggestionId, int StatusId)
+        {
+            suggestionConnector.UpdateStatus(SuggestionId, StatusId);
+            TempData["Message"] = "Statusen ble oppdatert";
+            TempData["Status"] = "Success";
+            return RedirectToAction("View", new { id = SuggestionId });
+        }
+
         public IActionResult View(int id)
         {
             var model = suggestionConnector.GetSuggestionById(id);

@@ -301,6 +301,17 @@ namespace NDWebApp.Data
             connection.Close();
         }
 
+        public void UpdateStatus(int SuggestionId, int StatusId)
+        {
+            using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
+            connection.Open();
+            var query = ("UPDATE `suggestion` SET `StatusId` = '" + StatusId + "' WHERE `suggestion`.`SuggestionId` = " + SuggestionId + ";");
+            System.Diagnostics.Debug.WriteLine(query);
+            var reader = ReadData(query, connection);
+            reader.Read();
+            connection.Close();
+        }
+
         public int FindHighestId()
         {
             using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));

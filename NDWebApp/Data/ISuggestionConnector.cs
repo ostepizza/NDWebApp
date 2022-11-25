@@ -18,6 +18,8 @@ namespace NDWebApp.Data
 
         void DeleteSuggestion(int suggestionId);
 
+        void UpdateStatus(int SuggestionId, int StatusId);
+
         IEnumerable<UserEntity> GetUsers();
 
         IEnumerable<TeamEntity> GetTeams();

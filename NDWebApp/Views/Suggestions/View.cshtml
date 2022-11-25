@@ -1,3 +1,4 @@
+@model SuggestionModel
 @{
     ViewBag.Title = "Forslag";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -46,7 +47,14 @@
             <u>Status:</u>
             @if (User.IsInRole("Administrator") || User.IsInRole("Team Leader"))
             {
-                <p>@Model.StatusName <a class="btn btn-sm btn-success" asp-action="UpdateStatus" asp-route-id="@Model.SuggestionId">Endre status</a></p>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>@Model.StatusName</p>
+                </div>
+                <div class="col-md-6">
+                    <p><a class="btn btn-sm btn-success" data-toggle="modal" data-target="#edit-status-@Model.SuggestionId">Endre status</a></p>
+                </div>
+            </div>
             } else {
                 <p>@Model.StatusName</p>
             }      
@@ -135,4 +143,42 @@
             </div>
         </div>
     </div>
-} 
+}  
+
+@if (User.IsInRole("Administrator") || User.IsInRole("Team Leader"))
+{
+    <div class="modal fade" id="edit-status-@Model.SuggestionId" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <b>Endre status på forslag</b>
+                </div>
+                <div class="modal-body">
+                    Vennligst velg en status:
+
+                    <form asp-action="UpdateStatus" method="post">
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <input asp-for="SuggestionId" class="form-control" value="@Model.SuggestionId" hidden />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="StatusId">Status:</label>
+                            <select asp-for="StatusId" class="form-control">
+                                <option value="0">Under vurdering</option>
+                                <option value="1">Godtatt</option>
+                                <option value="2">Avslått</option>
+                                <option value="3">Pågår</option>
+                                <option value="4">På pause</option>
+                                <option value="5">Ferdig</option>
+                            </select>
+                        </div>
+                        <br>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Avbryt</button>
+                        <button type="submit" class="btn btn-success btn-ok">Lagre</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
