@@ -12,6 +12,7 @@
 @if (User.IsInRole("Administrator") || User.IsInRole("Team Leader"))
 {
     <h5>Antall forslag i systemet: @Model.SuggestionsAllCount</h5>
+    
 
     <div>
         <canvas id="pieChart" style="margin-top: 50px;"></canvas>
