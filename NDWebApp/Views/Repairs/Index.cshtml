@@ -25,7 +25,7 @@ else if (TempData["Message"] != null && TempData["Status"] != null && TempData["
     <br />
 }
 
-<a asp-action="Add" class="btn btn-secondary">Send inn ny reparasjon</a>
+<a asp-action="Add" class="btn btn-secondary"> <i class="fas fa-wrench"></i> Send inn ny reparasjon</a>
 
 <table class="table">
     <tr>
@@ -43,15 +43,15 @@ else if (TempData["Message"] != null && TempData["Status"] != null && TempData["
             <td>@repair.TeamName</td>
             <td>@repair.RepairDeadline</td>
             <td>
-                <a class="btn btn-sm btn-primary" asp-action="View" asp-route-id="@repair.RepairId">
+                <a class="btn btn-sm btn-primary" asp-action="View" asp-route-id="@repair.RepairId"> <i class="fas fa-eye"></i>
                     Se på
                 </a>
                 @if (User.IsInRole("Administrator"))
                 {
-                    <a class="btn btn-sm btn-success" asp-action="Update" asp-route-id="@repair.RepairId">
+                    <a class="btn btn-sm btn-success" asp-action="Update" asp-route-id="@repair.RepairId"> <i class="fas fa-pen-to-square"></i>
                         Endre
                     </a>
-                    <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirm-delete-@repair.RepairId">
+                    <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirm-delete-@repair.RepairId"> <i class="fas fa-trash-can"></i>
                         Slett
                     </button>
                 }
