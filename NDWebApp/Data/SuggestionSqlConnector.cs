@@ -34,7 +34,9 @@ namespace NDWebApp.Data
                 //suggestion.SuggestionEnddate = reader.GetDateTime(4);
                 suggestion.SuggestedUserId = reader.GetString(5);
                 suggestion.ResponsibleUserId = reader.GetString(6);
-                suggestion.TeamId = reader.GetInt32(7);
+                if (!reader.IsDBNull(7))
+                    suggestion.TeamId = reader.GetInt32(7);
+                else suggestion.TeamId = null;
                 suggestion.StatusId = reader.GetInt32(8);
 
                 suggestions.Add(suggestion); //@Lucky: Må finne en måte å få navn på ting inn i suggestion før den er adda til lista. 
@@ -119,7 +121,7 @@ namespace NDWebApp.Data
             var suggestion = new SuggestionModel();
             while (reader.Read())
             {
-                suggestion.SuggestionId = reader.GetInt32("TeamId");
+                suggestion.SuggestionId = reader.GetInt32(0);
                 suggestion.SuggestionTitle = reader.GetString(1);
                 suggestion.SuggestionDescription = reader.GetString(2);
                 suggestion.SuggestionDeadline = reader.GetDateTime(3);
@@ -128,7 +130,9 @@ namespace NDWebApp.Data
                 else suggestion.SuggestionEndDate = DateTime.MinValue;
                 suggestion.SuggestedUserId= reader.GetString(5);
                 suggestion.ResponsibleUserId = reader.GetString(6);
-                suggestion.TeamId = reader.GetInt32(7);
+                if (!reader.IsDBNull(7))
+                    suggestion.TeamId = reader.GetInt32(7);
+                else suggestion.TeamId = null;
                 suggestion.StatusId= reader.GetInt32(8);
             }
             connection.Close();
@@ -233,11 +237,65 @@ namespace NDWebApp.Data
             return availableTeams;
         }
 
+        public IEnumerable<StatusEntity> GetStatusList()
+        {
+            using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
+            connection.Open();
+            var query = ("Select StatusId, StatusTitle from `Status`;");
+            var reader = ReadData(query, connection);
+            var statusList = new List<StatusEntity>();
+            while (reader.Read())
+            {
+                var status = new StatusEntity();
+                status.StatusId = reader.GetInt32(0);
+                status.StatusTitle = reader.GetString(1);
+
+                statusList.Add(status);
+            }
+            connection.Close();
+            return statusList;
+        }
+
         public void DeleteSuggestion(int suggestionId)
         {
             using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
             connection.Open();
             var query = ("DELETE FROM suggestion WHERE `suggestion`.`SuggestionId` = " + suggestionId + ";");
+            var reader = ReadData(query, connection);
+            reader.Read();
+            connection.Close();
+        }
+
+        public void UpdateSuggestion(int SuggestionId, string SuggestionTitle, string SuggestionDescription, DateTime SuggestionDeadline, DateTime SuggestionEnddate, string ResponsibleUserId, int TeamId, int StatusId)
+        {
+            var dateValueDeadline = SuggestionDeadline;
+            string DeadlineMySql = dateValueDeadline.ToString("yyyy-MM-dd HH:mm:ss");
+
+            var dateValueEnddate = SuggestionEnddate;
+            string EnddateMySql = dateValueEnddate.ToString("yyyy-MM-dd HH:mm:ss");
+
+            //From RepairsSqlConnector:
+            string teamIdAsString;
+            if (TeamId == 0)
+            {
+                teamIdAsString = "NULL";
+                //Duct-tape time!!!!!
+                //This shit looks stupid but in theory no team Id can ever be 0 unless manually added,
+                //because a new team will always look for highest number available + 1
+                //So if highest number = 0 teams then new team will have ID 1
+                //The form won't send Null if member isn't in any teams
+                //Here we force that shit to be null to avoid issues
+                //attempting to add teamId = 0
+            }
+            else
+            {
+                teamIdAsString = TeamId.ToString();
+            }
+
+            using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
+            connection.Open();
+            var query = ("UPDATE `suggestion` SET `SuggestionTitle` = '" + SuggestionTitle + "', `SuggestionDescription` = '" + SuggestionDescription + "', SuggestionDeadline = '"+ DeadlineMySql + "', SuggestionEnddate = '"+ EnddateMySql + "', ResponsibleUserId = '"+ResponsibleUserId+"', TeamId = "+ teamIdAsString + ", StatusId = "+StatusId+" WHERE `suggestion`.`SuggestionId` = " + SuggestionId + ";");
+            System.Diagnostics.Debug.WriteLine(query);
             var reader = ReadData(query, connection);
             reader.Read();
             connection.Close();

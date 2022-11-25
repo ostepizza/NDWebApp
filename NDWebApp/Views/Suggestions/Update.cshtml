@@ -1,0 +1,67 @@
+@model SuggestionModel
+
+@{
+    ViewBag.Title = "Oppdater forslag";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>@ViewData["Title"]</h1>
+<a asp-action="Index" class="btn btn-secondary">Tilbake</a>
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-action="Update" method="post">
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <input asp-for="SuggestionId" class="form-control" value="@Model.SuggestionId" disabled hidden/>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SuggestionTitle">Tittel:</label>
+        <input asp-for="SuggestionTitle" class="form-control" value="@Model.SuggestionTitle"/>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SuggestionDescription">Beskrivelse:</label>
+        <input asp-for="SuggestionDescription" class="form-control" value="@Model.SuggestionDescription" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SuggestionDeadline">Deadline:</label>
+        <input asp-for="SuggestionDeadline" class="form-control" value="@Model.SuggestionDeadline" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SuggestionEndDate">Sluttdato:</label>
+        <input asp-for="SuggestionEndDate" class="form-control" value="@Model.SuggestionEndDate" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SuggestedUserId">Sendt inn av:</label>
+        <input type="text"  class="form-control" value="@Model.SuggestedFirstname @Model.SuggestedLastname" disabled>
+        <input asp-for="SuggestedUserId" class="form-control" value="@Model.SuggestedUserId" disabled />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ResponsibleUserId">Ansvarlig for utførelse:</label>
+        <select asp-for="ResponsibleUserId" class="form-control">
+            
+            @foreach (var user in Model.Users)
+            {
+                <option value="@user.Id">@user.empFname @user.empLname</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="StatusId">Status:</label>
+        <select asp-for="StatusId" class="form-control">
+            <option value="0">Under vurdering</option>
+            <option value="1">Godtatt</option>
+            <option value="2">Avslått</option>
+            <option value="3">Pågår</option>
+            <option value="4">På pause</option>
+            <option value="5">Ferdig</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Lagre</button>
+</form>

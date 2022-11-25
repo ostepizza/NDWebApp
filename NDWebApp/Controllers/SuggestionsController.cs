@@ -54,6 +54,31 @@ namespace NDWebApp.MVC.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Administrator")]
+        public IActionResult Update(int id)
+        {
+            var users = suggestionConnector.GetUsers();
+            var teams = suggestionConnector.GetTeams();
+            var statusList = suggestionConnector.GetStatusList();
+            SuggestionModel model = suggestionConnector.GetSuggestionById(id);
+            model.Users = users;
+            model.Teams = teams;
+            model.StatusSelection = statusList;
+            return View(model);
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(int SuggestionId, string SuggestionTitle, string SuggestionDescription, DateTime SuggestionDeadline, DateTime SuggestionEnddate, string ResponsibleUserId, int TeamId, int StatusId)
+        {
+            System.Diagnostics.Debug.WriteLine("Date parse attempt: Deadline: " + SuggestionDeadline + ", Enddate: " + SuggestionEnddate);
+            suggestionConnector.UpdateSuggestion(SuggestionId, SuggestionTitle, SuggestionDescription, SuggestionDeadline, SuggestionEnddate, ResponsibleUserId, TeamId, StatusId);
+            TempData["Message"] = "Forslag " + SuggestionTitle + " ble oppdatert";
+            TempData["Status"] = "Success";
+            return RedirectToAction("Index");
+        }
+
         public IActionResult View(int id)
         {
             var model = suggestionConnector.GetSuggestionById(id);

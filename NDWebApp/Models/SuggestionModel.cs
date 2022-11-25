@@ -29,7 +29,7 @@ namespace NDWebApp.Models
 
         public string? ResponsibleLastname { get; set; }
 
-        public int TeamId { get; set; }
+        public int? TeamId { get; set; }
 
         public string? TeamName { get; set; }
 
@@ -40,6 +40,8 @@ namespace NDWebApp.Models
         public IEnumerable<UserEntity>? Users { get; set; }
 
         public IEnumerable<TeamEntity>? Teams { get; set; }
+
+        public IEnumerable<StatusEntity>? StatusSelection { get; set; }
 
         public IEnumerable<SuggestionEntity> Suggestions { get; set; }
 
