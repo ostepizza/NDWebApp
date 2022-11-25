@@ -9,7 +9,7 @@ namespace NDWebApp.Data
     {
         private readonly IConfiguration config;
 
-        public RepairsSqlConnector()
+        public RepairsSqlConnector(IConfiguration config)
         {
             this.config = config;
         }
@@ -17,22 +17,24 @@ namespace NDWebApp.Data
         {
             using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
             connection.Open();
-            var reader = ReadData("SELECT RepairsId, RepairsTitle, RepairsDescription, RepairsDeadline, RepairsEnddate, RepairsUserId, TeamId, StatusId FROM repairs;", connection);
+            var reader = ReadData("SELECT RepairsId, RepairsTitle, RepairsDescription, RepairsDeadline, RepairsEnddate, UserId, TeamId, StatusId FROM repairs;", connection);
             var repairs = new List<RepairsEntity>();
             while (reader.Read())
             {
                 var repair = new RepairsEntity();
-                repair.RepairsId = reader.GetInt32("RepairsId");
-                repair.RepairsTitle = reader.GetString(1);
+                repair.RepairId = reader.GetInt32(0);
+                repair.RepairTitle = reader.GetString(1);
                 if (!reader.IsDBNull(2))
-                    repair.RepairsDescription = reader.GetString(2);
-                else repair.RepairsDescription = string.Empty;
-                repair.RepairsDeadline = reader.GetDateTime(3);
+                    repair.RepairDescription = reader.GetString(2);
+                else repair.RepairDescription = string.Empty;
+                repair.RepairDeadline = reader.GetDateTime(3);
                 if (!reader.IsDBNull(4))
-                    repair.RepairsEnddate = reader.GetDateTime(4);
-                else repair.RepairsEnddate = DateTime.MinValue;
+                    repair.RepairEnddate = reader.GetDateTime(4);
+                else repair.RepairEnddate = DateTime.MinValue;
                 repair.UserId = reader.GetString(5);
-                repair.TeamId = reader.GetInt32(6);
+                if (!reader.IsDBNull(6))
+                    repair.TeamId = reader.GetInt32(6);
+                else repair.TeamId = null;
                 repair.StatusId = reader.GetInt32(7);
 
                 repairs.Add(repair);
@@ -45,7 +47,7 @@ namespace NDWebApp.Data
             //Loop to get users name
             foreach (var repair in repairs)
             {
-                System.Diagnostics.Debug.WriteLine(repair.RepairsTitle);
+                System.Diagnostics.Debug.WriteLine(repair.RepairTitle);
                 connection.Open();
                 query = ("SELECT empFname, empLname FROM AspNetUsers WHERE Id = '" + repair.UserId + "';");
                 reader = ReadData(query, connection);
@@ -60,7 +62,7 @@ namespace NDWebApp.Data
             //Loop to get Team name
             foreach (var repair in repairs)
             {
-                System.Diagnostics.Debug.WriteLine(repair.RepairsTitle);
+                System.Diagnostics.Debug.WriteLine(repair.RepairTitle);
                 connection.Open();
                 query = ("SELECT TeamName FROM Team WHERE TeamId = '" + repair.TeamId + "';");
                 reader = ReadData(query, connection);
@@ -74,7 +76,7 @@ namespace NDWebApp.Data
             //Loop to get Status title
             foreach (var repair in repairs)
             {
-                System.Diagnostics.Debug.WriteLine(repair.RepairsTitle);
+                System.Diagnostics.Debug.WriteLine(repair.RepairTitle);
                 connection.Open();
                 query = ("SELECT StatusTitle FROM Status WHERE StatusId = '" + repair.StatusId + "';");
                 reader = ReadData(query, connection);
@@ -94,20 +96,22 @@ namespace NDWebApp.Data
         {
             using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection")); //Specifies connection
             connection.Open(); //Opens connection
-            var query = ("SELECT SuggestionId, SuggestionTitle, SuggestionDescription, SuggestionDeadline, SuggestionEnddate, UserId, TeamId, StatusId FROM suggestion WHERE SuggestionId = " + id + ";");
+            var query = ("SELECT RepairsId, RepairsTitle, RepairsDescription, RepairsDeadline, RepairsEnddate, UserId, TeamId, StatusId FROM repairs WHERE RepairsId = " + id + ";");
             var reader = ReadData(query, connection);
             var repair = new RepairsModel();
             while (reader.Read())
             {
-                repair.RepairsId = reader.GetInt32("TeamId");
-                repair.RepairsTitle = reader.GetString(1);
-                repair.RepairsDescription = reader.GetString(2);
-                repair.RepairsDeadline = reader.GetDateTime(3);
+                repair.RepairId = reader.GetInt32(0);
+                repair.RepairTitle = reader.GetString(1);
+                repair.RepairDescription = reader.GetString(2);
+                repair.RepairDeadline = reader.GetDateTime(3);
                 if (!reader.IsDBNull(4))
-                    repair.RepairsEnddate = reader.GetDateTime(4);
-                else repair.RepairsEnddate = DateTime.MinValue;
+                    repair.RepairEnddate = reader.GetDateTime(4);
+                else repair.RepairEnddate = DateTime.MinValue;
                 repair.UserId = reader.GetString(5);
-                repair.TeamId = reader.GetInt32(6);
+                if (!reader.IsDBNull(6))
+                    repair.TeamId = reader.GetInt32(6);
+                else repair.TeamId = null;
                 repair.StatusId = reader.GetInt32(7);
             }
             connection.Close(); //Closes the connection
@@ -148,13 +152,29 @@ namespace NDWebApp.Data
 
         public int CreateRepair(string repTitle, string repDesc, DateTime repDea, string repUse, int teamId)
         {
+            string teamIdAsString;
+            if (teamId == 0)
+            {
+                teamIdAsString = "NULL";
+                //Duct-tape time!!!!!
+                //This shit looks stupid but in theory no team Id can ever be 0 unless manually added,
+                //because a new team will always look for highest number available + 1
+                //So if highest number = 0 teams then new team will have ID 1
+                //The form won't send Null if member isn't in any teams
+                //Here we force that shit to be null to avoid issues
+                //attempting to add teamId = 0
+            } else
+            {
+                teamIdAsString = teamId.ToString();
+            }
+
             var dateValue = repDea; //Takes supplied DateTime
             string formatDateForMySql = dateValue.ToString("yyyy-MM-dd HH:mm:ss"); //Then converts it into a format MySQL understands (or we'd all be stuck in year 0)
 
             using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
             var newRepairId = (FindHighestId() + 1);
             connection.Open();
-            var query = ("INSERT INTO `repairs` (`RepairsId`, `RepairsTitle`, `RepairsDescription`, `RepairsDeadline`, `RepairsEnddate`, `RepairsUserId`, `ResponsibleUserId`, `TeamId`, `StatusId`) VALUES ('" + newRepairId + "', '" + repTitle + "', '" + repDesc + "', '" + formatDateForMySql + "', NULL, '" + repUse + "', '" + teamId + "', '0');");
+            var query = ("INSERT INTO `repairs` (`RepairsId`, `RepairsTitle`, `RepairsDescription`, `RepairsDeadline`, `RepairsEnddate`, `UserId`, `TeamId`, `StatusId`) VALUES ('" + newRepairId + "', '" + repTitle + "', '" + repDesc + "', '" + formatDateForMySql + "', NULL, '" + repUse + "', " + teamIdAsString + ", '3');");
             System.Diagnostics.Debug.WriteLine(query);
             var reader = ReadData(query, connection);
             reader.Read();
@@ -166,7 +186,7 @@ namespace NDWebApp.Data
         {
             using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
             connection.Open();
-            var query = ("SELECT RepairsId FROM `repairs` WHERE `RepairsId` = (SELECT MAX(SuggestionId) FROM repairs);");
+            var query = ("SELECT RepairsId FROM `repairs` WHERE `RepairsId` = (SELECT MAX(RepairsId) FROM repairs);");
             var reader = ReadData(query, connection);
             int highestId = 0;
             while (reader.Read())
@@ -175,6 +195,29 @@ namespace NDWebApp.Data
             }
             connection.Close();
             return highestId;
+        }
+
+        public void DeleteRepair(int repairId)
+        {
+            using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
+            connection.Open();
+            var query = ("DELETE FROM repairs WHERE `repairs`.`RepairsId` = " + repairId + ";");
+            var reader = ReadData(query, connection);
+            reader.Read();
+            connection.Close();
+        }
+
+        public void PopulateStatusInDB()
+        {
+            //Highly ineffective way (probably) of making sure all statuses are present
+            //Basically tries to insert the statuses every time RepairController is constructed
+            //Brain is too fried to do it any other way
+            //Method identical to the one in SuggestionSqlConnector
+            using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
+            connection.Open();
+            var query = ("INSERT INTO `status` (StatusId, StatusTitle) VALUES (0, 'Under vurdering') ON DUPLICATE KEY UPDATE StatusId = 0;INSERT INTO `status` (StatusId, StatusTitle) VALUES (1, 'Godtatt') ON DUPLICATE KEY UPDATE StatusId = 1;INSERT INTO `status` (StatusId, StatusTitle) VALUES (2, 'Avslått') ON DUPLICATE KEY UPDATE StatusId = 2;INSERT INTO `status` (StatusId, StatusTitle) VALUES (3, 'Pågår') ON DUPLICATE KEY UPDATE StatusId = 3;INSERT INTO `status` (StatusId, StatusTitle) VALUES (4, 'På pause') ON DUPLICATE KEY UPDATE StatusId = 4;INSERT INTO `status` (StatusId, StatusTitle) VALUES (5, 'Ferdig') ON DUPLICATE KEY UPDATE StatusId = 5;"); //Om du er like langt til høyre som slutten på denne stringen så har du gjort noe feil i livet
+            var reader = ReadData(query, connection);
+            connection.Close();
         }
         private MySqlDataReader ReadData(string query, MySqlConnection conn)
         {

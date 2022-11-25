@@ -6,15 +6,15 @@ namespace NDWebApp.Models
     public class RepairsModel
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int RepairsId { get; set; }
+        public int RepairId { get; set; }
 
-        public string? RepairsTitle { get; set; }
+        public string? RepairTitle { get; set; }
 
-        public string? RepairsDescription { get; set; }
+        public string? RepairDescription { get; set; }
 
-        public DateTime? RepairsDeadline { get; set; }
+        public DateTime? RepairDeadline { get; set; }
 
-        public DateTime? RepairsEnddate { get; set; }
+        public DateTime? RepairEnddate { get; set; }
 
         public string UserId { get; set; }
 
@@ -22,7 +22,7 @@ namespace NDWebApp.Models
 
         public string? UserLastname { get; set; }
 
-        public int TeamId { get; set; }
+        public int? TeamId { get; set; }
 
         public string? TeamName { get; set; }
         

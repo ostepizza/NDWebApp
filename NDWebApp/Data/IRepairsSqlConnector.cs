@@ -11,5 +11,11 @@ namespace NDWebApp.Data
         RepairsModel GetRepairById(int id);
 
         IDbConnection GetDbConnection();
+
+        int CreateRepair(string repTitle, string repDesc, DateTime repDea, string repUse, int teamId);
+
+        void DeleteRepair(int repairId);
+
+        void PopulateStatusInDB();
     }
 }
