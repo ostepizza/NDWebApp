@@ -26,7 +26,7 @@ else if (TempData["Message"] != null && TempData["Status"] != null && TempData["
     <br />
 }
 
-<a asp-action="Add" class="btn btn-secondary">Send inn nytt forslag</a>
+<a asp-action="Add" class="btn btn-primary"> <i class="fa-solid fa-lightbulb"></i> Send inn nytt forslag</a>
 
 <table class="table">
     <tr>
@@ -44,15 +44,15 @@ else if (TempData["Message"] != null && TempData["Status"] != null && TempData["
         <td>@suggestion.ResponsibleFirstname @suggestion.ResponsibleLastname</td>
         <td>@suggestion.SuggestionDeadline</td>
         <td>
-            <a class="btn btn-sm btn-primary" asp-action="View" asp-route-id="@suggestion.SuggestionId">
+            <a class="btn btn-sm btn-primary" asp-action="View" asp-route-id="@suggestion.SuggestionId"> <i class="fas fa-eye"></i>
                 Se på
             </a>
             @if (User.IsInRole("Administrator"))
             {
-            <a class="btn btn-sm btn-success" asp-action="Update" asp-route-id="@suggestion.SuggestionId">
+            <a class="btn btn-sm btn-success" asp-action="Update" asp-route-id="@suggestion.SuggestionId"> <i class="fas fa-pen-to-square"></i>
                 Endre
             </a>
-            <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirm-delete-@suggestion.SuggestionId">
+            <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirm-delete-@suggestion.SuggestionId"> <i class="fas fa-trash-can"></i>
                 Slett
             </button>
             }

@@ -5,12 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h1>@ViewData["Title"]</h1>
-<a asp-action="Index" class="btn btn-secondary">Tilbake</a>
+<a asp-action="Index" class="btn btn-secondary"> <i class="fa-solid fa-circle-chevron-left"></i> Tilbake</a>
 <div asp-validation-summary="All" class="text-danger"></div>
 
 <br />
 <div class="alert alert-danger" role="alert">
-    <i class="fas fa-triangle-exclamation"></i> Sluttdato resettes på hver oppdatering. Er forslaget ferdig utført bør det dermed ikke oppdateres.
+    <i class="fas fa-triangle-exclamation"></i> Sluttdato resettes pÃ¥ hver oppdatering. Er forslaget ferdig utfÃ¸rt bÃ¸r det dermed ikke oppdateres.
 </div>
 
 <form asp-action="Update" method="post">
@@ -46,7 +46,7 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="ResponsibleUserId">Ansvarlig for utførelse:</label>
+        <label asp-for="ResponsibleUserId">Ansvarlig for utfÃ¸relse:</label>
         <select asp-for="ResponsibleUserId" class="form-control">
             
             @foreach (var user in Model.Users)
@@ -61,12 +61,12 @@
         <select asp-for="StatusId" class="form-control">
             <option value="0">Under vurdering</option>
             <option value="1">Godtatt</option>
-            <option value="2">Avslått</option>
-            <option value="3">Pågår</option>
-            <option value="4">På pause</option>
+            <option value="2">AvslÃ¥tt</option>
+            <option value="3">PÃ¥gÃ¥r</option>
+            <option value="4">PÃ¥ pause</option>
             <option value="5">Ferdig</option>
         </select>
     </div>
 
-    <button type="submit" class="btn btn-primary">Lagre</button>
+    <button type="submit" class="btn btn-primary"> <i class="fa-solid fa-floppy-disk"></i> Lagre</button>
 </form>
