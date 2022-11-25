@@ -11,7 +11,7 @@
 <form asp-action="Update" method="post">
     @Html.AntiForgeryToken()
     <div class="form-group">
-        <input asp-for="SuggestionId" class="form-control" value="@Model.SuggestionId" disabled hidden/>
+        <input asp-for="SuggestionId" class="form-control" value="@Model.SuggestionId" hidden/>
     </div>
 
     <div class="form-group">

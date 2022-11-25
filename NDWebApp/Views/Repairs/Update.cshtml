@@ -11,7 +11,7 @@
 <form asp-action="Update" method="post">
     @Html.AntiForgeryToken()
     <div class="form-group">
-        <input asp-for="RepairId" class="form-control" value="@Model.RepairId" disabled />
+        <input asp-for="RepairId" class="form-control" value="@Model.RepairId" hidden />
     </div>
 
     <div class="form-group">
