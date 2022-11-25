@@ -27,11 +27,12 @@ namespace NDWebApp.Data
                 if (!reader.IsDBNull(2))
                     suggestion.SuggestionDescription = reader.GetString(2);
                 else suggestion.SuggestionDescription = string.Empty;
-                suggestion.SuggestionDeadline = reader.GetDateTime(3);
+                if (!reader.IsDBNull(3))
+                    suggestion.SuggestionDeadline = reader.GetDateTime(3);
+                else suggestion.SuggestionDeadline = DateTime.MinValue;
                 if (!reader.IsDBNull(4))
                     suggestion.SuggestionEnddate = reader.GetDateTime(4);
                 else suggestion.SuggestionEnddate = DateTime.MinValue;
-                //suggestion.SuggestionEnddate = reader.GetDateTime(4);
                 suggestion.SuggestedUserId = reader.GetString(5);
                 suggestion.ResponsibleUserId = reader.GetString(6);
                 if (!reader.IsDBNull(7))
@@ -120,13 +121,11 @@ namespace NDWebApp.Data
                 suggestion.SuggestionId = reader.GetInt32(0);
                 suggestion.SuggestionTitle = reader.GetString(1);
                 suggestion.SuggestionDescription = reader.GetString(2);
-                suggestion.SuggestionDeadline = reader.GetDateTime(3);
-                System.Diagnostics.Debug.WriteLine("Datetime Deadline from DB: " + reader.GetDateTime(3));
-                System.Diagnostics.Debug.WriteLine("Datetime Deadline in model: " + suggestion.SuggestionDeadline);
+                if (!reader.IsDBNull(3))
+                    suggestion.SuggestionDeadline = reader.GetDateTime(3);
+                else suggestion.SuggestionDeadline = DateTime.MinValue;
                 if (!reader.IsDBNull(4)) { 
                     suggestion.SuggestionEndDate = reader.GetDateTime(4);
-                    System.Diagnostics.Debug.WriteLine("Datetime from DB: " + reader.GetDateTime(4));
-                    System.Diagnostics.Debug.WriteLine("Datetime in model: " + suggestion.SuggestionEndDate);
                 }
                 else suggestion.SuggestionEndDate = DateTime.MinValue;
                 suggestion.SuggestedUserId= reader.GetString(5);
@@ -280,13 +279,7 @@ namespace NDWebApp.Data
             if (TeamId == 0)
             {
                 teamIdAsString = "NULL";
-                //Duct-tape time!!!!!
-                //This shit looks stupid but in theory no team Id can ever be 0 unless manually added,
-                //because a new team will always look for highest number available + 1
-                //So if highest number = 0 teams then new team will have ID 1
-                //The form won't send Null if member isn't in any teams
-                //Here we force that shit to be null to avoid issues
-                //attempting to add teamId = 0
+                //Check RepairsSqlConnector for explanation
             }
             else
             {
