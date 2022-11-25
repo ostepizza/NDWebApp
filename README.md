@@ -1,5 +1,5 @@
 # NDWebApp
-This project uses Microsoft Identity for user registration and login.
+This project uses Microsoft Identity for user registration, login and authorization.
 
 # Installation
 Prerequisite: Have Visual Studio installed
@@ -10,3 +10,9 @@ Prerequisite: Have Visual Studio installed
 5. In the PM console, type "update-database" and press enter and wait.
 6. Check in PhpMyAdmin that the new database and tables have been created.
 7. Attempt to build solution inside Visual Studio
+
+# Known issues
+- Many forms are not checked if the input matches the model
+- Tables are not sortable or searchable and can get quite long
+- Multiple admin accounts can be added if admin changes own e-mail and it isn't updated in the config.json
+- Some (a lot of) duct-tape used
