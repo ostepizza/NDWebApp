@@ -5,7 +5,7 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-<a asp-action="Index" class="btn btn-secondary">Tilbake</a>
+<a asp-action="Index" class="btn btn-secondary"> <i class="fa-solid fa-circle-chevron-left"></i> Tilbake</a>
 <div asp-validation-summary="All" class="text-danger"></div>
 
 <form method="post">
@@ -48,5 +48,5 @@
             }
         </select>
     </div>
-    <button type="submit" class="btn btn-primary">Opprett bruker</button>
+    <button type="submit" class="btn btn-primary"> <i class="fa-solid fa-user"></i> Opprett bruker</button>
 </form>

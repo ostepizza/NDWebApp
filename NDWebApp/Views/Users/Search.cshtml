@@ -10,7 +10,7 @@
         <label asp-for="search">Søk etter ansatt (fritekst):</label>
         <input asp-for="search" class="form-control" aria-required="true" />
     </div>
-    <button type="submit" class="btn btn-primary">Søk</button>
+    <button type="submit" class="btn btn-primary"> <i class="fa-solid fa-magnifying-glass"></i> Søk</button>
 </form>
 <hr />
 @if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Success")

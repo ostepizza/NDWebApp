@@ -30,16 +30,20 @@
         <div class="row">
             <div class="col-lg-2 menu mobileHide">
                 <div class="logged-in-as">
+                
                     @if (SignInManager.IsSignedIn(User))
                     {
                         if (!string.IsNullOrEmpty(UserManager.GetUserAsync(User).Result.empFname) && !string.IsNullOrEmpty(UserManager.GetUserAsync(User).Result.empLname)) {
-                            <p>Hei, @UserManager.GetUserAsync(User).Result.empFname @UserManager.GetUserAsync(User).Result.empLname!</p>
+                            <i class="fa-solid fa-user"></i> <p>Hei, @UserManager.GetUserAsync(User).Result.empFname @UserManager.GetUserAsync(User).Result.empLname! </p>
                         } else {
-                            <p>Hei, @UserManager.GetUserName(User)!</p>
+                           <i class="fa-solid fa-user-gear"></i> <p>Hei, @UserManager.GetUserName(User)! </p>
                         }
                     } else {
                         <p>not logged in</p>
                     }
+
+                    
+                    
                     <!--Logged in as USER<br>
                     Last activity: timestamp-->
                 </div>
