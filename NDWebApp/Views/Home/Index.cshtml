@@ -1,32 +1,69 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using NDWebApp.Areas.Identity.Data
+@model StatisticsModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<h1>Velkommen</h1>
-<h5>Antall forslag du har sendt inn: 7</h5>
+@inject SignInManager<NDWebAppUser> SignInManager
+@inject UserManager<NDWebAppUser> UserManager
 
-<div>
-    <canvas id="pieChart" style="width: 500px; margin-top: 50px;”"></canvas>
-</div>
+<h1>Velkommen, @UserManager.GetUserAsync(User).Result.empFname @UserManager.GetUserAsync(User).Result.empLname!</h1>
+@if (User.IsInRole("Administrator") || User.IsInRole("Team Leader"))
+{
+    <h5>Antall forslag i systemet: @Model.SuggestionsAllCount</h5>
 
-<!-- For Pie Chart-->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3"></script>
+    <div>
+        <canvas id="pieChart" style="margin-top: 50px;"></canvas>
+    </div>
 
-<script>
-    //pie
-    var ctxP = document.getElementById("pieChart").getContext('2d');
-    var myPieChart = new Chart(ctxP, {
-        type: 'pie',
-        data: {
-            labels: ["Godkjente Forslag ", "Avslåtte Forslag", "Forslag Under Vurdering"],
-            datasets: [{
-                data: [2, 1, 4,],
-                backgroundColor: ["#008000", "#F7464A", "#4D5360"],
-                hoverBackgroundColor: ["#228B22", "#FF5A5E", "#616774"]
-            }]
-        },
-        options: {
-            responsive: true
-        }
-    });
-</script>
+    <!-- For Pie Chart-->
+    <script src="~/js/piechart.js"></script>
+
+    <script>
+        //pie
+        var ctxP = document.getElementById("pieChart").getContext('2d');
+        var myPieChart = new Chart(ctxP, {
+            type: 'pie',
+            data: {
+                labels: ["Forslag under vurdering", "Godkjente forslag", "Forslag som pågår", "Fullførte forslag", "Forslag på pause", "Avslåtte Forslag"],
+                datasets: [{
+                    data: [@Model.SuggestionsAllUnderVurdering, @Model.SuggestionsAllGodtatt, @Model.SuggestionsAllPagar, @Model.SuggestionsAllFerdig, @Model.SuggestionsAllPaPause, @Model.SuggestionsAllAvslatt,],
+                    backgroundColor: ["#323232", "#0a417a", "#2085ec", "#72b4eb", "#cea9bc", "#8464a0"],
+                    //hoverBackgroundColor: ["#228B22", "#FF5A5E", "#616774", "#008000", "#F7464A", "#4D5360"]
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    </script>
+} else {
+    <h5>Antall forslag du har sendt inn: @Model.SuggestionsCount</h5>
+
+    <div>
+        <canvas id="pieChart" style="margin-top: 50px;"></canvas>
+    </div>
+
+    <!-- For Pie Chart-->
+    <script src="~/js/piechart.js"></script>
+
+    <script>
+        //pie
+        var ctxP = document.getElementById("pieChart").getContext('2d');
+        var myPieChart = new Chart(ctxP, {
+            type: 'pie',
+            data: {
+                labels: ["Forslag under vurdering", "Godkjente forslag", "Forslag som pågår", "Fullførte forslag", "Forslag på pause", "Avslåtte Forslag"],
+                datasets: [{
+                    data: [@Model.SuggestionsUnderVurdering, @Model.SuggestionsGodtatt, @Model.SuggestionsPagar, @Model.SuggestionsFerdig, @Model.SuggestionsPaPause, @Model.SuggestionsAvslatt,],
+                    backgroundColor: ["#323232", "#0a417a", "#2085ec", "#72b4eb", "#cea9bc", "#8464a0"],
+                    //hoverBackgroundColor: ["#228B22", "#FF5A5E", "#616774", "#008000", "#F7464A", "#4D5360"]
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    </script>
+}

@@ -31,6 +31,7 @@ builder.Services.AddScoped<ISqlConnector, TeamSqlConnector>();
 builder.Services.AddScoped<ISuggestionConnector, SuggestionSqlConnector>();
 builder.Services.AddScoped<IRepairsSqlConnector, RepairsSqlConnector>();
 builder.Services.AddScoped<IUsersSqlConnector, UsersSqlConnector>();
+builder.Services.AddScoped<IHomeSqlConnector, HomeSqlConnector>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
