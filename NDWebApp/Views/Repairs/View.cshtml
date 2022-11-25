@@ -1,6 +1,7 @@
 @using Microsoft.AspNetCore.Identity
 @using NDWebApp.Areas.Identity.Data
 @inject UserManager<NDWebAppUser> UserManager
+@model RepairsModel
 
 @{
     ViewBag.Title = "Reparasjon";
@@ -50,11 +51,17 @@
     <div class="col-md-4">
         <u>Status:</u>
         @if (User.IsInRole("Administrator") || UserManager.GetUserAsync(User).Result.Id == Model.UserId) {
-            <p>@Model.StatusName <a class="btn btn-sm btn-success" asp-action="UpdateStatus" asp-route-id="@Model.RepairId">Endre status</a></p>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>@Model.StatusName</p>
+                </div>
+                <div class="col-md-6">
+                    <p><a class="btn btn-sm btn-success" data-toggle="modal" data-target="#edit-status-@Model.RepairId">Endre status</a></p>
+                </div>
+            </div>
         } else {
             <p>@Model.StatusName</p>
-        }
-            
+        }           
     </div>
 
     <div class="col-md-4">
@@ -139,3 +146,39 @@
     </div>
 </div>
 } 
+
+@if (User.IsInRole("Administrator") || User.IsInRole("Team Leader"))
+{
+    <div class="modal fade" id="edit-status-@Model.RepairId" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <b>Endre status på reparasjon</b>
+                </div>
+                <div class="modal-body">
+                    Vennligst velg en status:
+
+                    <form asp-action="UpdateStatus" method="post">
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <input asp-for="RepairId" class="form-control" value="@Model.RepairId" hidden />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="StatusId">Status:</label>
+                            <select asp-for="StatusId" class="form-control">
+                                <option value="2">Avbrutt</option>
+                                <option value="3">Gjennomføres</option>
+                                <option value="4">På pause</option>
+                                <option value="5">Ferdig</option>
+                            </select>
+                        </div>
+                        <br>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Avbryt</button>
+                        <button type="submit" class="btn btn-success btn-ok">Lagre</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -17,5 +17,15 @@ namespace NDWebApp.Data
         void DeleteRepair(int repairId);
 
         void PopulateStatusInDB();
+
+        void UpdateRepair(int RepairId, string RepairTitle, string RepairDescription, DateTime RepairDeadline, DateTime RepairEnddate, int StatusId);
+
+        void UpdateStatus(int RepairId, int StatusId);
+
+        IEnumerable<UserEntity> GetUsers();
+
+        IEnumerable<TeamEntity> GetTeams();
+
+        IEnumerable<StatusEntity> GetStatusList();
     }
 }

@@ -33,5 +33,9 @@ namespace NDWebApp.Models
         public IEnumerable<TeamEntity>? Teams { get; set; }
 
         public IEnumerable<RepairsEntity> Repairs { get; set; }
+
+        public IEnumerable<StatusEntity>? StatusSelection { get; set; }
+
+        public IEnumerable<UserEntity>? Users { get; set; }
     }
 }

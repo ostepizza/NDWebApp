@@ -182,6 +182,35 @@ namespace NDWebApp.Data
             return newRepairId; //Returns ID for added suggestion so Controller can redirect to the page for it
         }
 
+        //YOINKED from SuggestionSqlConnector
+        public void UpdateRepair(int RepairId, string RepairTitle, string RepairDescription, DateTime RepairDeadline, DateTime RepairEnddate, int StatusId)
+        {
+            var dateValueDeadline = RepairDeadline;
+            string DeadlineMySql = dateValueDeadline.ToString("yyyy-MM-dd HH:mm:ss");
+
+            var dateValueEnddate = RepairEnddate;
+            string EnddateMySql = dateValueEnddate.ToString("yyyy-MM-dd HH:mm:ss");
+
+            using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
+            connection.Open();
+            var query = ("UPDATE `repairs` SET `repairstitle` = '" + RepairTitle + "', `repairsdescription` = '" + RepairDescription + "', repairsDeadline = '" + DeadlineMySql + "', repairsenddate = '" + EnddateMySql + "', StatusId = " + StatusId + " WHERE `repairs`.`repairsid` = " + RepairId + ";");
+            System.Diagnostics.Debug.WriteLine(query);
+            var reader = ReadData(query, connection);
+            reader.Read();
+            connection.Close();
+        }
+
+        public void UpdateStatus(int RepairId, int StatusId)
+        {
+            using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
+            connection.Open();
+            var query = ("UPDATE `repairs` SET `StatusId` = '" + StatusId + "' WHERE `repairs`.`repairsid` = " + RepairId + ";");
+            System.Diagnostics.Debug.WriteLine(query);
+            var reader = ReadData(query, connection);
+            reader.Read();
+            connection.Close();
+        }
+
         private int FindHighestId()
         {
             using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
@@ -218,6 +247,64 @@ namespace NDWebApp.Data
             var query = ("INSERT INTO `status` (StatusId, StatusTitle) VALUES (0, 'Under vurdering') ON DUPLICATE KEY UPDATE StatusId = 0;INSERT INTO `status` (StatusId, StatusTitle) VALUES (1, 'Godtatt') ON DUPLICATE KEY UPDATE StatusId = 1;INSERT INTO `status` (StatusId, StatusTitle) VALUES (2, 'Avslått') ON DUPLICATE KEY UPDATE StatusId = 2;INSERT INTO `status` (StatusId, StatusTitle) VALUES (3, 'Pågår') ON DUPLICATE KEY UPDATE StatusId = 3;INSERT INTO `status` (StatusId, StatusTitle) VALUES (4, 'På pause') ON DUPLICATE KEY UPDATE StatusId = 4;INSERT INTO `status` (StatusId, StatusTitle) VALUES (5, 'Ferdig') ON DUPLICATE KEY UPDATE StatusId = 5;"); //Om du er like langt til høyre som slutten på denne stringen så har du gjort noe feil i livet
             var reader = ReadData(query, connection);
             connection.Close();
+        }
+
+        public IEnumerable<UserEntity> GetUsers()
+        {
+            using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
+            connection.Open();
+            var reader = ReadData("Select Id, empFname, empLname FROM AspNetUsers", connection);
+            var users = new List<UserEntity>();
+            while (reader.Read())
+            {
+                var user = new UserEntity();
+
+                user.Id = reader.GetString(0);
+                user.empFname = reader.GetString(1);
+                user.empLname = reader.GetString(2);
+
+                users.Add(user);
+            }
+            connection.Close();
+            return users;
+        }
+
+        public IEnumerable<TeamEntity> GetTeams()
+        {
+            using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
+            connection.Open();
+            var query = ("Select TeamId, TeamName from Team;");
+            var reader = ReadData(query, connection);
+            var availableTeams = new List<TeamEntity>();
+            while (reader.Read())
+            {
+                var team = new TeamEntity();
+                team.TeamId = reader.GetInt32("TeamId");
+                team.TeamName = reader.GetString(1);
+
+                availableTeams.Add(team);
+            }
+            connection.Close();
+            return availableTeams;
+        }
+
+        public IEnumerable<StatusEntity> GetStatusList()
+        {
+            using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
+            connection.Open();
+            var query = ("Select StatusId, StatusTitle from `Status`;");
+            var reader = ReadData(query, connection);
+            var statusList = new List<StatusEntity>();
+            while (reader.Read())
+            {
+                var status = new StatusEntity();
+                status.StatusId = reader.GetInt32(0);
+                status.StatusTitle = reader.GetString(1);
+
+                statusList.Add(status);
+            }
+            connection.Close();
+            return statusList;
         }
         private MySqlDataReader ReadData(string query, MySqlConnection conn)
         {

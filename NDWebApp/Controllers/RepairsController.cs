@@ -55,5 +55,41 @@ namespace NDWebApp.MVC.Controllers
             TempData["Status"] = "Success";
             return RedirectToAction("Index");
         }
+
+        [Authorize(Roles = "Administrator")]
+        public IActionResult Update(int id)
+        {
+            var users = repairConnector.GetUsers();
+            var teams = repairConnector.GetTeams();
+            var statusList = repairConnector.GetStatusList();
+            RepairsModel model = repairConnector.GetRepairById(id);
+            model.Users = users;
+            model.Teams = teams;
+            model.StatusSelection = statusList;
+            return View(model);
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(int RepairId, string RepairTitle, string RepairDescription, DateTime RepairDeadline, DateTime RepairEnddate, int StatusId)
+        {
+            System.Diagnostics.Debug.WriteLine("Repair ID: "+RepairId+" ||||||||||||| Date parse attempt: Deadline: " + RepairDeadline + ", Enddate: " + RepairEnddate);
+            repairConnector.UpdateRepair(RepairId, RepairTitle, RepairDescription, RepairDeadline, RepairEnddate, StatusId);
+            TempData["Message"] = "Forslag " + RepairTitle + " ble oppdatert";
+            TempData["Status"] = "Success";
+            return RedirectToAction("Index");
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult UpdateStatus(int RepairId, int StatusId)
+        {
+            repairConnector.UpdateStatus(RepairId, StatusId);
+            TempData["Message"] = "Statusen ble oppdatert";
+            TempData["Status"] = "Success";
+            return RedirectToAction("View", new { id = RepairId });
+        }
     }
 }
