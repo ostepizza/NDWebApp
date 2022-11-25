@@ -1,7 +1,7 @@
 ﻿@page
 @model LogoutModel
 @{
-    ViewData["Title"] = "Logg ut";
+    ViewData["Title"] = "Bekreft utlogging";
 }
 
 <header>
@@ -9,10 +9,11 @@
     @{
         if (User.Identity.IsAuthenticated)
         {
-            <h2>Bekreft utlogging</h2>
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                <button type="submit" class="btn btn-primary">Klikk her for å logge ut</button>
-            </form>
+            <div class="text-center">
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                    <button type="submit" class="btn btn-danger">Klikk her for å logge ut</button>
+                </form>
+            </div>
         }
         else
         {

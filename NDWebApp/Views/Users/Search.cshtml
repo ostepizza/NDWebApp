@@ -1,13 +1,13 @@
 ﻿@model UserModel
 @{
-    ViewData["Title"] = "Søk etter bruker";
+    ViewData["Title"] = "Brukersøk";
 }
 
 <h1>@ViewData["Title"]</h1>
 <form method="post">
     @Html.AntiForgeryToken()
     <div class="form-group">
-        <label asp-for="search">Søk etter ansatt (fritekst):</label>
+        <label asp-for="search">Søk etter navn, e-post eller telefon:</label>
         <input asp-for="search" class="form-control" aria-required="true" />
     </div>
     <br />
