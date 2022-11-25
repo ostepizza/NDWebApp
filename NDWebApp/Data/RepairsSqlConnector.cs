@@ -27,11 +27,17 @@ namespace NDWebApp.Data
                 if (!reader.IsDBNull(2))
                     repair.RepairDescription = reader.GetString(2);
                 else repair.RepairDescription = string.Empty;
-                repair.RepairDeadline = reader.GetDateTime(3);
+
+                if (!reader.IsDBNull(3))
+                    repair.RepairDeadline = reader.GetDateTime(3);
+                else repair.RepairDeadline = DateTime.MinValue;
+
                 if (!reader.IsDBNull(4))
                     repair.RepairEnddate = reader.GetDateTime(4);
                 else repair.RepairEnddate = DateTime.MinValue;
+
                 repair.UserId = reader.GetString(5);
+
                 if (!reader.IsDBNull(6))
                     repair.TeamId = reader.GetInt32(6);
                 else repair.TeamId = null;
@@ -104,7 +110,9 @@ namespace NDWebApp.Data
                 repair.RepairId = reader.GetInt32(0);
                 repair.RepairTitle = reader.GetString(1);
                 repair.RepairDescription = reader.GetString(2);
-                repair.RepairDeadline = reader.GetDateTime(3);
+                if (!reader.IsDBNull(3))
+                    repair.RepairDeadline = reader.GetDateTime(3);
+                else repair.RepairDeadline = DateTime.MinValue;
                 if (!reader.IsDBNull(4))
                     repair.RepairEnddate = reader.GetDateTime(4);
                 else repair.RepairEnddate = DateTime.MinValue;
