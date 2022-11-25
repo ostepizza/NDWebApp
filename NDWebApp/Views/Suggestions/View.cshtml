@@ -10,7 +10,9 @@
             {
             <a asp-action="Index" class="btn btn-sm btn-secondary">Tilbake</a>
             <a class="btn btn-sm btn-success" asp-action="Update" asp-route-id="@Model.SuggestionId">Endre</a>
-            <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@Model.SuggestionId">Slett</a>
+            <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirm-delete-@Model.SuggestionId">
+                Slett
+            </button>
             } else {
             <a asp-action="Index" class="btn btn-sm btn-secondary">Tilbake</a>
             }
@@ -44,7 +46,7 @@
             <u>Status:</u>
             @if (User.IsInRole("Administrator") || User.IsInRole("Team Leader"))
             {
-                <p>@Model.StatusName <a class="btn btn-sm btn-success" asp-action="Update" asp-route-id="@Model.SuggestionId">Endre status</a></p>
+                <p>@Model.StatusName <a class="btn btn-sm btn-success" asp-action="UpdateStatus" asp-route-id="@Model.SuggestionId">Endre status</a></p>
             } else {
                 <p>@Model.StatusName</p>
             }      
@@ -109,3 +111,28 @@
             </p>
         </div>
     </div>
+
+@if (User.IsInRole("Administrator"))
+{
+    <div class="modal fade" id="confirm-delete-@Model.SuggestionId" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <b>Bekreft sletting av forslag</b>
+                </div>
+                <div class="modal-body">
+                    Er du sikker på at du ønsker å slette forslag <b>"@Model.SuggestionTitle"</b>, innsendt av @Model.SuggestedFirstname @Model.SuggestedLastname?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <form asp-action="Delete" asp-route-id="@Model.SuggestionId" method="post">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger btn-ok">
+                            Bekreft sletting
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+} 

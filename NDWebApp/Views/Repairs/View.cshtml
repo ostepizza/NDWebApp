@@ -1,3 +1,7 @@
+@using Microsoft.AspNetCore.Identity
+@using NDWebApp.Areas.Identity.Data
+@inject UserManager<NDWebAppUser> UserManager
+
 @{
     ViewBag.Title = "Reparasjon";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,7 +14,9 @@
         {
             <a asp-action="Index" class="btn btn-sm btn-secondary">Tilbake</a>
             <a class="btn btn-sm btn-success" asp-action="Update" asp-route-id="@Model.RepairId">Endre</a>
-            <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@Model.RepairId">Slett</a>
+            <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirm-delete-@Model.RepairId">
+                Slett
+            </button>
         }
         else
         {
@@ -43,14 +49,12 @@
 <div class="row">
     <div class="col-md-4">
         <u>Status:</u>
-        @if (User.IsInRole("Administrator") || User.IsInRole("Team Leader"))
-        {
-            <p>@Model.StatusName <a class="btn btn-sm btn-success" asp-action="Update" asp-route-id="@Model.RepairId">Endre status</a></p>
-        }
-        else
-        {
+        @if (User.IsInRole("Administrator") || UserManager.GetUserAsync(User).Result.Id == Model.UserId) {
+            <p>@Model.StatusName <a class="btn btn-sm btn-success" asp-action="UpdateStatus" asp-route-id="@Model.RepairId">Endre status</a></p>
+        } else {
             <p>@Model.StatusName</p>
         }
+            
     </div>
 
     <div class="col-md-4">
@@ -110,3 +114,28 @@
         </p>
     </div>
 </div>
+
+@if (User.IsInRole("Administrator"))
+{
+<div class="modal fade" id="confirm-delete-@Model.RepairId" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <b>Bekreft sletting av reparasjon</b>
+            </div>
+            <div class="modal-body">
+                    Er du sikker på at du ønsker å slette reparasjon <b>"@Model.RepairTitle"</b>, innsendt av @Model.UserFirstname @Model.UserLastname?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <form asp-action="Delete" asp-route-id="@Model.RepairId" method="post">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-danger btn-ok">
+                        Bekreft sletting
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+} 

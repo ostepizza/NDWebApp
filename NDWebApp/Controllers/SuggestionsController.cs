@@ -44,6 +44,7 @@ namespace NDWebApp.MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public IActionResult Delete(int id)
         {
             suggestionConnector.DeleteSuggestion(id);

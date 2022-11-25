@@ -46,6 +46,7 @@ namespace NDWebApp.MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public IActionResult Delete(int id)
         {
             repairConnector.DeleteRepair(id);
