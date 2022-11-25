@@ -7,6 +7,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using NDWebApp.Areas.Identity.Data;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace NDWebApp.MVC.Controllers
 {
@@ -34,7 +35,10 @@ namespace NDWebApp.MVC.Controllers
         [Authorize(Roles = "Administrator")]
         public IActionResult Add()
         {
-            return View();
+            var users = teamSqlConnector.GetUsers();
+            var model = new TeamModel();
+            model.Users = users;
+            return View(model);
         }
 
         [Authorize(Roles = "Administrator")]
@@ -63,7 +67,10 @@ namespace NDWebApp.MVC.Controllers
         [Authorize(Roles = "Administrator")]
         public IActionResult Update(int id)
         {
-            return View(id);
+            var users = teamSqlConnector.GetUsers();
+            TeamModel model = teamSqlConnector.GetTeamById(id);
+            model.Users = users;
+            return View(model);
         }
 
         [Authorize(Roles = "Administrator")]

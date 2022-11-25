@@ -16,7 +16,12 @@
     </div>
     <div class="form-group">
         <label asp-for="LeaderUserId">Bruker ID for teamleder:</label>
-        <input asp-for="LeaderUserId" class="form-control" aria-required="true" />
+        <select asp-for="LeaderUserId" class="form-control">
+            @foreach (var user in Model.Users)
+            {
+                <option value="@user.Id">@user.empFname @user.empLname</option>
+            }
+        </select>
     </div>
     <button type="submit" class="btn btn-primary"> <i class="fa-solid fa-users"></i> Opprett team</button>
 </form>

@@ -11,18 +11,23 @@
 <form asp-action="Update" method="post">
     @Html.AntiForgeryToken()
     <div class="form-group">
-        <label asp-for="TeamId">Team Id</label>
-        <input asp-for="TeamId" class="form-control" disabled />
+        <input asp-for="TeamId" class="form-control" value="@Model.TeamId" hidden/>
     </div>
 
     <div class="form-group">
         <label asp-for="TeamName">Teamnavn</label>
-        <input asp-for="TeamName" class="form-control" />
+        <input asp-for="TeamName" class="form-control" value="@Model.TeamName"/>
     </div>
 
     <div class="form-group">
-        <label asp-for="LeaderUserId">Teamleder bruker ID</label>
-        <input asp-for="LeaderUserId" class="form-control" />
+        <label asp-for="LeaderUserId">Bruker ID for teamleder:</label>
+        <select asp-for="LeaderUserId" class="form-control">
+            
+            @foreach (var user in Model.Users)
+            {
+                <option value="@user.Id">@user.empFname @user.empLname</option>
+            }
+        </select>
     </div>
 
     <button type="submit" class="btn btn-primary">Lagre</button>

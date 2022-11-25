@@ -166,6 +166,26 @@ namespace NDWebApp.Data
             connection.Close();
         }
 
+        public IEnumerable<UserEntity> GetUsers()
+        {
+            using var connection = new MySqlConnection(config.GetConnectionString("NDWebAppContextConnection"));
+            connection.Open();
+            var reader = ReadData("Select Id, empFname, empLname FROM AspNetUsers", connection);
+            var users = new List<UserEntity>();
+            while (reader.Read())
+            {
+                var user = new UserEntity();
+
+                user.Id = reader.GetString(0);
+                user.empFname = reader.GetString(1);
+                user.empLname = reader.GetString(2);
+
+                users.Add(user);
+            }
+            connection.Close();
+            return users;
+        }
+
         private MySqlDataReader ReadData(string query, MySqlConnection conn)
         {
             using var command = conn.CreateCommand();

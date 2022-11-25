@@ -18,6 +18,8 @@ namespace NDWebApp.Data
 
         IEnumerable<TeamMemberEntity> GetTeamMembers(int id);
 
+        IEnumerable<UserEntity> GetUsers();
+
         IDbConnection GetDbConnection();
     }
 }
