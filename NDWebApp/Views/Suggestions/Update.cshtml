@@ -8,6 +8,11 @@
 <a asp-action="Index" class="btn btn-secondary">Tilbake</a>
 <div asp-validation-summary="All" class="text-danger"></div>
 
+<br />
+<div class="alert alert-danger" role="alert">
+    <i class="fas fa-triangle-exclamation"></i> Sluttdato resettes på hver oppdatering. Er forslaget ferdig utført bør det dermed ikke oppdateres.
+</div>
+
 <form asp-action="Update" method="post">
     @Html.AntiForgeryToken()
     <div class="form-group">
@@ -26,7 +31,7 @@
 
     <div class="form-group">
         <label asp-for="SuggestionDeadline">Deadline:</label>
-        <input asp-for="SuggestionDeadline" class="form-control" value="@Model.SuggestionDeadline" />
+        <input asp-for="SuggestionDeadline" class="form-control" value="@Model.SuggestionDeadline.ToString("yyyy-MM-dd HH:mm:ss")" />
     </div>
 
     <div class="form-group">

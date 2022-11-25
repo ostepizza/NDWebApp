@@ -13,7 +13,7 @@ namespace NDWebApp.Models
 
         public string? SuggestionDescription { get; set; }
 
-        public DateTime? SuggestionDeadline { get; set;}
+        public DateTime SuggestionDeadline { get; set;}
 
         public DateTime? SuggestionEndDate { get; set;}
 

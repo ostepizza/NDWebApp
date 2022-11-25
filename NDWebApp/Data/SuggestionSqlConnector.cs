@@ -121,8 +121,13 @@ namespace NDWebApp.Data
                 suggestion.SuggestionTitle = reader.GetString(1);
                 suggestion.SuggestionDescription = reader.GetString(2);
                 suggestion.SuggestionDeadline = reader.GetDateTime(3);
-                if (!reader.IsDBNull(4))
+                System.Diagnostics.Debug.WriteLine("Datetime Deadline from DB: " + reader.GetDateTime(3));
+                System.Diagnostics.Debug.WriteLine("Datetime Deadline in model: " + suggestion.SuggestionDeadline);
+                if (!reader.IsDBNull(4)) { 
                     suggestion.SuggestionEndDate = reader.GetDateTime(4);
+                    System.Diagnostics.Debug.WriteLine("Datetime from DB: " + reader.GetDateTime(4));
+                    System.Diagnostics.Debug.WriteLine("Datetime in model: " + suggestion.SuggestionEndDate);
+                }
                 else suggestion.SuggestionEndDate = DateTime.MinValue;
                 suggestion.SuggestedUserId= reader.GetString(5);
                 suggestion.ResponsibleUserId = reader.GetString(6);

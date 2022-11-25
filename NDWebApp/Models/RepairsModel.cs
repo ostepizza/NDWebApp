@@ -12,7 +12,7 @@ namespace NDWebApp.Models
 
         public string? RepairDescription { get; set; }
 
-        public DateTime? RepairDeadline { get; set; }
+        public DateTime RepairDeadline { get; set; }
 
         public DateTime? RepairEnddate { get; set; }
 

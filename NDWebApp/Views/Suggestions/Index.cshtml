@@ -4,10 +4,6 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-<div class="alert alert-danger" role="alert">
-    <b>Endre:</b> Dato blir ikke henta, må velges på nytt ellers sendes år 0001 elns<br />
-</div>
-<br />
 @if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Success")
 {
     <div class="alert alert-success" role="alert">
