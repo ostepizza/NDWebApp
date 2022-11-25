@@ -7,8 +7,8 @@
 @if (User.IsInRole("Administrator"))
 {
     <div class="alert alert-danger" role="alert">
-        <b>Create:</b> M� skrive inn bruker-ID for teamleder<br />
-        <b>Endre:</b> M� skrive inn bruker-ID for teamleder<br />
+        <b>Create:</b> Må skrive inn bruker-ID for teamleder<br />
+        <b>Endre:</b> Må skrive inn bruker-ID for teamleder<br />
     </div>
     <br />
     @if (TempData["Message"] != null && TempData["Status"] != null && TempData["Status"].ToString() == "Success")
@@ -65,7 +65,7 @@
             <td>@team.TeamMemberAmount</td>
             <td>
                 <a class="btn btn-sm btn-primary" asp-action="View" asp-route-id="@team.TeamId">
-                    Se p�
+                    Se på
                 </a>
                 <a class="btn btn-sm btn-success" asp-action="Update" asp-route-id="@team.TeamId">
                     Endre
@@ -88,7 +88,7 @@ else
                 <td>@team.TeamMemberAmount</td>
             <td>
                 <a class="btn btn-sm btn-primary" asp-action="View" asp-route-id="@team.TeamId">
-                    Se p�
+                    Se på
                 </a>
             </td>
         </tr>
@@ -107,7 +107,7 @@ else
                         <b>Bekreft sletting av team</b>
                     </div>
                     <div class="modal-body">
-                        Er du sikker p� at du �nsker � slette team <b>"@team.TeamName" (@team.TeamId)</b> permanent?
+                        Er du sikker på at du ønsker å slette team <b>"@team.TeamName" (@team.TeamId)</b> permanent?
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

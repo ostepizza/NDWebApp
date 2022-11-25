@@ -37,21 +37,19 @@ else if (TempData["Message"] != null && TempData["Status"] != null && TempData["
 
 @if (Model.Users != null)
 {
-    <table>
-        <thead>
-            <th>Navn:</th>
-            <th>Epost:</th>
-            <th>Tlf.nr.:</th>
-        </thead>
-        <tbody>
-            @foreach (var user in Model.Users)
-            {
-                <tr>
-                    <td>@user.empFname @user.empLname</td>
-                    <td>@user.Email</td>
-                    <td>@user.Phone</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<table class="table">
+    <tr>
+        <th scope="col">Navn:</th>
+        <th scope="col">Epost:</th>
+        <th scope="col">Tlf.nr.:</th>
+    </tr>
+    @foreach (var user in Model.Users)
+    {
+        <tr>
+            <td>@user.empFname @user.empLname</td>
+            <td>@user.Email</td>
+            <td>@user.Phone</td>
+        </tr>
+    }
+</table>
 }
