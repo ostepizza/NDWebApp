@@ -56,7 +56,7 @@
                 {
                     <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Index"><div class="btn"><i class="fas fa-user"></i>Min konto</div></a>
                     <a class="nav-link" asp-area="" asp-controller="Users" asp-action="Index"><div class="btn"><i class="fas fa-box-archive"></i>Brukerliste</div></a>
-                    <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Index"><div class="btn"><i class="fas fa-gears"></i>Admin</div></a>
+                    @*<a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Index"><div class="btn"><i class="fas fa-gears"></i>Admin</div></a>*@
                 }
                 else if (User.IsInRole("Team Leader"))
                 {
