@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h1>@ViewData["Title"]</h1>
-<a asp-action="Index" class="btn btn-secondary">Tilbake</a>
+<a asp-action="Index" class="btn btn-secondary"> <i class="fa-solid fa-circle-chevron-left"></i> Tilbake</a>
 <div asp-validation-summary="All" class="text-danger"></div>
 
 <form asp-action="Update" method="post">
@@ -44,11 +44,11 @@
         <label asp-for="StatusId">Status:</label>
         <select asp-for="StatusId" class="form-control">
             <option value="2">Avbrutt</option>
-            <option value="3">Gjennomføres</option>
-            <option value="4">På pause</option>
+            <option value="3">GjennomfÃ¸res</option>
+            <option value="4">PÃ¥ pause</option>
             <option value="5">Ferdig</option>
         </select>
     </div>
 
-    <button type="submit" class="btn btn-primary">Lagre</button>
+    <button type="submit" class="btn btn-primary"> <i class="fa-solid fa-floppy-disk"></i> Lagre</button>
 </form>
